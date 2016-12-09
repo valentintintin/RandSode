@@ -13,25 +13,9 @@
     tools:context="lpsmin.randsode.MainActivity"
     tools:showIn="@layout/activity_main">
 
-    <AutoCompleteTextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:id="@+id/main_search_field2"
-        android:hint="Search for a serie"
-        android:drawableLeft="@android:drawable/ic_search_category_default"
-        android:dropDownSelector="@android:drawable/ic_menu_search"
-        android:imeOptions="actionSearch"
-        android:inputType="text"
-        android:maxLines="1"
-        android:text="Doctor Who" />
-
     <android.support.v7.widget.RecyclerView
         android:id="@+id/main_list"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/main_search_field2" />
+        android:layout_height="match_parent" />
 
 </RelativeLayout>
