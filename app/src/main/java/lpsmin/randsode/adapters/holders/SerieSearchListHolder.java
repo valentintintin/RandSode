@@ -1,32 +1,34 @@
-package lpsmin.randsode;
+package lpsmin.randsode.adapters.holders;
 
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
 
 import info.movito.themoviedbapi.model.tv.TvSeries;
+import lpsmin.randsode.R;
+import lpsmin.randsode.activities.SerieActivity;
+import lpsmin.randsode.shared.HttpSingleton;
 
-public class CardHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+public class SerieSearchListHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
     private static final int MAX_SUMMARY_LENGTH = 300;
 
-    private ImageLoader imageLoader;
+    private final ImageLoader imageLoader;
 
-    private TextView name;
-    private TextView summary;
-    private NetworkImageView image;
+    private final TextView name;
+    private final TextView summary;
+    private final NetworkImageView image;
 
-    private Context context;
+    private final Context context;
 
     private TvSeries serie;
 
-    public CardHolder(View itemView, Context context) {
+    public SerieSearchListHolder(View itemView, Context context) {
         super(itemView);
 
         this.name = (TextView) itemView.findViewById(R.id.card_layout_name);
