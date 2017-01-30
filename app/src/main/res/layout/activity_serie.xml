@@ -23,7 +23,7 @@
             android:fitsSystemWindows="true"
             android:minHeight="200dp">
 
-            <ImageView
+            <com.android.volley.toolbox.NetworkImageView
                 android:id="@+id/serie_image"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"

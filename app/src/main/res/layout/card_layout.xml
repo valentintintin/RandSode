@@ -15,11 +15,11 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <ImageView
+        <com.android.volley.toolbox.NetworkImageView
             android:id="@+id/card_layout_image"
+            android:layout_width="125dp"
             android:layout_height="match_parent"
-            android:scaleType="centerCrop"
-            android:layout_width="125dp" />
+            android:scaleType="centerCrop" />
 
         <LinearLayout
             android:orientation="vertical"

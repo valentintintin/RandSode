@@ -7,7 +7,8 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.squareup.picasso.Picasso;
+import com.android.volley.toolbox.ImageLoader;
+import com.android.volley.toolbox.NetworkImageView;
 
 import info.movito.themoviedbapi.model.tv.TvSeries;
 
@@ -15,9 +16,11 @@ public class CardHolder extends RecyclerView.ViewHolder implements View.OnClickL
 
     private static final int MAX_SUMMARY_LENGTH = 300;
 
+    private ImageLoader imageLoader;
+
     private TextView name;
     private TextView summary;
-    private ImageView image;
+    private NetworkImageView image;
 
     private Context context;
 
@@ -28,9 +31,10 @@ public class CardHolder extends RecyclerView.ViewHolder implements View.OnClickL
 
         this.name = (TextView) itemView.findViewById(R.id.card_layout_name);
         this.summary = (TextView) itemView.findViewById(R.id.card_layout_summary);
-        this.image = (ImageView) itemView.findViewById(R.id.card_layout_image);
+        this.image = (NetworkImageView) itemView.findViewById(R.id.card_layout_image);
 
         this.context = context;
+        this.imageLoader = HttpSingleton.getInstance(context).getImageLoader();
 
         itemView.setOnClickListener(this);
     }
@@ -42,7 +46,7 @@ public class CardHolder extends RecyclerView.ViewHolder implements View.OnClickL
         this.summary.setText(serie.getOverview().substring(0, (serie.getOverview().length() < MAX_SUMMARY_LENGTH ? serie.getOverview().length() : MAX_SUMMARY_LENGTH)));
 
         if (serie.getPosterPath() != null) {
-            Picasso.with(this.context).load("https://image.tmdb.org/t/p/w185/" + serie.getPosterPath()).into(this.image);
+            this.image.setImageUrl("https://image.tmdb.org/t/p/w185/" + serie.getPosterPath(), this.imageLoader);
         } else this.image.setVisibility(View.INVISIBLE);
     }
 
