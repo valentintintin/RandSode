@@ -25,7 +25,7 @@ public class SerieSearchRecyclerViewAdapter extends RecyclerView.Adapter<SerieSe
 
     @Override
     public SerieSearchListHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_layout, parent, false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.holder_search, parent, false);
         return new SerieSearchListHolder(v, this.context);
     }
 

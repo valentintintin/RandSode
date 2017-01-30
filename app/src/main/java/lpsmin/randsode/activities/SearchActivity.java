@@ -4,6 +4,7 @@ import android.app.SearchManager;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
@@ -30,6 +31,8 @@ public class SearchActivity extends AppCompatActivity {
         final ArrayList<TvSeries> series = new ArrayList<>();
 
         RecyclerView list = (RecyclerView) findViewById(R.id.search_list);
+        list.addItemDecoration(new DividerItemDecoration(list.getContext(), DividerItemDecoration.VERTICAL));
+
         this.listAdapter = new SerieSearchRecyclerViewAdapter(this, series);
         list.setAdapter(listAdapter);
         list.setLayoutManager(new LinearLayoutManager(this));
@@ -55,6 +58,7 @@ public class SearchActivity extends AppCompatActivity {
     }
 
     private void search(String query) {
+        query = "lol";
         if (query.length() > 0) {
             SearchTask task = new SearchTask(query, this.listAdapter);
             task.execute();

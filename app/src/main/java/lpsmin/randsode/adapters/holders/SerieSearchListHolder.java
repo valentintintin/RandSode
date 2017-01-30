@@ -3,6 +3,7 @@ package lpsmin.randsode.adapters.holders;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -16,12 +17,10 @@ import lpsmin.randsode.shared.HttpSingleton;
 
 public class SerieSearchListHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-    private static final int MAX_SUMMARY_LENGTH = 300;
-
     private final ImageLoader imageLoader;
 
     private final TextView name;
-    private final TextView summary;
+    private final TextView yearLabel, year;
     private final NetworkImageView image;
 
     private final Context context;
@@ -31,9 +30,10 @@ public class SerieSearchListHolder extends RecyclerView.ViewHolder implements Vi
     public SerieSearchListHolder(View itemView, Context context) {
         super(itemView);
 
-        this.name = (TextView) itemView.findViewById(R.id.card_layout_name);
-        this.summary = (TextView) itemView.findViewById(R.id.card_layout_summary);
-        this.image = (NetworkImageView) itemView.findViewById(R.id.card_layout_image);
+        this.name = (TextView) itemView.findViewById(R.id.holder_search_name);
+        this.yearLabel = (TextView) itemView.findViewById(R.id.holder_search_year_label);
+        this.year = (TextView) itemView.findViewById(R.id.holder_search_year);
+        this.image = (NetworkImageView) itemView.findViewById(R.id.holder_search_image);
 
         this.context = context;
         this.imageLoader = HttpSingleton.getInstance(context).getImageLoader();
@@ -45,11 +45,17 @@ public class SerieSearchListHolder extends RecyclerView.ViewHolder implements Vi
         this.serie = serie;
 
         this.name.setText(serie.getName());
-        this.summary.setText(serie.getOverview().substring(0, (serie.getOverview().length() < MAX_SUMMARY_LENGTH ? serie.getOverview().length() : MAX_SUMMARY_LENGTH)));
+
+        if (serie.getFirstAirDate().length() >= 4) {
+            this.year.setText(serie.getFirstAirDate().substring(0, 4));
+        } else {
+            this.yearLabel.setVisibility(View.INVISIBLE);
+            this.year.setVisibility(View.INVISIBLE);
+        }
 
         if (serie.getPosterPath() != null) {
             this.image.setImageUrl("https://image.tmdb.org/t/p/w185/" + serie.getPosterPath(), this.imageLoader);
-        } else this.image.setVisibility(View.INVISIBLE);
+        }
     }
 
     @Override
