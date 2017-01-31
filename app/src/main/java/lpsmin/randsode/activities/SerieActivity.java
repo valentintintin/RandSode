@@ -1,19 +1,21 @@
-package lpsmin.randsode;
+package lpsmin.randsode.activities;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 
 import com.android.volley.toolbox.NetworkImageView;
 
 import info.movito.themoviedbapi.model.tv.TvSeries;
+import lpsmin.randsode.R;
+import lpsmin.randsode.shared.HttpSingleton;
 
 public class SerieActivity extends AppCompatActivity {
 
-    TvSeries serie;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,13 +26,19 @@ public class SerieActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
-        this.serie = (TvSeries) getIntent().getSerializableExtra("serie");
+        TvSeries serie = (TvSeries) getIntent().getSerializableExtra("serie");
 
         TextView summary = (TextView) findViewById(R.id.serie_summary);
-        setTitle(this.serie.getName());
+        setTitle(serie.getName());
+
         NetworkImageView image = (NetworkImageView) findViewById(R.id.serie_image);
-        image.setImageUrl("https://image.tmdb.org/t/p/w185/" + serie.getPosterPath(), HttpSingleton.getInstance(this).getImageLoader());
-        summary.setText(this.serie.getOverview());
+        if (serie.getPosterPath() != null) {
+            image.setImageUrl("https://image.tmdb.org/t/p/w185/" + serie.getPosterPath(), HttpSingleton.getInstance(this).getImageLoader());
+        } else {
+            image.setVisibility(View.INVISIBLE);
+        }
+
+        summary.setText(serie.getOverview());
 
         FloatingActionButton favorite = (FloatingActionButton) findViewById(R.id.fab_favorite);
     }

@@ -1,4 +1,4 @@
-package lpsmin.randsode;
+package lpsmin.randsode.adapters;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -10,36 +10,33 @@ import java.util.Collections;
 import java.util.List;
 
 import info.movito.themoviedbapi.model.tv.TvSeries;
+import lpsmin.randsode.adapters.holders.SerieSearchListHolder;
+import lpsmin.randsode.R;
 
-public class RecyclerViewAdapter extends RecyclerView.Adapter<CardHolder> {
+public class SerieSearchRecyclerViewAdapter extends RecyclerView.Adapter<SerieSearchListHolder> {
 
-    private Context context;
+    private final Context context;
     private List<TvSeries> list = Collections.emptyList();
 
-    public RecyclerViewAdapter(Context context, List<TvSeries> list) {
+    public SerieSearchRecyclerViewAdapter(Context context, List<TvSeries> list) {
         this.context = context;
         this.list = list;
     }
 
     @Override
-    public CardHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_layout, parent, false);
-        return new CardHolder(v, this.context);
+    public SerieSearchListHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.holder_search, parent, false);
+        return new SerieSearchListHolder(v, this.context);
     }
 
     @Override
-    public void onBindViewHolder(CardHolder holder, int position) {
+    public void onBindViewHolder(SerieSearchListHolder holder, int position) {
         holder.bind(list.get(position));
     }
 
     @Override
     public int getItemCount() {
         return list.size();
-    }
-
-    @Override
-    public void onAttachedToRecyclerView(RecyclerView recyclerView) {
-        super.onAttachedToRecyclerView(recyclerView);
     }
 
     public void resetAndAdd(List<TvSeries> data) {

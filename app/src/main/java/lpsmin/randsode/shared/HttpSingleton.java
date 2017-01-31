@@ -1,4 +1,4 @@
-package lpsmin.randsode;
+package lpsmin.randsode.shared;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -17,11 +17,11 @@ public class HttpSingleton {
 
     private static HttpSingleton instance;
     private RequestQueue requestQueue;
-    private ImageLoader imageLoader;
+    private final ImageLoader imageLoader;
     private static Context context;
 
     private HttpSingleton(Context context) {
-        this.context = context;
+        HttpSingleton.context = context;
         this.requestQueue = getRequestQueue();
         this.imageLoader = new ImageLoader(this.requestQueue, new ImageLoader.ImageCache() {
 
@@ -46,11 +46,9 @@ public class HttpSingleton {
         return instance;
     }
 
-    public RequestQueue getRequestQueue() {
+    private RequestQueue getRequestQueue() {
         if (this.requestQueue == null) {
-            // getApplicationContext() is key, it keeps you from leaking the
-            // Activity or BroadcastReceiver if someone passes one in.
-            this.requestQueue = Volley.newRequestQueue(this.context.getApplicationContext());
+            this.requestQueue = Volley.newRequestQueue(context.getApplicationContext());
         }
         return requestQueue;
     }

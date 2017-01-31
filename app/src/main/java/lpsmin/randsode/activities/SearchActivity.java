@@ -1,25 +1,24 @@
-package lpsmin.randsode;
+package lpsmin.randsode.activities;
 
-import android.app.ActionBar;
 import android.app.SearchManager;
 import android.content.Intent;
-import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
 
 import java.util.ArrayList;
 
 import info.movito.themoviedbapi.model.tv.TvSeries;
+import lpsmin.randsode.R;
+import lpsmin.randsode.adapters.SerieSearchRecyclerViewAdapter;
+import lpsmin.randsode.shared.SearchTask;
 
 public class SearchActivity extends AppCompatActivity {
 
-    private RecyclerView list;
-    private RecyclerViewAdapter listAdapter;
+    private SerieSearchRecyclerViewAdapter listAdapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -31,10 +30,12 @@ public class SearchActivity extends AppCompatActivity {
 
         final ArrayList<TvSeries> series = new ArrayList<>();
 
-        this.list = (RecyclerView) findViewById(R.id.search_list);
-        this.listAdapter = new RecyclerViewAdapter(this, series);
-        this.list.setAdapter(listAdapter);
-        this.list.setLayoutManager(new LinearLayoutManager(this));
+        RecyclerView list = (RecyclerView) findViewById(R.id.search_list);
+        list.addItemDecoration(new DividerItemDecoration(list.getContext(), DividerItemDecoration.VERTICAL));
+
+        this.listAdapter = new SerieSearchRecyclerViewAdapter(this, series);
+        list.setAdapter(listAdapter);
+        list.setLayoutManager(new LinearLayoutManager(this));
 
         handleIntent(getIntent());
     }
@@ -56,7 +57,8 @@ public class SearchActivity extends AppCompatActivity {
         }
     }
 
-    public void search(String query) {
+    private void search(String query) {
+        query = "lol";
         if (query.length() > 0) {
             SearchTask task = new SearchTask(query, this.listAdapter);
             task.execute();

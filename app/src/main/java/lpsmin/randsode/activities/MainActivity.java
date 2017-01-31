@@ -1,8 +1,7 @@
-package lpsmin.randsode;
+package lpsmin.randsode.activities;
 
 import android.app.SearchManager;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -14,11 +13,10 @@ import android.support.v7.widget.SearchView;
 import java.util.ArrayList;
 
 import info.movito.themoviedbapi.model.tv.TvSeries;
+import lpsmin.randsode.R;
+import lpsmin.randsode.adapters.SerieSearchRecyclerViewAdapter;
 
 public class MainActivity extends AppCompatActivity { // implements SearchView.OnQueryTextListener
-
-    private RecyclerView list;
-    private RecyclerViewAdapter listAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,10 +29,10 @@ public class MainActivity extends AppCompatActivity { // implements SearchView.O
 
         final ArrayList<TvSeries> series = new ArrayList<>();
 
-        this.list = (RecyclerView) findViewById(R.id.main_list);
-        this.listAdapter = new RecyclerViewAdapter(this, series);
-        this.list.setAdapter(listAdapter);
-        this.list.setLayoutManager(new LinearLayoutManager(this));
+        RecyclerView list = (RecyclerView) findViewById(R.id.main_list);
+        SerieSearchRecyclerViewAdapter listAdapter = new SerieSearchRecyclerViewAdapter(this, series);
+        list.setAdapter(listAdapter);
+        list.setLayoutManager(new LinearLayoutManager(this));
     }
 
     @Override

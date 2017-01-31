@@ -3,4 +3,5 @@
     <string name="search_hint">Search for a serie</string>
     <string name="title_activity_serie">Showing serie</string>
     <string name="search_activity_title_caption">Search for :</string>
+    <string name="holder_search_year_label">Year :</string>
 </resources>
