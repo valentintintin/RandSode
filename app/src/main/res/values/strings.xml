@@ -3,7 +3,7 @@
     <string name="search_hint">Search for a serie</string>
     <string name="title_activity_serie">Showing serie</string>
     <string name="search_activity_title_caption">Search for :</string>
-    <string name="holder_search_year_label">Year :</string>
+    <string name="holder_serie_year_label">Year :</string>
     <string name="main_title_popular">Popular series</string>
     <string name="main_title_favorite">Favorite series</string>
     <string name="main_help_popular">You don\'t have favorite series, see popular !</string>

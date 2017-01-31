@@ -28,10 +28,10 @@ public class SerieHolder extends RecyclerView.ViewHolder implements View.OnClick
     public SerieHolder(View itemView, Context context) {
         super(itemView);
 
-        this.name = (TextView) itemView.findViewById(R.id.holder_search_name);
-        this.yearLabel = (TextView) itemView.findViewById(R.id.holder_search_year_label);
-        this.year = (TextView) itemView.findViewById(R.id.holder_search_year);
-        this.image = (NetworkImageView) itemView.findViewById(R.id.holder_search_image);
+        this.name = (TextView) itemView.findViewById(R.id.holder_serie_name);
+        this.yearLabel = (TextView) itemView.findViewById(R.id.holder_serie_year_label);
+        this.year = (TextView) itemView.findViewById(R.id.holder_serie_year);
+        this.image = (NetworkImageView) itemView.findViewById(R.id.holder_serie_image);
         this.image.setDefaultImageResId(R.drawable.ic_no_image);
         this.image.setErrorImageResId(R.drawable.ic_no_image);
 

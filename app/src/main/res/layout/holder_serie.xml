@@ -10,7 +10,7 @@
     android:background="?android:selectableItemBackground">
 
     <com.android.volley.toolbox.NetworkImageView
-        android:id="@+id/holder_search_image"
+        android:id="@+id/holder_serie_image"
         android:scaleType="fitXY"
         android:layout_width="@dimen/image_list"
         android:layout_height="@dimen/image_list" />
@@ -23,7 +23,7 @@
         android:paddingTop="10dp">
 
         <TextView
-            android:id="@+id/holder_search_name"
+            android:id="@+id/holder_serie_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textAppearance="@android:style/TextAppearance.DeviceDefault.Large" />
@@ -36,12 +36,12 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/holder_search_year_label"
+                android:text="@string/holder_serie_year_label"
                 android:textAppearance="@android:style/TextAppearance.DeviceDefault.Small"
-                android:id="@+id/holder_search_year_label" />
+                android:id="@+id/holder_serie_year_label" />
 
             <TextView
-                android:id="@+id/holder_search_year"
+                android:id="@+id/holder_serie_year"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textAppearance="@android:style/TextAppearance.DeviceDefault.Small"

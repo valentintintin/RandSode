@@ -6,7 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.util.Collections;
 import java.util.List;
 
 import info.movito.themoviedbapi.model.tv.TvSeries;
@@ -29,7 +28,7 @@ public class SeriePopularRecyclerViewAdapter extends SerieRecyclerViewAdapter {
             View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.holder_header, parent, false);
             return new HeaderHolder(v);
         } else {
-            View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.holder_search, parent, false);
+            View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.holder_serie, parent, false);
             return new SerieHolder(v, this.context);
         }
     }

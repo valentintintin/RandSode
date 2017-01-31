@@ -6,7 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.util.Collections;
 import java.util.List;
 
 import info.movito.themoviedbapi.model.tv.TvSeries;
@@ -21,7 +20,7 @@ public class SerieSearchRecyclerViewAdapter extends SerieRecyclerViewAdapter {
 
     @Override
     public SerieHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.holder_search, parent, false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.holder_serie, parent, false);
         return new SerieHolder(v, this.context);
     }
 
