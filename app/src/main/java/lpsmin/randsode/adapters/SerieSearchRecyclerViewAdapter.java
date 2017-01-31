@@ -40,6 +40,9 @@ public class SerieSearchRecyclerViewAdapter extends RecyclerView.Adapter<SerieSe
     }
 
     public void resetAndAdd(List<TvSeries> data) {
+        for(int i = 0; i < data.size(); i++) {
+            if (data.get(i).getOverview().length() == 0) data.remove(i);
+        }
         this.list.clear();
         this.list.addAll(data);
         this.notifyDataSetChanged();

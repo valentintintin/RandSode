@@ -58,7 +58,6 @@ public class SearchActivity extends AppCompatActivity {
     }
 
     private void search(String query) {
-        query = "lol";
         if (query.length() > 0) {
             SearchTask task = new SearchTask(query, this.listAdapter);
             task.execute();
