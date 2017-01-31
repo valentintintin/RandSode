@@ -26,9 +26,9 @@ public abstract class SerieTask extends AsyncTask<Void, Void, TvResultsPage> {
         this.list = list;
         this.noData = noData;
 
-        this.loader.setVisibility(View.VISIBLE);
         this.list.setVisibility(View.GONE);
         this.noData.setVisibility(View.GONE);
+        this.loader.setVisibility(View.VISIBLE);
     }
 
     protected void onPostExecute(TvResultsPage result) {
