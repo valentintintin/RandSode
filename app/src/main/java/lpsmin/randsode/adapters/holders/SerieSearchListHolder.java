@@ -17,8 +17,6 @@ import lpsmin.randsode.shared.HttpSingleton;
 
 public class SerieSearchListHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-    private final ImageLoader imageLoader;
-
     private final TextView name;
     private final TextView yearLabel, year;
     private final NetworkImageView image;
@@ -34,9 +32,10 @@ public class SerieSearchListHolder extends RecyclerView.ViewHolder implements Vi
         this.yearLabel = (TextView) itemView.findViewById(R.id.holder_search_year_label);
         this.year = (TextView) itemView.findViewById(R.id.holder_search_year);
         this.image = (NetworkImageView) itemView.findViewById(R.id.holder_search_image);
+        this.image.setDefaultImageResId(R.drawable.ic_no_image);
+        this.image.setErrorImageResId(R.drawable.ic_no_image);
 
         this.context = context;
-        this.imageLoader = HttpSingleton.getInstance(context).getImageLoader();
 
         itemView.setOnClickListener(this);
     }
@@ -53,8 +52,17 @@ public class SerieSearchListHolder extends RecyclerView.ViewHolder implements Vi
             this.year.setVisibility(View.INVISIBLE);
         }
 
-        if (serie.getPosterPath() != null) {
-            this.image.setImageUrl("https://image.tmdb.org/t/p/w185/" + serie.getPosterPath(), this.imageLoader);
+        if (serie.getBackdropPath() != null) {
+            Log.i("img", serie.getName() + "  " + serie.getBackdropPath());
+
+            image.setImageUrl("https://image.tmdb.org/t/p/w185/" + serie.getBackdropPath(), HttpSingleton.getInstance(this.context).getImageLoader());
+        } else if (serie.getPosterPath() != null) {
+            Log.i("img", serie.getName() + "  " + serie.getPosterPath());
+            image.setImageUrl("https://image.tmdb.org/t/p/w185/" + serie.getPosterPath(), HttpSingleton.getInstance(this.context).getImageLoader());
+        } else {
+//            image.setImageResource(R.drawable.ic_no_image);
+//            image.setVisibility(View.INVISIBLE);
+            Log.i("img", serie.getName() + "  " + "no image");
         }
     }
 
