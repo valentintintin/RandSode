@@ -42,8 +42,6 @@ public class SerieActivity extends AppCompatActivity {
         }
 
         summary.setText(serie.getOverview());
-
-        FloatingActionButton favorite = (FloatingActionButton) findViewById(R.id.fab_favorite);
     }
 
     @Override

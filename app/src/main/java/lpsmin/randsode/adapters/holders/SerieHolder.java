@@ -15,7 +15,7 @@ import lpsmin.randsode.R;
 import lpsmin.randsode.activities.SerieActivity;
 import lpsmin.randsode.shared.HttpSingleton;
 
-public class SerieListHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+public class SerieHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
     private final TextView name;
     private final TextView yearLabel, year;
@@ -25,7 +25,7 @@ public class SerieListHolder extends RecyclerView.ViewHolder implements View.OnC
 
     private TvSeries serie;
 
-    public SerieListHolder(View itemView, Context context) {
+    public SerieHolder(View itemView, Context context) {
         super(itemView);
 
         this.name = (TextView) itemView.findViewById(R.id.holder_search_name);
@@ -52,18 +52,8 @@ public class SerieListHolder extends RecyclerView.ViewHolder implements View.OnC
             this.year.setVisibility(View.INVISIBLE);
         }
 
-        if (serie.getBackdropPath() != null) {
-            Log.i("img", serie.getName() + "  " + serie.getBackdropPath());
-
-            image.setImageUrl("https://image.tmdb.org/t/p/w185/" + serie.getBackdropPath(), HttpSingleton.getInstance(this.context).getImageLoader());
-        } else if (serie.getPosterPath() != null) {
-            Log.i("img", serie.getName() + "  " + serie.getPosterPath());
-            image.setImageUrl("https://image.tmdb.org/t/p/w185/" + serie.getPosterPath(), HttpSingleton.getInstance(this.context).getImageLoader());
-        } else {
-//            image.setImageResource(R.drawable.ic_no_image);
-//            image.setVisibility(View.INVISIBLE);
-            Log.i("img", serie.getName() + "  " + "no image");
-        }
+        if (serie.getBackdropPath() != null) image.setImageUrl("https://image.tmdb.org/t/p/w185/" + serie.getBackdropPath(), HttpSingleton.getInstance(this.context).getImageLoader());
+        else if (serie.getPosterPath() != null) image.setImageUrl("https://image.tmdb.org/t/p/w185/" + serie.getPosterPath(), HttpSingleton.getInstance(this.context).getImageLoader());
     }
 
     @Override

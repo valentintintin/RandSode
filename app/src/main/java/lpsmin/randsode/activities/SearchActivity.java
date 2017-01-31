@@ -8,17 +8,21 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
+import android.widget.FrameLayout;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
 import info.movito.themoviedbapi.model.tv.TvSeries;
 import lpsmin.randsode.R;
-import lpsmin.randsode.adapters.SerieRecyclerViewAdapter;
+import lpsmin.randsode.adapters.SerieSearchRecyclerViewAdapter;
 import lpsmin.randsode.tasks.SearchTask;
 
 public class SearchActivity extends AppCompatActivity {
 
-    private SerieRecyclerViewAdapter listAdapter;
+    private RecyclerView list;
+    private SerieSearchRecyclerViewAdapter listAdapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -30,10 +34,10 @@ public class SearchActivity extends AppCompatActivity {
 
         final ArrayList<TvSeries> series = new ArrayList<>();
 
-        RecyclerView list = (RecyclerView) findViewById(R.id.search_list);
-        list.addItemDecoration(new DividerItemDecoration(list.getContext(), DividerItemDecoration.VERTICAL));
+        this.list = (RecyclerView) findViewById(R.id.search_list);
+        this.list.addItemDecoration(new DividerItemDecoration(list.getContext(), DividerItemDecoration.VERTICAL));
 
-        this.listAdapter = new SerieRecyclerViewAdapter(this, series);
+        this.listAdapter = new SerieSearchRecyclerViewAdapter(this, series);
         list.setAdapter(listAdapter);
         list.setLayoutManager(new LinearLayoutManager(this));
 
@@ -59,7 +63,7 @@ public class SearchActivity extends AppCompatActivity {
 
     private void search(String query) {
         if (query.length() > 0) {
-            SearchTask task = new SearchTask(query, this.listAdapter);
+            SearchTask task = new SearchTask(query, (FrameLayout) findViewById(R.id.search_load), this.listAdapter, this.list, (TextView) findViewById(R.id.search_no_data));
             task.execute();
         }
     }

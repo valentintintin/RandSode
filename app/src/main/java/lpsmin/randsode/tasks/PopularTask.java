@@ -1,26 +1,24 @@
 package lpsmin.randsode.tasks;
 
 import android.os.AsyncTask;
+import android.support.v7.widget.RecyclerView;
+import android.widget.FrameLayout;
+import android.widget.TextView;
 
 import info.movito.themoviedbapi.TmdbApi;
 import info.movito.themoviedbapi.TvResultsPage;
-import lpsmin.randsode.adapters.SerieRecyclerViewAdapter;
+import lpsmin.randsode.adapters.SeriePopularRecyclerViewAdapter;
+import lpsmin.randsode.adapters.SerieSearchRecyclerViewAdapter;
 
-public class PopularTask extends AsyncTask<Void, Void, TvResultsPage> {
+public class PopularTask extends SerieTask {
 
-    private final SerieRecyclerViewAdapter listAdapter;
-
-    public PopularTask(SerieRecyclerViewAdapter listAdapter) {
-        this.listAdapter = listAdapter;
+    public PopularTask(FrameLayout loader, SeriePopularRecyclerViewAdapter listAdapter, RecyclerView list, TextView noData) {
+        super(loader, listAdapter, list, noData);
     }
 
     @Override
     protected TvResultsPage doInBackground(Void... params) {
         TmdbApi tmdb = new TmdbApi("6eea0576c85e5ebf9fd8e438a8d8b316");
         return tmdb.getTvSeries().getPopular("en-UK", 1);
-    }
-
-    protected void onPostExecute(TvResultsPage result) {
-        this.listAdapter.resetAndAdd(result.getResults());
     }
 }
