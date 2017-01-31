@@ -1,17 +1,17 @@
-package lpsmin.randsode.shared;
+package lpsmin.randsode.tasks;
 
 import android.os.AsyncTask;
 
 import info.movito.themoviedbapi.TmdbApi;
 import info.movito.themoviedbapi.TvResultsPage;
-import lpsmin.randsode.adapters.SerieSearchRecyclerViewAdapter;
+import lpsmin.randsode.adapters.SerieRecyclerViewAdapter;
 
 public class SearchTask extends AsyncTask<Void, Void, TvResultsPage> {
 
     private final String searchQuery;
-    private final SerieSearchRecyclerViewAdapter listAdapter;
+    private final SerieRecyclerViewAdapter listAdapter;
 
-    public SearchTask(String searchQuery, SerieSearchRecyclerViewAdapter listAdapter) {
+    public SearchTask(String searchQuery, SerieRecyclerViewAdapter listAdapter) {
         this.searchQuery = searchQuery;
         this.listAdapter = listAdapter;
     }

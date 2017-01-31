@@ -10,27 +10,27 @@ import java.util.Collections;
 import java.util.List;
 
 import info.movito.themoviedbapi.model.tv.TvSeries;
-import lpsmin.randsode.adapters.holders.SerieSearchListHolder;
+import lpsmin.randsode.adapters.holders.SerieListHolder;
 import lpsmin.randsode.R;
 
-public class SerieSearchRecyclerViewAdapter extends RecyclerView.Adapter<SerieSearchListHolder> {
+public class SerieRecyclerViewAdapter extends RecyclerView.Adapter<SerieListHolder> {
 
     private final Context context;
     private List<TvSeries> list = Collections.emptyList();
 
-    public SerieSearchRecyclerViewAdapter(Context context, List<TvSeries> list) {
+    public SerieRecyclerViewAdapter(Context context, List<TvSeries> list) {
         this.context = context;
         this.list = list;
     }
 
     @Override
-    public SerieSearchListHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public SerieListHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.holder_search, parent, false);
-        return new SerieSearchListHolder(v, this.context);
+        return new SerieListHolder(v, this.context);
     }
 
     @Override
-    public void onBindViewHolder(SerieSearchListHolder holder, int position) {
+    public void onBindViewHolder(SerieListHolder holder, int position) {
         holder.bind(list.get(position));
     }
 

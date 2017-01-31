@@ -15,7 +15,7 @@ import lpsmin.randsode.R;
 import lpsmin.randsode.activities.SerieActivity;
 import lpsmin.randsode.shared.HttpSingleton;
 
-public class SerieSearchListHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+public class SerieListHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
     private final TextView name;
     private final TextView yearLabel, year;
@@ -25,7 +25,7 @@ public class SerieSearchListHolder extends RecyclerView.ViewHolder implements Vi
 
     private TvSeries serie;
 
-    public SerieSearchListHolder(View itemView, Context context) {
+    public SerieListHolder(View itemView, Context context) {
         super(itemView);
 
         this.name = (TextView) itemView.findViewById(R.id.holder_search_name);

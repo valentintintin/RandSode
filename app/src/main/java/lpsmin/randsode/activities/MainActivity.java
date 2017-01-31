@@ -4,6 +4,7 @@ import android.app.SearchManager;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -14,7 +15,8 @@ import java.util.ArrayList;
 
 import info.movito.themoviedbapi.model.tv.TvSeries;
 import lpsmin.randsode.R;
-import lpsmin.randsode.adapters.SerieSearchRecyclerViewAdapter;
+import lpsmin.randsode.adapters.SerieRecyclerViewAdapter;
+import lpsmin.randsode.tasks.PopularTask;
 
 public class MainActivity extends AppCompatActivity { // implements SearchView.OnQueryTextListener
 
@@ -30,9 +32,15 @@ public class MainActivity extends AppCompatActivity { // implements SearchView.O
         final ArrayList<TvSeries> series = new ArrayList<>();
 
         RecyclerView list = (RecyclerView) findViewById(R.id.main_list);
-        SerieSearchRecyclerViewAdapter listAdapter = new SerieSearchRecyclerViewAdapter(this, series);
+        list.addItemDecoration(new DividerItemDecoration(list.getContext(), DividerItemDecoration.VERTICAL));
+        SerieRecyclerViewAdapter listAdapter = new SerieRecyclerViewAdapter(this, series);
         list.setAdapter(listAdapter);
         list.setLayoutManager(new LinearLayoutManager(this));
+
+        if (series.isEmpty()) {
+            PopularTask task = new PopularTask(listAdapter);
+            task.execute();
+        }
     }
 
     @Override
