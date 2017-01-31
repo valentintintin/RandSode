@@ -41,7 +41,7 @@ public class SeriePopularRecyclerViewAdapter extends SerieRecyclerViewAdapter {
 
     @Override
     public int getItemViewType(int position) {
-        if(position == 0) return TYPE_HEADER;
+        if(position == 0) return TYPE_HEADER; //TODO : not header, lost the first one !
         return TYPE_ITEM;
     }
 }

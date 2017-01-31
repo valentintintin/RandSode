@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
         final ArrayList<TvSeries> series = new ArrayList<>();
 
         this.list = (RecyclerView) findViewById(R.id.main_list);
-        this.list.addItemDecoration(new DividerItemDecoration(this.list.getContext(), DividerItemDecoration.VERTICAL));
+//        this.list.addItemDecoration(new DividerItemDecoration(this.list.getContext(), DividerItemDecoration.VERTICAL));
         final SeriePopularRecyclerViewAdapter listAdapter = new SeriePopularRecyclerViewAdapter(this, series);
         this.list.setAdapter(listAdapter);
         this.list.setLayoutManager(new LinearLayoutManager(this));
