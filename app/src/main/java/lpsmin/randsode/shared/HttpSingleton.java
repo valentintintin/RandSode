@@ -2,16 +2,13 @@ package lpsmin.randsode.shared;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.util.Log;
 import android.util.LruCache;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.Volley;
-
-/**
- * Created by Valentin on 30/01/2017.
- */
 
 public class HttpSingleton {
 
@@ -23,20 +20,7 @@ public class HttpSingleton {
     private HttpSingleton(Context context) {
         HttpSingleton.context = context;
         this.requestQueue = getRequestQueue();
-        this.imageLoader = new ImageLoader(this.requestQueue, new ImageLoader.ImageCache() {
-
-            private final LruCache<String, Bitmap> cache = new LruCache<String, Bitmap>(20);
-
-            @Override
-            public Bitmap getBitmap(String url) {
-                return cache.get(url);
-            }
-
-            @Override
-            public void putBitmap(String url, Bitmap bitmap) {
-                cache.put(url, bitmap);
-            }
-        });
+        this.imageLoader = new ImageLoader(this.requestQueue, new LruBitmapCache());
     }
 
     public static synchronized HttpSingleton getInstance(Context context) {
