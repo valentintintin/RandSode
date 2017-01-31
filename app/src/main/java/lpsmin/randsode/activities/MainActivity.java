@@ -23,7 +23,7 @@ import lpsmin.randsode.adapters.SeriePopularRecyclerViewAdapter;
 import lpsmin.randsode.adapters.SerieSearchRecyclerViewAdapter;
 import lpsmin.randsode.tasks.PopularTask;
 
-public class MainActivity extends AppCompatActivity { // implements SearchView.OnQueryTextListener
+public class MainActivity extends AppCompatActivity {
 
     private RecyclerView list;
 
@@ -58,19 +58,13 @@ public class MainActivity extends AppCompatActivity { // implements SearchView.O
         SearchView searchView = (SearchView) menu.findItem(R.id.search).getActionView();
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
 
-        searchView.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+        searchView.setOnQueryTextFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
-            public void onFocusChange(View view, boolean b) {
-                Log.i("b", b + "");
-                if (b) {
-                    list.setVisibility(View.GONE);
-                } else {
-                    list.setVisibility(View.VISIBLE);
-                }
+            public void onFocusChange(View view, boolean hasFocus) {
+                if (hasFocus) list.setVisibility(View.GONE);
+                else list.setVisibility(View.VISIBLE);
             }
         });
-
-//        searchView.setOnQueryTextListener(this);
 
         return true;
     }
