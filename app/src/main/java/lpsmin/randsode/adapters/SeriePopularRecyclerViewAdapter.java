@@ -36,12 +36,18 @@ public class SeriePopularRecyclerViewAdapter extends SerieRecyclerViewAdapter {
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         if (holder instanceof HeaderHolder) ((HeaderHolder) holder).bind(list.isEmpty());
-        else ((SerieHolder)holder).bind(list.get(position));
+        else ((SerieHolder)holder).bind(list.get(position - 1)); //header = 0
+    }
+
+
+    @Override
+    public int getItemCount() {
+        return super.getItemCount() + 1; //Header
     }
 
     @Override
     public int getItemViewType(int position) {
-        if(position == 0) return TYPE_HEADER; //TODO : not header, lost the first one !
+        if(position == 0) return TYPE_HEADER;
         return TYPE_ITEM;
     }
 }
