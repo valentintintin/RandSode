@@ -4,11 +4,9 @@ import android.app.SearchManager;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.support.v7.widget.SearchView;
 import android.view.View;
@@ -19,8 +17,11 @@ import java.util.ArrayList;
 
 import info.movito.themoviedbapi.model.tv.TvSeries;
 import lpsmin.randsode.R;
-import lpsmin.randsode.adapters.SeriePopularRecyclerViewAdapter;
-import lpsmin.randsode.adapters.SerieSearchRecyclerViewAdapter;
+import lpsmin.randsode.adapters.HeaderRecyclerViewAdapter;
+import lpsmin.randsode.adapters.PopularRecyclerViewAdapter;
+import lpsmin.randsode.adapters.RecyclerViewAdapter;
+import lpsmin.randsode.adapters.holders.HeaderHolder;
+import lpsmin.randsode.adapters.holders.SerieHolder;
 import lpsmin.randsode.tasks.PopularTask;
 
 public class MainActivity extends AppCompatActivity {
@@ -40,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
 
         this.list = (RecyclerView) findViewById(R.id.main_list);
 //        this.list.addItemDecoration(new DividerItemDecoration(this.list.getContext(), DividerItemDecoration.VERTICAL));
-        final SeriePopularRecyclerViewAdapter listAdapter = new SeriePopularRecyclerViewAdapter(this, series);
+        final HeaderRecyclerViewAdapter listAdapter = new HeaderRecyclerViewAdapter(this, series, R.layout.holder_serie, SerieHolder.class, R.layout.holder_header, HeaderHolder.class);
         this.list.setAdapter(listAdapter);
         this.list.setLayoutManager(new LinearLayoutManager(this));
 

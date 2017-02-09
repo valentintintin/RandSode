@@ -15,19 +15,19 @@ import lpsmin.randsode.activities.SerieActivity;
 import lpsmin.randsode.shared.HttpSingleton;
 import lpsmin.randsode.tasks.PopularTask;
 
-public class HeaderHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+public class HeaderHolder extends Holder<Boolean> {
 
     private final TextView title, help;
 
 
-    public HeaderHolder(View itemView) {
-        super(itemView);
+    public HeaderHolder(View itemView, Context context) {
+        super(itemView, context);
 
         this.title = (TextView) itemView.findViewById(R.id.holder_header_title);
         this.help = (TextView) itemView.findViewById(R.id.holder_header_help);
     }
 
-    public void bind(boolean empty) {
+    public void bind(Boolean empty) {
         if (!empty) { //TODO bug
             title.setText(R.string.main_title_popular);
             help.setVisibility(View.VISIBLE);

@@ -6,11 +6,12 @@ import android.widget.TextView;
 
 import info.movito.themoviedbapi.TmdbApi;
 import info.movito.themoviedbapi.TvResultsPage;
-import lpsmin.randsode.adapters.SeriePopularRecyclerViewAdapter;
+import lpsmin.randsode.adapters.PopularRecyclerViewAdapter;
+import lpsmin.randsode.adapters.RecyclerViewAdapter;
 
 public class PopularTask extends ArrayTask {
 
-    public PopularTask(FrameLayout loader, SeriePopularRecyclerViewAdapter listAdapter, RecyclerView list, TextView noData) {
+    public PopularTask(FrameLayout loader, RecyclerViewAdapter listAdapter, RecyclerView list, TextView noData) {
         super(loader, listAdapter, list, noData);
     }
 

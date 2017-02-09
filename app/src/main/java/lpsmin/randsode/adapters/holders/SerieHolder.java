@@ -16,17 +16,15 @@ import lpsmin.randsode.R;
 import lpsmin.randsode.activities.SerieActivity;
 import lpsmin.randsode.shared.HttpSingleton;
 
-public class SerieHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+public class SerieHolder extends Holder<TvSeries> {
 
     private final TextView name, year, rank, summary, genres;
     private final NetworkImageView image;
 
-    private final Context context;
-
     private TvSeries serie;
 
     public SerieHolder(View itemView, Context context) {
-        super(itemView);
+        super(itemView, context);
 
         this.name = (TextView) itemView.findViewById(R.id.holder_serie_name);
         this.year = (TextView) itemView.findViewById(R.id.holder_serie_year);
@@ -36,8 +34,6 @@ public class SerieHolder extends RecyclerView.ViewHolder implements View.OnClick
         this.rank = (TextView) itemView.findViewById(R.id.holder_serie_rank);
         this.genres = (TextView) itemView.findViewById(R.id.holder_serie_genres);
         this.summary = (TextView) itemView.findViewById(R.id.holder_serie_summary);
-
-        this.context = context;
 
         itemView.setOnClickListener(this);
     }

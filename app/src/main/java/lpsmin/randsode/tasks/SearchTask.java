@@ -4,17 +4,16 @@ import android.support.v7.widget.RecyclerView;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
-import java.util.ArrayList;
-
 import info.movito.themoviedbapi.TmdbApi;
 import info.movito.themoviedbapi.TvResultsPage;
-import lpsmin.randsode.adapters.SerieSearchRecyclerViewAdapter;
+import lpsmin.randsode.adapters.RecyclerViewAdapter;
+import lpsmin.randsode.adapters.SearchRecyclerViewAdapter;
 
 public class SearchTask extends ArrayTask {
 
     private final String searchQuery;
 
-    public SearchTask(String searchQuery, FrameLayout loader, SerieSearchRecyclerViewAdapter listAdapter, RecyclerView list, TextView noData) {
+    public SearchTask(String searchQuery, FrameLayout loader, RecyclerViewAdapter listAdapter, RecyclerView list, TextView noData) {
         super(loader, listAdapter, list, noData);
 
         this.searchQuery = searchQuery;
