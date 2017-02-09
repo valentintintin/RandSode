@@ -8,4 +8,7 @@
     <string name="main_title_favorite">Favorite series</string>
     <string name="main_help_popular">You don\'t have favorite series, see popular !</string>
     <string name="no_data">No data</string>
+    <string name="seasons">seasons</string>
+    <string name="episodes">episodes</string>
+    <string name="give_random">Give me a random episode !</string>
 </resources>

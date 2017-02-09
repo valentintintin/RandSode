@@ -23,6 +23,12 @@
             android:fitsSystemWindows="true"
             android:minHeight="200dp">
 
+            <com.android.volley.toolbox.NetworkImageView
+                android:id="@+id/serie_image"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="fitXY" />
+
             <android.support.v7.widget.Toolbar
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
@@ -30,12 +36,6 @@
                 android:minHeight="?attr/actionBarSize"
                 app:layout_collapseMode="pin"
                 app:popupTheme="@style/AppTheme.PopupOverlay" />
-
-            <com.android.volley.toolbox.NetworkImageView
-                android:id="@+id/serie_image"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:scaleType="fitCenter" />
 
         </android.support.design.widget.CollapsingToolbarLayout>
     </android.support.design.widget.AppBarLayout>
