@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.toolbox.NetworkImageView;
 
@@ -47,15 +48,21 @@ public class SerieActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Random rand = new Random();
-                int season = rand.nextInt(serie.getNumberOfSeasons()) + 1;
-                int episode = rand.nextInt(serie.getNumberOfEpisodes()) + 1;
+                final int season = rand.nextInt(serie.getNumberOfSeasons()) + 1;
+                final int episode = rand.nextInt(serie.getEpisodeRuntime().size()) + 1;
 
                 RandomTask task = new RandomTask(serie.getId(), season, episode, loader, random, new Closure() {
                     @Override
                     public void go(Object data) {
-                        
+                        if (data == null) {
+                            Toast.makeText(getApplicationContext(), "Not found (S" + season + "x" + episode + ")", Toast.LENGTH_SHORT).show();
+                        } else {
+                            TvEpisode episodeObject = (TvEpisode) data;
+                            Toast.makeText(getApplicationContext(), episodeObject.getName() + " (S" + season + "x" + episode + ")", Toast.LENGTH_SHORT).show();
+                        }
                     }
                 });
+                task.execute();
             }
         });
 

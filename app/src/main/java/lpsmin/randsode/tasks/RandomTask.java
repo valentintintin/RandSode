@@ -21,6 +21,10 @@ public class RandomTask extends OneTask<TvEpisode> {
     @Override
     protected TvEpisode doInBackground(Void... voids) {
         TmdbApi tmdb = new TmdbApi("6eea0576c85e5ebf9fd8e438a8d8b316");
-        return tmdb.getTvEpisodes().getEpisode(this.serieId, this.season, this.episode, "en-UK");
+        try {
+            return tmdb.getTvEpisodes().getEpisode(this.serieId, this.season, this.episode, "en-UK");
+        } catch (RuntimeException e) {
+            return null;
+        }
     }
 }
