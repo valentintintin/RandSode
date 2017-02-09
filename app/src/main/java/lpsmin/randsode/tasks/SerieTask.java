@@ -2,7 +2,6 @@ package lpsmin.randsode.tasks;
 
 import android.os.AsyncTask;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.TextView;
@@ -11,35 +10,27 @@ import info.movito.themoviedbapi.TmdbApi;
 import info.movito.themoviedbapi.TvResultsPage;
 import info.movito.themoviedbapi.model.tv.TvSeries;
 import lpsmin.randsode.adapters.SerieRecyclerViewAdapter;
-import lpsmin.randsode.adapters.SerieSearchRecyclerViewAdapter;
 
-public abstract class SerieTask extends AsyncTask<Void, Void, TvResultsPage> {
+public class SerieTask extends Task<TvSeries> {
 
-    private final SerieRecyclerViewAdapter listAdapter;
-    private final RecyclerView list;
-    private final FrameLayout loader;
-    private final TextView noData;
+    private final int serieId;
+    private Populate populate;
 
-    public SerieTask(FrameLayout loader, SerieRecyclerViewAdapter listAdapter, RecyclerView list, TextView noData) {
-        this.listAdapter = listAdapter;
-        this.loader = loader;
-        this.list = list;
-        this.noData = noData;
+    public SerieTask(int serieId, FrameLayout loader, View list, Populate populate) {
+        super(loader, list, null);
 
-        this.list.setVisibility(View.GONE);
-        this.noData.setVisibility(View.GONE);
-        this.loader.setVisibility(View.VISIBLE);
+        this.serieId = serieId;
+        this.populate = populate;
     }
 
-    protected void onPostExecute(TvResultsPage result) {
-        this.loader.setVisibility(View.GONE);
+    @Override
+    protected void process(TvSeries data) {
+        populate.go(data);
+    }
 
-        if (result.getResults().isEmpty()) this.noData.setVisibility(View.VISIBLE);
-        else {
-            this.noData.setVisibility(View.GONE);
-            this.list.setVisibility(View.VISIBLE);
-
-            this.listAdapter.resetAndAdd(result.getResults());
-        }
+    @Override
+    protected TvSeries doInBackground(Void... voids) {
+        TmdbApi tmdb = new TmdbApi("6eea0576c85e5ebf9fd8e438a8d8b316");
+        return tmdb.getTvSeries().getSeries(this.serieId, "en-UK");
     }
 }

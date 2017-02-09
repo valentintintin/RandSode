@@ -1,6 +1,5 @@
 package lpsmin.randsode.tasks;
 
-import android.os.AsyncTask;
 import android.support.v7.widget.RecyclerView;
 import android.widget.FrameLayout;
 import android.widget.TextView;
@@ -8,9 +7,8 @@ import android.widget.TextView;
 import info.movito.themoviedbapi.TmdbApi;
 import info.movito.themoviedbapi.TvResultsPage;
 import lpsmin.randsode.adapters.SeriePopularRecyclerViewAdapter;
-import lpsmin.randsode.adapters.SerieSearchRecyclerViewAdapter;
 
-public class PopularTask extends SerieTask {
+public class PopularTask extends ArrayTask {
 
     public PopularTask(FrameLayout loader, SeriePopularRecyclerViewAdapter listAdapter, RecyclerView list, TextView noData) {
         super(loader, listAdapter, list, noData);

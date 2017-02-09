@@ -1,17 +1,16 @@
 package lpsmin.randsode.tasks;
 
-import android.os.AsyncTask;
 import android.support.v7.widget.RecyclerView;
-import android.view.View;
 import android.widget.FrameLayout;
-import android.widget.ProgressBar;
 import android.widget.TextView;
+
+import java.util.ArrayList;
 
 import info.movito.themoviedbapi.TmdbApi;
 import info.movito.themoviedbapi.TvResultsPage;
 import lpsmin.randsode.adapters.SerieSearchRecyclerViewAdapter;
 
-public class SearchTask extends SerieTask {
+public class SearchTask extends ArrayTask {
 
     private final String searchQuery;
 
