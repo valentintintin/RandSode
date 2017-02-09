@@ -12,12 +12,15 @@ import android.widget.TextView;
 
 import com.android.volley.toolbox.NetworkImageView;
 
-import org.w3c.dom.Text;
+import java.util.Objects;
+import java.util.Random;
 
+import info.movito.themoviedbapi.model.tv.TvEpisode;
 import info.movito.themoviedbapi.model.tv.TvSeries;
 import lpsmin.randsode.R;
 import lpsmin.randsode.shared.HttpSingleton;
-import lpsmin.randsode.tasks.Populate;
+import lpsmin.randsode.tasks.Closure;
+import lpsmin.randsode.tasks.RandomTask;
 import lpsmin.randsode.tasks.SerieTask;
 
 public class SerieActivity extends AppCompatActivity {
@@ -34,15 +37,25 @@ public class SerieActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
+        final FrameLayout loader = (FrameLayout) findViewById(R.id.serie_load);
         TextView summary = (TextView) findViewById(R.id.serie_summary);
         NetworkImageView image = (NetworkImageView) findViewById(R.id.serie_image);
         final TextView seasons = (TextView) findViewById(R.id.serie_number_seasons);
         final TextView episodes = (TextView) findViewById(R.id.serie_number_episodes);
-        Button random = (Button) findViewById(R.id.serie_random);
+        final Button random = (Button) findViewById(R.id.serie_random);
         random.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Random rand = new Random();
+                int season = rand.nextInt(serie.getNumberOfSeasons()) + 1;
+                int episode = rand.nextInt(serie.getNumberOfEpisodes()) + 1;
 
+                RandomTask task = new RandomTask(serie.getId(), season, episode, loader, random, new Closure() {
+                    @Override
+                    public void go(Object data) {
+                        
+                    }
+                });
             }
         });
 
@@ -55,11 +68,11 @@ public class SerieActivity extends AppCompatActivity {
         else if (serie.getPosterPath() != null)
             image.setImageUrl("https://image.tmdb.org/t/p/w342/" + serie.getPosterPath(), HttpSingleton.getInstance(getApplicationContext()).getImageLoader());
 
-        SerieTask task = new SerieTask(this.serie.getId(), (FrameLayout) findViewById(R.id.serie_load), (LinearLayout) findViewById(R.id.serie_infos__toload), new Populate() {
+        SerieTask task = new SerieTask(this.serie.getId(), loader, (LinearLayout) findViewById(R.id.serie_infos__toload), new Closure() {
 
             @Override
-            public void go(TvSeries data) {
-                serie = data;
+            public void go(Object data) {
+                serie = (TvSeries) data;
 
                 seasons.setText(serie.getNumberOfSeasons() + "");
                 episodes.setText(serie.getNumberOfEpisodes() + "");
