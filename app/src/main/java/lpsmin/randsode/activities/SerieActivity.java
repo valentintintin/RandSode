@@ -26,6 +26,7 @@ import info.movito.themoviedbapi.model.tv.TvSeries;
 import lpsmin.randsode.R;
 import lpsmin.randsode.adapters.RecyclerViewAdapter;
 import lpsmin.randsode.adapters.holders.SerieHolder;
+import lpsmin.randsode.models.Episode;
 import lpsmin.randsode.models.Serie;
 import lpsmin.randsode.shared.HttpSingleton;
 import lpsmin.randsode.tasks.models.Closure;
@@ -38,6 +39,9 @@ public class SerieActivity extends AppCompatActivity {
 
     private FrameLayout loader;
     private FloatingActionButton random;
+    private TextView seasons, episodes;
+    private FloatingActionMenu fabs;
+    private FloatingActionButton favorite, favoriteDelete;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,11 +60,11 @@ public class SerieActivity extends AppCompatActivity {
         RecyclerView list = (RecyclerView) findViewById(R.id.serie_list);
         TextView summary = (TextView) findViewById(R.id.serie_summary);
         NetworkImageView image = (NetworkImageView) findViewById(R.id.serie_image);
-        final TextView seasons = (TextView) findViewById(R.id.serie_number_seasons);
-        final TextView episodes = (TextView) findViewById(R.id.serie_number_episodes);
-        final FloatingActionButton favorite = (FloatingActionButton) findViewById(R.id.serie_favorite);
-        final FloatingActionButton favoriteDelete = (FloatingActionButton) findViewById(R.id.serie_favorite_delete);
-        final FloatingActionMenu fabs = (FloatingActionMenu) findViewById(R.id.serie_fabs);
+        seasons = (TextView) findViewById(R.id.serie_number_seasons);
+        episodes = (TextView) findViewById(R.id.serie_number_episodes);
+        favorite = (FloatingActionButton) findViewById(R.id.serie_favorite);
+        favoriteDelete = (FloatingActionButton) findViewById(R.id.serie_favorite_delete);
+        fabs = (FloatingActionMenu) findViewById(R.id.serie_fabs);
 
         final ArrayList<TvEpisode> episodesList = new ArrayList<>();
         final RecyclerViewAdapter listAdapter = new RecyclerViewAdapter(this, episodesList, R.layout.holder_serie, SerieHolder.class);
@@ -75,7 +79,6 @@ public class SerieActivity extends AppCompatActivity {
         else if (serie.getPosterPath() != null)
             image.setImageUrl("https://image.tmdb.org/t/p/w342/" + serie.getPosterPath(), HttpSingleton.getInstance(getApplicationContext()).getImageLoader());
 
-
         random.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -87,10 +90,7 @@ public class SerieActivity extends AppCompatActivity {
         favorite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Serie serieORM = new Serie(serie);
-                FlowManager.getModelAdapter(Serie.class).save(serieORM);
-                favorite.setVisibility(View.GONE);
-                favoriteDelete.setVisibility(View.VISIBLE);
+                saveSerie();
                 fabs.close(true);
                 Toast.makeText(getApplicationContext(), "Added !", Toast.LENGTH_SHORT).show();
             }
@@ -99,34 +99,26 @@ public class SerieActivity extends AppCompatActivity {
         favoriteDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                FlowManager.getModelAdapter(Serie.class).delete((Serie) serie);
-                favorite.setVisibility(View.VISIBLE);
-                favoriteDelete.setVisibility(View.GONE);
+                deleteSerie();
                 fabs.close(true);
                 Toast.makeText(getApplicationContext(), "Deleted !", Toast.LENGTH_SHORT).show();
             }
         });
 
         if (serie instanceof Serie) {
-            seasons.setText(String.valueOf(serie.getNumberOfSeasons()));
-            episodes.setText(String.valueOf(serie.getNumberOfEpisodes()));
             loader.setVisibility(View.GONE);
             favorite.setVisibility(View.GONE);
             favoriteDelete.setVisibility(View.VISIBLE);
+
+            addNumbersInfos();
         } else {
             SerieTask task = new SerieTask(this.serie.getId(), loader, findViewById(R.id.serie_infos__toload), new Closure() {
 
                 @Override
                 public void go(Object data) {
-                    serie = (TvSeries) data;
+                serie = (TvSeries) data;
 
-                    seasons.setText(String.valueOf(serie.getNumberOfSeasons()));
-                    episodes.setText(String.valueOf(serie.getNumberOfEpisodes()));
-
-                    if (serie.getNumberOfSeasons() == 0 && serie.getNumberOfEpisodes() == 0) {
-                        random.setVisibility(View.GONE);
-                        favorite.setVisibility(View.GONE);
-                    }
+                addNumbersInfos();
                 }
             });
             task.execute();
@@ -143,10 +135,19 @@ public class SerieActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void giveRandomEpisode() {
+    private void addNumbersInfos() {
+        seasons.setText(String.valueOf(serie.getNumberOfSeasons()));
+        episodes.setText(String.valueOf(serie.getNumberOfEpisodes()));
+
+        if (serie.getNumberOfSeasons() == 0 && serie.getNumberOfEpisodes() == 0) {
+            fabs.setVisibility(View.GONE);
+        }
+    }
+
+    private void giveRandomEpisodeProcess() {
         Random rand = new Random();
         final int season = rand.nextInt(serie.getNumberOfSeasons()) + 1;
-        final int episode = rand.nextInt(serie.getEpisodeRuntime().size()) + 1;
+        final int episode = rand.nextInt(serie.getSeasons().get(season).getEpisodes().size()) + 1;
 
         RandomTask task = new RandomTask(serie.getId(), season, episode, loader, random, new Closure() {
             @Override
@@ -157,10 +158,42 @@ public class SerieActivity extends AppCompatActivity {
         task.execute();
     }
 
-    private void createDialog(TvEpisode episode) {
+    private void giveRandomEpisode() {
+        if (serie instanceof Serie) {
+            SerieTask task = new SerieTask(this.serie.getId(), loader, findViewById(R.id.serie_infos__toload), new Closure() {
+
+                @Override
+                public void go(Object data) {
+                    serie = (TvSeries) data;
+
+                    giveRandomEpisodeProcess();
+                }
+            });
+            task.execute();
+        } else giveRandomEpisodeProcess();
+    }
+
+    private void saveSerie() {
+        if (!(this.serie instanceof Serie)) {
+            Serie serieORM = new Serie(serie);
+            FlowManager.getModelAdapter(Serie.class).save(serieORM);
+            favorite.setVisibility(View.GONE);
+            favoriteDelete.setVisibility(View.VISIBLE);
+        }
+    }
+
+    private void deleteSerie() {
+        if (this.serie instanceof Serie) {
+            FlowManager.getModelAdapter(Serie.class).delete((Serie) serie);
+            favorite.setVisibility(View.VISIBLE);
+            favoriteDelete.setVisibility(View.GONE);
+        }
+    }
+
+    private void createDialog(final TvEpisode episode) {
         final Dialog dialog = new Dialog(SerieActivity.this);
         dialog.setContentView(R.layout.dialog_episode);
-        dialog.setTitle("Watch " + episode.getName() + "?");
+        dialog.setTitle(getResources().getString(R.string.dialog_title_episode));
 
         TextView title = (TextView) dialog.findViewById(R.id.episode_title);
         title.setText(episode.getName() + " (" + episode.getSeasonNumber() + "x" + episode.getEpisodeNumber() + ")");
@@ -174,7 +207,11 @@ public class SerieActivity extends AppCompatActivity {
         no.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+//                Episode episodeOrm = new Episode(episode, false);
+//                FlowManager.getModelAdapter(Serie.class).delete((Serie) serie);
+//                Toast.makeText(getApplicationContext(), "Deleted !", Toast.LENGTH_SHORT).show();
                 dialog.dismiss();
+                giveRandomEpisode();
             }
         });
 
@@ -182,7 +219,9 @@ public class SerieActivity extends AppCompatActivity {
         yes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //yes
+                saveSerie();
+                Episode episodeOrm = new Episode(episode, true);
+                FlowManager.getModelAdapter(Episode.class).save(episodeOrm);
                 dialog.dismiss();
             }
         });

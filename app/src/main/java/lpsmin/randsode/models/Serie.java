@@ -1,13 +1,17 @@
 package lpsmin.randsode.models;
 
 import com.raizlabs.android.dbflow.annotation.Column;
+import com.raizlabs.android.dbflow.annotation.OneToMany;
 import com.raizlabs.android.dbflow.annotation.PrimaryKey;
 import com.raizlabs.android.dbflow.annotation.Table;
+import com.raizlabs.android.dbflow.sql.language.SQLite;
+
+import java.util.List;
 
 import info.movito.themoviedbapi.model.tv.TvSeries;
 
 @Table(database = AppDatabase.class)
-public class Serie extends TvSeries {
+public class Serie {
 
     @PrimaryKey
     private int id;
@@ -45,8 +49,9 @@ public class Serie extends TvSeries {
     @Column(name = "last_watched")
     private long lastWatched;
 
+    List<Episode> episodes;
+
     public Serie() {
-        super();
     }
 
     public Serie(TvSeries serie) {
@@ -60,6 +65,18 @@ public class Serie extends TvSeries {
         this.numberOfEpisodes = serie.getNumberOfEpisodes();
         this.voteAverage = serie.getVoteAverage();
         this.voteCount = serie.getVoteCount();
+    }
+
+    @OneToMany(methods = {OneToMany.Method.ALL}, variableName = "episodes")
+    public List<Episode> getEpisodes() {
+        if (episodes == null || episodes.isEmpty()) {
+            episodes = SQLite.select()
+                    .from(Episode.class)
+                    .where(Episode_Table.show_id.eq(id))
+                    .orderBy(Episode_Table.date_added, false)
+                    .queryList();
+        }
+        return episodes;
     }
 
     public int getId() {
