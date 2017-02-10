@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.toolbox.NetworkImageView;
 import com.github.clans.fab.FloatingActionButton;
@@ -58,6 +59,7 @@ public class SerieActivity extends AppCompatActivity {
         final TextView seasons = (TextView) findViewById(R.id.serie_number_seasons);
         final TextView episodes = (TextView) findViewById(R.id.serie_number_episodes);
         final FloatingActionButton favorite = (FloatingActionButton) findViewById(R.id.serie_favorite);
+        final FloatingActionButton favoriteDelete = (FloatingActionButton) findViewById(R.id.serie_favorite_delete);
         final FloatingActionMenu fabs = (FloatingActionMenu) findViewById(R.id.serie_fabs);
 
         final ArrayList<TvEpisode> episodesList = new ArrayList<>();
@@ -87,26 +89,48 @@ public class SerieActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Serie serieORM = new Serie(serie);
                 FlowManager.getModelAdapter(Serie.class).save(serieORM);
+                favorite.setVisibility(View.GONE);
+                favoriteDelete.setVisibility(View.VISIBLE);
                 fabs.close(true);
+                Toast.makeText(getApplicationContext(), "Added !", Toast.LENGTH_SHORT).show();
             }
         });
 
-        SerieTask task = new SerieTask(this.serie.getId(), loader, findViewById(R.id.serie_infos__toload), new Closure() {
-
+        favoriteDelete.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void go(Object data) {
-                serie = (TvSeries) data;
-
-                seasons.setText(String.valueOf(serie.getNumberOfSeasons()));
-                episodes.setText(String.valueOf(serie.getNumberOfEpisodes()));
-
-                if (serie.getNumberOfSeasons() == 0 && serie.getNumberOfEpisodes() == 0) {
-                    random.setVisibility(View.GONE);
-                    favorite.setVisibility(View.GONE);
-                }
+            public void onClick(View view) {
+                FlowManager.getModelAdapter(Serie.class).delete((Serie) serie);
+                favorite.setVisibility(View.VISIBLE);
+                favoriteDelete.setVisibility(View.GONE);
+                fabs.close(true);
+                Toast.makeText(getApplicationContext(), "Deleted !", Toast.LENGTH_SHORT).show();
             }
         });
-        task.execute();
+
+        if (serie instanceof Serie) {
+            seasons.setText(String.valueOf(serie.getNumberOfSeasons()));
+            episodes.setText(String.valueOf(serie.getNumberOfEpisodes()));
+            loader.setVisibility(View.GONE);
+            favorite.setVisibility(View.GONE);
+            favoriteDelete.setVisibility(View.VISIBLE);
+        } else {
+            SerieTask task = new SerieTask(this.serie.getId(), loader, findViewById(R.id.serie_infos__toload), new Closure() {
+
+                @Override
+                public void go(Object data) {
+                    serie = (TvSeries) data;
+
+                    seasons.setText(String.valueOf(serie.getNumberOfSeasons()));
+                    episodes.setText(String.valueOf(serie.getNumberOfEpisodes()));
+
+                    if (serie.getNumberOfSeasons() == 0 && serie.getNumberOfEpisodes() == 0) {
+                        random.setVisibility(View.GONE);
+                        favorite.setVisibility(View.GONE);
+                    }
+                }
+            });
+            task.execute();
+        }
     }
 
     @Override

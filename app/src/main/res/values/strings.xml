@@ -11,5 +11,6 @@
     <string name="episodes">episodes</string>
     <string name="give_random">Give me a random episode !</string>
     <string name="favorite">Set as favorite</string>
+    <string name="favorite_delete">Delete of favorite</string>
     <string name="no_favorite">You don\'t have any serie</string>
 </resources>
