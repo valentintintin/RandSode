@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name" translatable="false">RandSode</string>
-    <string name="search_hint">Search for a serie</string>
+    <string name="search_hint">Search for a serie on the web</string>
     <string name="title_activity_serie">Showing serie</string>
     <string name="search_activity_title_caption">Search for :</string>
     <string name="main_title_popular">Popular series</string>
@@ -11,4 +11,5 @@
     <string name="episodes">episodes</string>
     <string name="give_random">Give me a random episode !</string>
     <string name="favorite">Set as favorite</string>
+    <string name="no_favorite">You don\'t have any serie</string>
 </resources>

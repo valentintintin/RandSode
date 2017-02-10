@@ -3,7 +3,6 @@ package lpsmin.randsode.models;
 import com.raizlabs.android.dbflow.annotation.Column;
 import com.raizlabs.android.dbflow.annotation.PrimaryKey;
 import com.raizlabs.android.dbflow.annotation.Table;
-import com.raizlabs.android.dbflow.structure.BaseModel;
 
 import info.movito.themoviedbapi.model.tv.TvSeries;
 
@@ -37,8 +36,14 @@ public class Serie extends TvSeries {
     @Column(name = "vote_average")
     private float voteAverage;
 
-    @Column(name = "vote_count")
+    @Column(name = "vote_count", defaultValue = "0")
     private int voteCount;
+
+    @Column(name = "date_added", defaultValue = "Date('now')")
+    private long dateAdded;
+
+    @Column(name = "last_watched")
+    private long lastWatched;
 
     public Serie() {
         super();
@@ -135,5 +140,21 @@ public class Serie extends TvSeries {
 
     public void setVoteCount(int voteCount) {
         this.voteCount = voteCount;
+    }
+
+    public long getDateAdded() {
+        return dateAdded;
+    }
+
+    public void setDateAdded(long dateAdded) {
+        this.dateAdded = dateAdded;
+    }
+
+    public long getLastWatched() {
+        return lastWatched;
+    }
+
+    public void setLastWatched(long lastWatched) {
+        this.lastWatched = lastWatched;
     }
 }

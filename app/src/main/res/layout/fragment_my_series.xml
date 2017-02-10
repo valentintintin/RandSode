@@ -7,13 +7,14 @@
         android:id="@+id/my_series_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scrollbars="vertical" />
+        android:scrollbars="vertical"
+        android:visibility="gone"/>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/my_series_no_data"
-        android:text="@string/no_data"
+        android:text="@string/no_favorite"
         android:textAlignment="center"
         android:textAppearance="@android:style/TextAppearance.DeviceDefault.Large" />
 </LinearLayout>
