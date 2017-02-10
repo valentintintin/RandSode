@@ -10,4 +10,5 @@
     <string name="seasons">seasons</string>
     <string name="episodes">episodes</string>
     <string name="give_random">Give me a random episode !</string>
+    <string name="favorite">Set as favorite</string>
 </resources>

@@ -2,7 +2,6 @@ package lpsmin.randsode.activities;
 
 import android.app.Dialog;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -15,6 +14,8 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.android.volley.toolbox.NetworkImageView;
+import com.github.clans.fab.FloatingActionButton;
+import com.github.clans.fab.FloatingActionMenu;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -34,7 +35,7 @@ public class SerieActivity extends AppCompatActivity {
     private TvSeries serie;
 
     private FrameLayout loader;
-    private Button random;
+    private FloatingActionButton random;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,13 +50,14 @@ public class SerieActivity extends AppCompatActivity {
         this.serie = (TvSeries) getIntent().getSerializableExtra("serie");
 
         this.loader = (FrameLayout) findViewById(R.id.serie_load);
-        this.random = (Button) findViewById(R.id.serie_random);
+        this.random = (FloatingActionButton) findViewById(R.id.serie_random);
         RecyclerView list = (RecyclerView) findViewById(R.id.serie_list);
         TextView summary = (TextView) findViewById(R.id.serie_summary);
         NetworkImageView image = (NetworkImageView) findViewById(R.id.serie_image);
         final TextView seasons = (TextView) findViewById(R.id.serie_number_seasons);
         final TextView episodes = (TextView) findViewById(R.id.serie_number_episodes);
         final FloatingActionButton favorite = (FloatingActionButton) findViewById(R.id.serie_favorite);
+        final FloatingActionMenu fabs = (FloatingActionMenu) findViewById(R.id.serie_fabs);
 
         final ArrayList<TvEpisode> episodesList = new ArrayList<>();
         final RecyclerViewAdapter listAdapter = new RecyclerViewAdapter(this, episodesList, R.layout.holder_serie, SerieHolder.class);
@@ -75,13 +77,14 @@ public class SerieActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 giveRandomEpisode();
+                fabs.close(true);
             }
         });
 
         favorite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                fabs.close(true);
             }
         });
 
@@ -129,7 +132,7 @@ public class SerieActivity extends AppCompatActivity {
 
     private void createDialog(TvEpisode episode) {
         final Dialog dialog = new Dialog(SerieActivity.this);
-        dialog.setContentView(R.layout.episode);
+        dialog.setContentView(R.layout.dialog_episode);
         dialog.setTitle("Watch " + episode.getName() + "?");
 
         TextView title = (TextView) dialog.findViewById(R.id.episode_title);

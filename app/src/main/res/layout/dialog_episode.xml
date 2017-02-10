@@ -21,13 +21,15 @@
 
         <LinearLayout
             android:orientation="vertical"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content">
 
             <com.android.volley.toolbox.NetworkImageView
                 android:id="@+id/episode_image"
                 android:scaleType="fitXY"
-                android:layout_height="150dp"
                 android:layout_width="match_parent"
-                android:layout_gravity="center"/>
+                android:layout_gravity="center"
+                android:layout_height="200dp" />
 
             <TextView
                 android:paddingTop="@dimen/text_margin"
