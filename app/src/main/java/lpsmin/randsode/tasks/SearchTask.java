@@ -7,7 +7,6 @@ import android.widget.TextView;
 import info.movito.themoviedbapi.TmdbApi;
 import info.movito.themoviedbapi.TvResultsPage;
 import lpsmin.randsode.adapters.RecyclerViewAdapter;
-import lpsmin.randsode.adapters.SearchRecyclerViewAdapter;
 
 public class SearchTask extends ArrayTask {
 

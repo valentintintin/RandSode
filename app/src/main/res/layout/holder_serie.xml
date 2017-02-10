@@ -39,7 +39,7 @@
                     android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium"
                     android:textStyle="bold"
                     android:layout_weight="1"
-                    android:paddingRight="1dp" />
+                    android:paddingEnd="2dp" />
 
                 <TextView
                     android:id="@+id/holder_serie_rank"

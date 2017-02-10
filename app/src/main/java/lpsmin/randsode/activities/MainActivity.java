@@ -18,8 +18,6 @@ import java.util.ArrayList;
 import info.movito.themoviedbapi.model.tv.TvSeries;
 import lpsmin.randsode.R;
 import lpsmin.randsode.adapters.HeaderRecyclerViewAdapter;
-import lpsmin.randsode.adapters.PopularRecyclerViewAdapter;
-import lpsmin.randsode.adapters.RecyclerViewAdapter;
 import lpsmin.randsode.adapters.holders.HeaderHolder;
 import lpsmin.randsode.adapters.holders.SerieHolder;
 import lpsmin.randsode.tasks.PopularTask;

@@ -9,7 +9,7 @@ import lpsmin.randsode.adapters.RecyclerViewAdapter;
 
 public abstract class ArrayTask extends Task<TvResultsPage> {
 
-    protected RecyclerViewAdapter listAdapter;
+    protected final RecyclerViewAdapter listAdapter;
 
     public ArrayTask(FrameLayout loader, RecyclerViewAdapter listAdapter, RecyclerView list, TextView noData) {
         super(loader, list, noData);

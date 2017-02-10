@@ -2,6 +2,7 @@ package lpsmin.randsode.activities;
 
 import android.app.Dialog;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -11,7 +12,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.android.volley.toolbox.NetworkImageView;
@@ -22,7 +22,6 @@ import java.util.Random;
 import info.movito.themoviedbapi.model.tv.TvEpisode;
 import info.movito.themoviedbapi.model.tv.TvSeries;
 import lpsmin.randsode.R;
-import lpsmin.randsode.adapters.PopularRecyclerViewAdapter;
 import lpsmin.randsode.adapters.RecyclerViewAdapter;
 import lpsmin.randsode.adapters.holders.SerieHolder;
 import lpsmin.randsode.shared.HttpSingleton;
@@ -35,7 +34,6 @@ public class SerieActivity extends AppCompatActivity {
     private TvSeries serie;
 
     private FrameLayout loader;
-    private RecyclerView list;
     private Button random;
 
     @Override
@@ -52,16 +50,17 @@ public class SerieActivity extends AppCompatActivity {
 
         this.loader = (FrameLayout) findViewById(R.id.serie_load);
         this.random = (Button) findViewById(R.id.serie_random);
-        this.list = (RecyclerView) findViewById(R.id.serie_list);
+        RecyclerView list = (RecyclerView) findViewById(R.id.serie_list);
         TextView summary = (TextView) findViewById(R.id.serie_summary);
         NetworkImageView image = (NetworkImageView) findViewById(R.id.serie_image);
         final TextView seasons = (TextView) findViewById(R.id.serie_number_seasons);
         final TextView episodes = (TextView) findViewById(R.id.serie_number_episodes);
+        FloatingActionButton favorite = (FloatingActionButton) findViewById(R.id.serie_favorite);
 
         final ArrayList<TvEpisode> episodesList = new ArrayList<>();
         final RecyclerViewAdapter listAdapter = new RecyclerViewAdapter(this, episodesList, R.layout.holder_serie, SerieHolder.class);
-        this.list.setAdapter(listAdapter);
-        this.list.setLayoutManager(new LinearLayoutManager(this));
+        list.setAdapter(listAdapter);
+        list.setLayoutManager(new LinearLayoutManager(this));
 
         setTitle(serie.getName());
         summary.setText(serie.getOverview());
@@ -79,14 +78,21 @@ public class SerieActivity extends AppCompatActivity {
             }
         });
 
-        SerieTask task = new SerieTask(this.serie.getId(), loader, (LinearLayout) findViewById(R.id.serie_infos__toload), new Closure() {
+        favorite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+
+        SerieTask task = new SerieTask(this.serie.getId(), loader, findViewById(R.id.serie_infos__toload), new Closure() {
 
             @Override
             public void go(Object data) {
                 serie = (TvSeries) data;
 
-                seasons.setText(serie.getNumberOfSeasons() + "");
-                episodes.setText(serie.getNumberOfEpisodes() + "");
+                seasons.setText(String.valueOf(serie.getNumberOfSeasons()));
+                episodes.setText(String.valueOf(serie.getNumberOfEpisodes()));
             }
         });
         task.execute();

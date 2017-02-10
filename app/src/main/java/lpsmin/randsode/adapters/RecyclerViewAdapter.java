@@ -10,14 +10,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.Collections;
 import java.util.List;
 
-import info.movito.themoviedbapi.model.tv.TvSeries;
-import lpsmin.randsode.R;
 import lpsmin.randsode.adapters.holders.Holder;
-import lpsmin.randsode.adapters.holders.SerieHolder;
-
-/**
- * Created by Valentin on 31/01/2017.
- */
 
 public class RecyclerViewAdapter<T> extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
@@ -43,13 +36,9 @@ public class RecyclerViewAdapter<T> extends RecyclerView.Adapter<RecyclerView.Vi
     protected Holder<T> getHolder(Class holderClass, View v) {
         try {
             return (Holder<T>) holderClass.getConstructor(View.class, Context.class).newInstance(v, this.context);
-        } catch (InstantiationException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
+        } catch (InstantiationException | IllegalAccessException | NoSuchMethodException e) {
             e.printStackTrace();
         } catch (InvocationTargetException e) {
-            e.printStackTrace();
-        } catch (NoSuchMethodException e) {
             e.printStackTrace();
         }
 

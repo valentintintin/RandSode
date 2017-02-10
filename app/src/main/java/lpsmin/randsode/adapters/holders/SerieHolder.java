@@ -2,15 +2,11 @@ package lpsmin.randsode.adapters.holders;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
-import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
 
-import info.movito.themoviedbapi.model.Genre;
 import info.movito.themoviedbapi.model.tv.TvSeries;
 import lpsmin.randsode.R;
 import lpsmin.randsode.activities.SerieActivity;
@@ -18,7 +14,10 @@ import lpsmin.randsode.shared.HttpSingleton;
 
 public class SerieHolder extends Holder<TvSeries> {
 
-    private final TextView name, year, rank, summary, genres;
+    private final TextView name;
+    private final TextView year;
+    private final TextView rank;
+    private final TextView summary;
     private final NetworkImageView image;
 
     private TvSeries serie;
@@ -32,7 +31,7 @@ public class SerieHolder extends Holder<TvSeries> {
         this.image.setDefaultImageResId(R.drawable.ic_no_image);
         this.image.setErrorImageResId(R.drawable.ic_no_image);
         this.rank = (TextView) itemView.findViewById(R.id.holder_serie_rank);
-        this.genres = (TextView) itemView.findViewById(R.id.holder_serie_genres);
+        TextView genres = (TextView) itemView.findViewById(R.id.holder_serie_genres);
         this.summary = (TextView) itemView.findViewById(R.id.holder_serie_summary);
 
         itemView.setOnClickListener(this);
@@ -42,7 +41,7 @@ public class SerieHolder extends Holder<TvSeries> {
         this.serie = serie;
 
         this.name.setText(serie.getName());
-        this.rank.setText(serie.getVoteAverage() + "");
+        this.rank.setText(String.valueOf(serie.getVoteAverage()));
         this.summary.setText(serie.getOverview());
 //        String genres = "";
 ////        try {

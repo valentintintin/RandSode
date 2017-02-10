@@ -1,19 +1,10 @@
 package lpsmin.randsode.adapters.holders;
 
 import android.content.Context;
-import android.content.Intent;
-import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
-import com.android.volley.toolbox.NetworkImageView;
-
-import info.movito.themoviedbapi.model.tv.TvSeries;
 import lpsmin.randsode.R;
-import lpsmin.randsode.activities.SerieActivity;
-import lpsmin.randsode.shared.HttpSingleton;
-import lpsmin.randsode.tasks.PopularTask;
 
 public class HeaderHolder extends Holder<Boolean> {
 

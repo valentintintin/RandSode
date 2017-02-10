@@ -15,17 +15,14 @@ import java.util.ArrayList;
 
 import info.movito.themoviedbapi.model.tv.TvSeries;
 import lpsmin.randsode.R;
-import lpsmin.randsode.adapters.HeaderRecyclerViewAdapter;
 import lpsmin.randsode.adapters.RecyclerViewAdapter;
-import lpsmin.randsode.adapters.SearchRecyclerViewAdapter;
-import lpsmin.randsode.adapters.holders.HeaderHolder;
 import lpsmin.randsode.adapters.holders.SerieHolder;
 import lpsmin.randsode.tasks.SearchTask;
 
 public class SearchActivity extends AppCompatActivity {
 
     private RecyclerView list;
-    private HeaderRecyclerViewAdapter listAdapter;
+    private RecyclerViewAdapter listAdapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -40,7 +37,7 @@ public class SearchActivity extends AppCompatActivity {
         this.list = (RecyclerView) findViewById(R.id.search_list);
         this.list.addItemDecoration(new DividerItemDecoration(list.getContext(), DividerItemDecoration.VERTICAL));
 
-        this.listAdapter = new HeaderRecyclerViewAdapter(this, series, R.layout.holder_serie, SerieHolder.class, R.layout.holder_header, HeaderHolder.class);
+        this.listAdapter = new RecyclerViewAdapter(this, series, R.layout.holder_serie, SerieHolder.class);
         list.setAdapter(listAdapter);
         list.setLayoutManager(new LinearLayoutManager(this));
 

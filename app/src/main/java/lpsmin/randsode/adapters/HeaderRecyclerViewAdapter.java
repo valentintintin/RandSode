@@ -6,14 +6,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
-import info.movito.themoviedbapi.model.tv.TvSeries;
-import lpsmin.randsode.R;
 import lpsmin.randsode.adapters.holders.HeaderHolder;
 import lpsmin.randsode.adapters.holders.Holder;
-import lpsmin.randsode.adapters.holders.SerieHolder;
 
 public class HeaderRecyclerViewAdapter<T> extends RecyclerViewAdapter<T> {
 
