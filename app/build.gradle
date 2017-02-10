@@ -33,6 +33,7 @@ android {
 
 ext {
     supportLibVersion = '25.1.1'  // variable that can be referenced to keep support libs consistent
+    dbflow_version = "4.0.0-beta5"
 }
 
 dependencies {
@@ -48,4 +49,8 @@ dependencies {
     testCompile 'junit:junit:4.12'
     compile 'com.android.volley:volley:1.0.0'
     compile 'com.github.clans:fab:1.6.4'
+
+    annotationProcessor "com.github.Raizlabs.DBFlow:dbflow-processor:${dbflow_version}"
+    compile "com.github.Raizlabs.DBFlow:dbflow-core:${dbflow_version}"
+    compile "com.github.Raizlabs.DBFlow:dbflow:${dbflow_version}"
 }

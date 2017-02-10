@@ -13,7 +13,7 @@ import lpsmin.randsode.activities.SerieActivity;
 import lpsmin.randsode.models.Serie;
 import lpsmin.randsode.shared.HttpSingleton;
 
-public class SerieHolder extends Holder<TvSeries> {
+public class SerieLocalHolder extends Holder<Serie> {
 
     private final TextView name;
     private final TextView year;
@@ -21,9 +21,9 @@ public class SerieHolder extends Holder<TvSeries> {
     private final TextView summary;
     private final NetworkImageView image;
 
-    private TvSeries serie;
+    private Serie serie;
 
-    public SerieHolder(View itemView, Context context) {
+    public SerieLocalHolder(View itemView, Context context) {
         super(itemView, context);
 
         this.name = (TextView) itemView.findViewById(R.id.holder_serie_name);
@@ -38,7 +38,7 @@ public class SerieHolder extends Holder<TvSeries> {
         itemView.setOnClickListener(this);
     }
 
-    public void bind(TvSeries serie) {
+    public void bind(Serie serie) {
         this.serie = serie;
 
         this.name.setText(serie.getName());
@@ -66,7 +66,7 @@ public class SerieHolder extends Holder<TvSeries> {
     @Override
     public void onClick(View view) {
         Intent serieActivity = new Intent(this.context, SerieActivity.class);
-        serieActivity.putExtra("serie", serie);
+//        serieActivity.putExtra("serie", serie);
         this.context.startActivity(serieActivity);
     }
 }

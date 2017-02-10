@@ -8,7 +8,6 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -16,6 +15,7 @@ import android.widget.TextView;
 import com.android.volley.toolbox.NetworkImageView;
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
+import com.raizlabs.android.dbflow.config.FlowManager;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -25,8 +25,9 @@ import info.movito.themoviedbapi.model.tv.TvSeries;
 import lpsmin.randsode.R;
 import lpsmin.randsode.adapters.RecyclerViewAdapter;
 import lpsmin.randsode.adapters.holders.SerieHolder;
+import lpsmin.randsode.models.Serie;
 import lpsmin.randsode.shared.HttpSingleton;
-import lpsmin.randsode.tasks.Closure;
+import lpsmin.randsode.tasks.models.Closure;
 import lpsmin.randsode.tasks.RandomTask;
 import lpsmin.randsode.tasks.SerieTask;
 
@@ -84,6 +85,8 @@ public class SerieActivity extends AppCompatActivity {
         favorite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Serie serieORM = new Serie(serie);
+                serieORM.save();
                 fabs.close(true);
             }
         });
@@ -136,7 +139,7 @@ public class SerieActivity extends AppCompatActivity {
         dialog.setTitle("Watch " + episode.getName() + "?");
 
         TextView title = (TextView) dialog.findViewById(R.id.episode_title);
-        title.setText(episode.getName());
+        title.setText(episode.getName() + " (" + episode.getSeasonNumber() + "x" + episode.getEpisodeNumber() + ")");
         NetworkImageView image = (NetworkImageView) dialog.findViewById(R.id.episode_image);
         image.setDefaultImageResId(R.drawable.ic_no_image);
         image.setErrorImageResId(R.drawable.ic_no_image);

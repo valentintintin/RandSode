@@ -7,8 +7,9 @@ import android.widget.TextView;
 import info.movito.themoviedbapi.TmdbApi;
 import info.movito.themoviedbapi.TvResultsPage;
 import lpsmin.randsode.adapters.RecyclerViewAdapter;
+import lpsmin.randsode.tasks.models.ArrayTask;
 
-public class PopularTask extends ArrayTask {
+public class PopularTask extends SerieArrayTask {
 
     public PopularTask(FrameLayout loader, RecyclerViewAdapter listAdapter, RecyclerView list, TextView noData) {
         super(loader, listAdapter, list, noData);

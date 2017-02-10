@@ -5,6 +5,8 @@ import android.widget.FrameLayout;
 
 import info.movito.themoviedbapi.TmdbApi;
 import info.movito.themoviedbapi.model.tv.TvEpisode;
+import lpsmin.randsode.tasks.models.Closure;
+import lpsmin.randsode.tasks.models.OneTask;
 
 public class RandomTask extends OneTask<TvEpisode> {
 

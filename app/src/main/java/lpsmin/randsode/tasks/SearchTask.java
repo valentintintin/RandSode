@@ -7,8 +7,9 @@ import android.widget.TextView;
 import info.movito.themoviedbapi.TmdbApi;
 import info.movito.themoviedbapi.TvResultsPage;
 import lpsmin.randsode.adapters.RecyclerViewAdapter;
+import lpsmin.randsode.tasks.models.ArrayTask;
 
-public class SearchTask extends ArrayTask {
+public class SearchTask extends SerieArrayTask {
 
     private final String searchQuery;
 

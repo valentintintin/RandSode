@@ -1,4 +1,4 @@
-package lpsmin.randsode.tasks;
+package lpsmin.randsode.tasks.models;
 
 import android.os.AsyncTask;
 import android.view.View;

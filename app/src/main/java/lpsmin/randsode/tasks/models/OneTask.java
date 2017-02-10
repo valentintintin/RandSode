@@ -1,4 +1,4 @@
-package lpsmin.randsode.tasks;
+package lpsmin.randsode.tasks.models;
 
 import android.view.View;
 import android.widget.FrameLayout;
