@@ -8,7 +8,7 @@ import com.raizlabs.android.dbflow.structure.BaseModel;
 import info.movito.themoviedbapi.model.tv.TvSeries;
 
 @Table(database = AppDatabase.class)
-public class Serie extends BaseModel {
+public class Serie extends TvSeries {
 
     @PrimaryKey
     private int id;
@@ -41,6 +41,7 @@ public class Serie extends BaseModel {
     private int voteCount;
 
     public Serie() {
+        super();
     }
 
     public Serie(TvSeries serie) {

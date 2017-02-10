@@ -86,7 +86,7 @@ public class SerieActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Serie serieORM = new Serie(serie);
-                serieORM.save();
+                FlowManager.getModelAdapter(Serie.class).save(serieORM);
                 fabs.close(true);
             }
         });

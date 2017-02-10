@@ -1,6 +1,7 @@
 package lpsmin.randsode.adapters.holders;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -19,6 +20,7 @@ public class HeaderHolder extends Holder<Boolean> {
     }
 
     public void bind(Boolean empty) {
+        Log.i("empty", empty + "");
         if (!empty) { //TODO bug
             title.setText(R.string.main_title_popular);
             help.setVisibility(View.VISIBLE);

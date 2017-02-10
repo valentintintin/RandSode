@@ -24,7 +24,6 @@ import lpsmin.randsode.R;
 import lpsmin.randsode.adapters.HeaderRecyclerViewAdapter;
 import lpsmin.randsode.adapters.holders.HeaderHolder;
 import lpsmin.randsode.adapters.holders.SerieHolder;
-import lpsmin.randsode.adapters.holders.SerieLocalHolder;
 import lpsmin.randsode.models.Serie;
 import lpsmin.randsode.tasks.PopularTask;
 
@@ -46,19 +45,14 @@ public class MainActivity extends AppCompatActivity {
 
         final List<Serie> series = SQLite.select().from(Serie.class).queryList();
 
-        if (series.isEmpty()) {
-            final ArrayList<TvSeries> seriesPopulaire = new ArrayList<>();
-            final HeaderRecyclerViewAdapter listAdapter = new HeaderRecyclerViewAdapter(this, seriesPopulaire, R.layout.holder_serie, SerieHolder.class, R.layout.holder_header, HeaderHolder.class);
-            this.list.setAdapter(listAdapter);
-            this.list.setLayoutManager(new LinearLayoutManager(this));
+        final HeaderRecyclerViewAdapter listAdapter = new HeaderRecyclerViewAdapter(this, series, R.layout.holder_serie, SerieHolder.class, R.layout.holder_header, HeaderHolder.class);
+        this.list.setAdapter(listAdapter);
+        this.list.setLayoutManager(new LinearLayoutManager(this));
 
+        if (series.isEmpty()) {
             PopularTask task = new PopularTask(loader, listAdapter, this.list, (TextView) findViewById(R.id.main_no_data));
             task.execute();
         } else {
-            final HeaderRecyclerViewAdapter listAdapter = new HeaderRecyclerViewAdapter(this, series, R.layout.holder_serie, SerieLocalHolder.class, R.layout.holder_header, HeaderHolder.class);
-            this.list.setAdapter(listAdapter);
-            this.list.setLayoutManager(new LinearLayoutManager(this));
-
             this.list.setVisibility(View.VISIBLE);
             loader.setVisibility(View.GONE);
         }
