@@ -52,6 +52,17 @@ public class MainActivity extends AppCompatActivity {
         SearchView searchView = (SearchView) menu.findItem(R.id.search).getActionView();
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
 
+        searchView.setOnQueryTextFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean hasFocus) {
+                if (hasFocus) {
+                    tabLayout.setVisibility(View.GONE);
+                } else {
+                    tabLayout.setVisibility(View.VISIBLE);
+                }
+            }
+        });
+
         return true;
     }
 

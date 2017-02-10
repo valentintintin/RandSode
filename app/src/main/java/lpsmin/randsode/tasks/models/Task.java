@@ -8,7 +8,7 @@ import android.widget.TextView;
 
 public abstract class Task<T> extends AsyncTask<Void, Void, T> {
 
-    private final View list;
+    protected final View list;
     private final FrameLayout loader;
     protected final TextView noData;
 

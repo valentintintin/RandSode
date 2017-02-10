@@ -1,6 +1,7 @@
 package lpsmin.randsode.tasks;
 
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
@@ -16,5 +17,13 @@ public abstract class SerieArrayTask extends ArrayTask<TvResultsPage> {
 
     protected void process(TvResultsPage data) {
         this.listAdapter.resetAndAdd(data.getResults());
+
+        if (data.getResults().isEmpty()) {
+            this.list.setVisibility(View.GONE);
+            this.noData.setVisibility(View.VISIBLE);
+        } else {
+            this.list.setVisibility(View.VISIBLE);
+            this.noData.setVisibility(View.GONE);
+        }
     }
 }
