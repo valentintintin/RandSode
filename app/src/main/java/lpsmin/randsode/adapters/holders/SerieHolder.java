@@ -41,8 +41,13 @@ public class SerieHolder extends Holder<TvSeries> {
         this.serie = serie;
 
         this.name.setText(serie.getName());
+
         this.rank.setText(String.valueOf(serie.getVoteAverage()));
+        if (serie.getVoteCount() == 0) this.rank.setVisibility(View.GONE);
+
         this.summary.setText(serie.getOverview());
+        if (serie.getOverview().length() == 0) this.summary.setVisibility(View.GONE);
+
 //        String genres = "";
 ////        try {
 //            for (Genre g : serie.getGenres()) genres += g.getId() + ",";

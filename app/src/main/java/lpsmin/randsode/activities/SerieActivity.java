@@ -55,7 +55,7 @@ public class SerieActivity extends AppCompatActivity {
         NetworkImageView image = (NetworkImageView) findViewById(R.id.serie_image);
         final TextView seasons = (TextView) findViewById(R.id.serie_number_seasons);
         final TextView episodes = (TextView) findViewById(R.id.serie_number_episodes);
-        FloatingActionButton favorite = (FloatingActionButton) findViewById(R.id.serie_favorite);
+        final FloatingActionButton favorite = (FloatingActionButton) findViewById(R.id.serie_favorite);
 
         final ArrayList<TvEpisode> episodesList = new ArrayList<>();
         final RecyclerViewAdapter listAdapter = new RecyclerViewAdapter(this, episodesList, R.layout.holder_serie, SerieHolder.class);
@@ -93,6 +93,11 @@ public class SerieActivity extends AppCompatActivity {
 
                 seasons.setText(String.valueOf(serie.getNumberOfSeasons()));
                 episodes.setText(String.valueOf(serie.getNumberOfEpisodes()));
+
+                if (serie.getNumberOfSeasons() == 0 && serie.getNumberOfEpisodes() == 0) {
+                    random.setVisibility(View.GONE);
+                    favorite.setVisibility(View.GONE);
+                }
             }
         });
         task.execute();
@@ -133,6 +138,7 @@ public class SerieActivity extends AppCompatActivity {
         image.setDefaultImageResId(R.drawable.ic_no_image);
         image.setErrorImageResId(R.drawable.ic_no_image);
         image.setImageUrl("https://image.tmdb.org/t/p/w185/" + episode.getStillPath(), HttpSingleton.getInstance(SerieActivity.this).getImageLoader());
+        if (episode.getStillPath().length() == 0) image.setVisibility(View.GONE);
 
         ImageButton no = (ImageButton) dialog.findViewById(R.id.episode_no);
         no.setOnClickListener(new View.OnClickListener() {
