@@ -24,7 +24,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:visibility="visible"
                 android:indeterminate="true"/>
 
         </FrameLayout>
@@ -38,41 +37,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/serie_summary" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:id="@+id/serie_infos__toload"
-            android:layout_gravity="center">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/serie_number_seasons"
-                android:layout_weight="1"
-                android:paddingEnd="2dp" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/seasons"
-                android:layout_weight="1"
-                android:paddingEnd="5dp" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/serie_number_episodes"
-                android:layout_weight="1"
-                android:paddingEnd="2dp" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/episodes"
-                android:layout_weight="1" />
         </LinearLayout>
 
 

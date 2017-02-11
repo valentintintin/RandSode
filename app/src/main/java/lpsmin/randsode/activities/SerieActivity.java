@@ -18,7 +18,6 @@ import com.android.volley.toolbox.NetworkImageView;
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
 import com.raizlabs.android.dbflow.config.FlowManager;
-import com.raizlabs.android.dbflow.sql.language.SQLite;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -28,7 +27,6 @@ import lpsmin.randsode.adapters.RecyclerViewAdapter;
 import lpsmin.randsode.adapters.holders.SerieHolder;
 import lpsmin.randsode.models.Episode;
 import lpsmin.randsode.models.Serie;
-import lpsmin.randsode.models.Serie_Table;
 import lpsmin.randsode.requests.EpisodeRequest;
 import lpsmin.randsode.requests.SerieRequest;
 import lpsmin.randsode.shared.HttpSingleton;
@@ -39,7 +37,6 @@ public class SerieActivity extends AppCompatActivity {
 
     private FrameLayout loader;
     private FloatingActionButton random;
-    private TextView seasons, episodes;
     private FloatingActionMenu fabs;
     private FloatingActionButton favorite, favoriteDelete;
 
@@ -60,8 +57,6 @@ public class SerieActivity extends AppCompatActivity {
         final RecyclerView list = (RecyclerView) findViewById(R.id.serie_list);
         final TextView summary = (TextView) findViewById(R.id.serie_summary);
         final NetworkImageView image = (NetworkImageView) findViewById(R.id.serie_image);
-        seasons = (TextView) findViewById(R.id.serie_number_seasons);
-        episodes = (TextView) findViewById(R.id.serie_number_episodes);
         favorite = (FloatingActionButton) findViewById(R.id.serie_favorite);
         favoriteDelete = (FloatingActionButton) findViewById(R.id.serie_favorite_delete);
         fabs = (FloatingActionMenu) findViewById(R.id.serie_fabs);
@@ -105,25 +100,7 @@ public class SerieActivity extends AppCompatActivity {
             }
         });
 
-        Serie serieOrm = SQLite.select().from(Serie.class).where(Serie_Table.id.eq(this.serie.getId())).querySingle();
-        if (serieOrm != null) {
-            this.serie = serieOrm;
-
-            loader.setVisibility(View.GONE);
-            favorite.setVisibility(View.GONE);
-            favoriteDelete.setVisibility(View.VISIBLE);
-
-            addNumbersInfos();
-        } else {
-            new SerieRequest(this.serie.getId(), new Response.Listener<Serie>() {
-                @Override
-                public void onResponse(Serie response) {
-                    serie = response;
-
-                    addNumbersInfos();
-                }
-            }, loader, findViewById(R.id.serie_infos__toload));
-        }
+        checkRandomPossible();
     }
 
     @Override
@@ -136,18 +113,19 @@ public class SerieActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void addNumbersInfos() {
-        seasons.setText(String.valueOf(serie.getNumber_of_seasons()));
-        episodes.setText(String.valueOf(serie.getNumber_of_episodes()));
-
-        if (serie.getNumber_of_seasons() == 0 && serie.getNumber_of_episodes() == 0) {
-            fabs.setVisibility(View.GONE);
-        }
+    private void checkRandomPossible() {
+        new SerieRequest(this.serie.getId(), new Response.Listener<Serie>() {
+            @Override
+            public void onResponse(Serie response) {
+                serie = response;
+                if (serie.getNumber_of_seasons() == 0 && serie.getNumber_of_episodes() == 0) {
+                    fabs.setVisibility(View.GONE);
+                }
+            }
+        }, loader);
     }
 
     private void giveRandomEpisode() {
-        saveSerie();
-
         Random rand = new Random();
         final int season = rand.nextInt(serie.getNumber_of_seasons()) + 1;
         final int episode = rand.nextInt(serie.getSeasons().get(season).getEpisodeCount()) + 1;
@@ -205,6 +183,7 @@ public class SerieActivity extends AppCompatActivity {
         yes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                saveSerie();
                 FlowManager.getModelAdapter(Episode.class).save(episode);
                 dialog.dismiss();
             }
