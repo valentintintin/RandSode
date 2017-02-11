@@ -14,4 +14,6 @@
     <string name="no_favorite">You don\'t have any serie</string>
     <string name="no_episode">You don\'t have any episode watched</string>
     <string name="dialog_title_episode">Watch this episode?</string>
+    <string name="delete_question">Are you sure to delete?</string>
+    <string name="delete_question_title">Delete a serie?</string>
 </resources>

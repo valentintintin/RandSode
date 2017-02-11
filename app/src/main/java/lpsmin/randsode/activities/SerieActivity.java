@@ -3,7 +3,9 @@ package lpsmin.randsode.activities;
 import android.app.Dialog;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
@@ -81,7 +83,6 @@ public class SerieActivity extends AppCompatActivity {
             public void onClick(View view) {
                 saveSerie();
                 fabs.close(true);
-                Toast.makeText(getApplicationContext(), "Added !", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -90,7 +91,6 @@ public class SerieActivity extends AppCompatActivity {
             public void onClick(View view) {
                 deleteSerie();
                 fabs.close(true);
-                Toast.makeText(getApplicationContext(), "Deleted !", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -117,12 +117,17 @@ public class SerieActivity extends AppCompatActivity {
     }
 
     private void checkRandomPossible() {
+        if (this.serie.exists()) {
+            favorite.setVisibility(View.GONE);
+            favoriteDelete.setVisibility(View.VISIBLE);
+        }
+
         new SerieRequest(this.serie.getId(), new Response.Listener<Serie>() {
             @Override
             public void onResponse(Serie response) {
                 serie = response;
-                if (serie.getNumber_of_seasons() == 0 && serie.getNumber_of_episodes() == 0) {
-                    fabs.setVisibility(View.GONE);
+                if (serie.getNumber_of_episodes() != 0) {
+                    fabs.setVisibility(View.VISIBLE);
                 }
             }
         }, loader);
@@ -138,7 +143,7 @@ public class SerieActivity extends AppCompatActivity {
             public void onResponse(Episode response) {
                 response.setSerieId(serie.getId());
                 response.setDate_added(new Date().getTime());
-                createDialog(response);
+                createEpisodeDialog(response);
             }
         }, loader, random);
     }
@@ -148,18 +153,37 @@ public class SerieActivity extends AppCompatActivity {
             serie.save();
             favorite.setVisibility(View.GONE);
             favoriteDelete.setVisibility(View.VISIBLE);
+            Toast.makeText(getApplicationContext(), "Serie added to favorite", Toast.LENGTH_SHORT).show();
         }
     }
 
     private void deleteSerie() {
         if (this.serie.exists()) {
-            serie.delete();
-            favorite.setVisibility(View.VISIBLE);
-            favoriteDelete.setVisibility(View.GONE);
+            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+            alertDialogBuilder.setIcon(android.R.drawable.ic_delete);
+            alertDialogBuilder.setTitle(R.string.delete_question_title);
+            alertDialogBuilder.setMessage(R.string.delete_question);
+            alertDialogBuilder.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    serie.delete();
+                    favorite.setVisibility(View.VISIBLE);
+                    favoriteDelete.setVisibility(View.GONE);
+                    episodeListFragment.refresh();
+                    Toast.makeText(getApplicationContext(), "Serie deleted from favorite", Toast.LENGTH_SHORT).show();
+                }
+            });
+            alertDialogBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+
+                }
+            });
+            alertDialogBuilder.show();
         }
     }
 
-    private void createDialog(final Episode episode) {
+    private void createEpisodeDialog(final Episode episode) {
         final Dialog dialog = new Dialog(SerieActivity.this);
         dialog.setContentView(R.layout.dialog_episode);
         dialog.setTitle(getResources().getString(R.string.dialog_title_episode));
