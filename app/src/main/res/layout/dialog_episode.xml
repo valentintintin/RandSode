@@ -17,7 +17,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             app:srcCompat="@android:drawable/ic_delete"
-            android:id="@+id/episode_no" />
+            android:id="@+id/dialog_episode_no" />
 
         <LinearLayout
             android:orientation="vertical"
@@ -25,7 +25,7 @@
             android:layout_height="wrap_content">
 
             <com.android.volley.toolbox.NetworkImageView
-                android:id="@+id/episode_image"
+                android:id="@+id/dialog_episode_image"
                 android:scaleType="fitXY"
                 android:layout_width="match_parent"
                 android:layout_gravity="center"
@@ -35,7 +35,7 @@
                 android:paddingTop="@dimen/text_margin"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:id="@+id/episode_title"
+                android:id="@+id/dialog_episode_title"
                 android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium"
                 android:textStyle="bold"
                 android:textAlignment="center"
@@ -48,7 +48,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             app:srcCompat="@android:drawable/ic_input_add"
-            android:id="@+id/episode_yes"/>
+            android:id="@+id/dialog_episode_yes"/>
     </LinearLayout>
 
 </LinearLayout>

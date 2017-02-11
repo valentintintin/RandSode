@@ -5,17 +5,22 @@ import com.raizlabs.android.dbflow.annotation.PrimaryKey;
 import com.raizlabs.android.dbflow.annotation.Table;
 import com.raizlabs.android.dbflow.structure.BaseModel;
 
+import java.io.Serializable;
+
 @Table(database = AppDatabase.class)
-public class Episode extends BaseModel {
+public class Episode extends BaseModel implements Serializable {
 
     @PrimaryKey
     private int id;
 
-    @Column
-    private int show_id;
+    @Column(name = "serie_id")
+    private int serieId;
 
     @Column
     private String name;
+
+    @Column
+    private String air_date;
 
     @Column
     private int season_number;
@@ -50,12 +55,12 @@ public class Episode extends BaseModel {
         this.id = id;
     }
 
-    public int getShow_id() {
-        return show_id;
+    public int getSerieId() {
+        return serieId;
     }
 
-    public void setShow_id(int show_id) {
-        this.show_id = show_id;
+    public void setSerieId(int serieId) {
+        this.serieId = serieId;
     }
 
     public String getName() {
@@ -120,5 +125,13 @@ public class Episode extends BaseModel {
 
     public void setWatched(boolean watched) {
         this.watched = watched;
+    }
+
+    public String getAir_date() {
+        return air_date;
+    }
+
+    public void setAir_date(String air_date) {
+        this.air_date = air_date;
     }
 }

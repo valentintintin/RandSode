@@ -61,7 +61,7 @@ public class Serie extends BaseModel implements Serializable {
         if (episodes == null || episodes.isEmpty()) {
             episodes = SQLite.select()
                     .from(Episode.class)
-                    .where(Episode_Table.show_id.eq(id))
+                    .where(Episode_Table.serie_id.eq(id))
                     .orderBy(Episode_Table.date_added, false)
                     .queryList();
         }

@@ -1,10 +1,10 @@
 package lpsmin.randsode.activities;
 
 import android.app.Dialog;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,14 +17,11 @@ import com.android.volley.Response;
 import com.android.volley.toolbox.NetworkImageView;
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
-import com.raizlabs.android.dbflow.config.FlowManager;
 
-import java.util.ArrayList;
 import java.util.Random;
 
 import lpsmin.randsode.R;
-import lpsmin.randsode.adapters.RecyclerViewAdapter;
-import lpsmin.randsode.adapters.holders.SerieHolder;
+import lpsmin.randsode.fragments.EpisodeListFragment;
 import lpsmin.randsode.models.Episode;
 import lpsmin.randsode.models.Serie;
 import lpsmin.randsode.requests.EpisodeRequest;
@@ -54,17 +51,11 @@ public class SerieActivity extends AppCompatActivity {
 
         this.loader = (FrameLayout) findViewById(R.id.serie_load);
         this.random = (FloatingActionButton) findViewById(R.id.serie_random);
-        final RecyclerView list = (RecyclerView) findViewById(R.id.serie_list);
         final TextView summary = (TextView) findViewById(R.id.serie_summary);
         final NetworkImageView image = (NetworkImageView) findViewById(R.id.serie_image);
         favorite = (FloatingActionButton) findViewById(R.id.serie_favorite);
         favoriteDelete = (FloatingActionButton) findViewById(R.id.serie_favorite_delete);
         fabs = (FloatingActionMenu) findViewById(R.id.serie_fabs);
-
-        final ArrayList<Episode> episodesList = new ArrayList<>();
-        final RecyclerViewAdapter listAdapter = new RecyclerViewAdapter(this, episodesList, R.layout.holder_serie, SerieHolder.class);
-        list.setAdapter(listAdapter);
-        list.setLayoutManager(new LinearLayoutManager(this));
 
         setTitle(serie.getName());
         summary.setText(serie.getOverview());
@@ -101,6 +92,15 @@ public class SerieActivity extends AppCompatActivity {
         });
 
         checkRandomPossible();
+
+        FragmentManager fragmentManager = getFragmentManager();
+        FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+        EpisodeListFragment episodeListFragment = new EpisodeListFragment();
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("serie", serie);
+        episodeListFragment.setArguments(bundle);
+        fragmentTransaction.add(R.id.serie_list_episode_fragment, episodeListFragment);
+        fragmentTransaction.commit();
     }
 
     @Override
@@ -133,6 +133,7 @@ public class SerieActivity extends AppCompatActivity {
         new EpisodeRequest(serie.getId(), season, episode, new Response.Listener<Episode>() {
             @Override
             public void onResponse(Episode response) {
+                response.setSerieId(serie.getId());
                 createDialog(response);
             }
         }, loader, random);
@@ -140,7 +141,7 @@ public class SerieActivity extends AppCompatActivity {
 
     private void saveSerie() {
         if (!this.serie.exists()) {
-            FlowManager.getModelAdapter(Serie.class).save(serie);
+            serie.save();
             favorite.setVisibility(View.GONE);
             favoriteDelete.setVisibility(View.VISIBLE);
         }
@@ -148,7 +149,7 @@ public class SerieActivity extends AppCompatActivity {
 
     private void deleteSerie() {
         if (this.serie.exists()) {
-            FlowManager.getModelAdapter(Serie.class).delete((Serie) serie);
+            serie.delete();
             favorite.setVisibility(View.VISIBLE);
             favoriteDelete.setVisibility(View.GONE);
         }
@@ -159,15 +160,15 @@ public class SerieActivity extends AppCompatActivity {
         dialog.setContentView(R.layout.dialog_episode);
         dialog.setTitle(getResources().getString(R.string.dialog_title_episode));
 
-        TextView title = (TextView) dialog.findViewById(R.id.episode_title);
+        TextView title = (TextView) dialog.findViewById(R.id.dialog_episode_title);
         title.setText(episode.getName() + " (" + episode.getSeason_number() + "x" + episode.getEpisode_number() + ")");
-        NetworkImageView image = (NetworkImageView) dialog.findViewById(R.id.episode_image);
+        NetworkImageView image = (NetworkImageView) dialog.findViewById(R.id.dialog_episode_image);
         image.setDefaultImageResId(R.drawable.ic_no_image);
         image.setErrorImageResId(R.drawable.ic_no_image);
-        image.setImageUrl("https://image.tmdb.org/t/p/w185/" + episode.getStill_path(), HttpSingleton.getInstance().getImageLoader());
-        if (episode.getStill_path().length() == 0) image.setVisibility(View.GONE);
+        if (episode.getStill_path() == null) image.setVisibility(View.GONE);
+        else image.setImageUrl("https://image.tmdb.org/t/p/w185/" + episode.getStill_path(), HttpSingleton.getInstance().getImageLoader());
 
-        ImageButton no = (ImageButton) dialog.findViewById(R.id.episode_no);
+        ImageButton no = (ImageButton) dialog.findViewById(R.id.dialog_episode_no);
         no.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -179,12 +180,12 @@ public class SerieActivity extends AppCompatActivity {
             }
         });
 
-        ImageButton yes = (ImageButton) dialog.findViewById(R.id.episode_yes);
+        ImageButton yes = (ImageButton) dialog.findViewById(R.id.dialog_episode_yes);
         yes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 saveSerie();
-                FlowManager.getModelAdapter(Episode.class).save(episode);
+                episode.save();
                 dialog.dismiss();
             }
         });

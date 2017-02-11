@@ -12,5 +12,6 @@
     <string name="favorite">Set as favorite</string>
     <string name="favorite_delete">Delete of favorite</string>
     <string name="no_favorite">You don\'t have any serie</string>
+    <string name="no_episode">You don\'t have any episode watched</string>
     <string name="dialog_title_episode">Watch this episode?</string>
 </resources>
