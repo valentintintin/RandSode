@@ -20,6 +20,7 @@ import java.util.List;
 import lpsmin.randsode.R;
 import lpsmin.randsode.fragments.MySeriesListFragment;
 import lpsmin.randsode.fragments.PopularListFragment;
+import lpsmin.randsode.shared.HttpSingleton;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -30,6 +31,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main);
+
+        HttpSingleton.createInstance(this); //Creation of the HTTP singleton
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 
@@ -68,8 +71,8 @@ public class MainActivity extends AppCompatActivity {
 
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(new MySeriesListFragment(), "My Series");
-        adapter.addFragment(new PopularListFragment(), "Popular");
+        adapter.addFragment(new MySeriesListFragment(), getResources().getString(R.string.main_title_my_series));
+        adapter.addFragment(new PopularListFragment(), getResources().getString(R.string.main_title_popular));
         viewPager.setAdapter(adapter);
     }
 

@@ -7,13 +7,12 @@ import android.widget.TextView;
 
 import com.android.volley.toolbox.NetworkImageView;
 
-import info.movito.themoviedbapi.model.tv.TvSeries;
 import lpsmin.randsode.R;
 import lpsmin.randsode.activities.SerieActivity;
 import lpsmin.randsode.models.Serie;
 import lpsmin.randsode.shared.HttpSingleton;
 
-public class SerieHolder extends Holder<TvSeries> {
+public class SerieHolder extends Holder<Serie> {
 
     private final TextView name;
     private final TextView year;
@@ -21,7 +20,7 @@ public class SerieHolder extends Holder<TvSeries> {
     private final TextView summary;
     private final NetworkImageView image;
 
-    private TvSeries serie;
+    private Serie serie;
 
     public SerieHolder(View itemView, Context context) {
         super(itemView, context);
@@ -38,13 +37,13 @@ public class SerieHolder extends Holder<TvSeries> {
         itemView.setOnClickListener(this);
     }
 
-    public void bind(TvSeries serie) {
+    public void bind(Serie serie) {
         this.serie = serie;
 
         this.name.setText(serie.getName());
 
-        this.rank.setText(String.valueOf(serie.getVoteAverage()));
-        if (serie.getVoteCount() == 0) this.rank.setVisibility(View.GONE);
+        this.rank.setText(String.valueOf(serie.getVote_average()));
+        if (serie.getVote_count() == 0) this.rank.setVisibility(View.GONE);
 
         this.summary.setText(serie.getOverview());
         if (serie.getOverview().length() == 0) this.summary.setVisibility(View.GONE);
@@ -56,11 +55,11 @@ public class SerieHolder extends Holder<TvSeries> {
 //            this.genres.setText(genres);
 ////        } catch (NullPointerException e) {}
 
-        if (serie.getFirstAirDate().length() >= 4) this.year.setText(serie.getFirstAirDate().substring(0, 4));
+        if (serie.getFirst_air_date().length() >= 4) this.year.setText(serie.getFirst_air_date().substring(0, 4));
         else this.year.setVisibility(View.INVISIBLE);
 
-        if (serie.getPosterPath() != null) image.setImageUrl("https://image.tmdb.org/t/p/w185/" + serie.getPosterPath(), HttpSingleton.getInstance(this.context).getImageLoader());
-        else if (serie.getBackdropPath() != null) image.setImageUrl("https://image.tmdb.org/t/p/w185/" + serie.getBackdropPath(), HttpSingleton.getInstance(this.context).getImageLoader());
+        if (serie.getPoster_path() != null) image.setImageUrl("https://image.tmdb.org/t/p/w185/" + serie.getPoster_path(), HttpSingleton.getInstance().getImageLoader());
+        else if (serie.getBackdrop_path() != null) image.setImageUrl("https://image.tmdb.org/t/p/w185/" + serie.getBackdrop_path(), HttpSingleton.getInstance().getImageLoader());
     }
 
     @Override

@@ -13,11 +13,11 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-import info.movito.themoviedbapi.model.tv.TvSeries;
 import lpsmin.randsode.R;
 import lpsmin.randsode.adapters.RecyclerViewAdapter;
 import lpsmin.randsode.adapters.holders.SerieHolder;
-import lpsmin.randsode.tasks.SearchTask;
+import lpsmin.randsode.models.Serie;
+import lpsmin.randsode.requests.SearchRequest;
 
 public class SearchActivity extends AppCompatActivity {
 
@@ -32,7 +32,7 @@ public class SearchActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
-        final ArrayList<TvSeries> series = new ArrayList<>();
+        final ArrayList<Serie> series = new ArrayList<>();
 
         this.list = (RecyclerView) findViewById(R.id.search_list);
         this.list.addItemDecoration(new DividerItemDecoration(list.getContext(), DividerItemDecoration.VERTICAL));
@@ -63,8 +63,7 @@ public class SearchActivity extends AppCompatActivity {
 
     private void search(String query) {
         if (query.length() > 0) {
-            SearchTask task = new SearchTask(query, (FrameLayout) findViewById(R.id.search_load), this.listAdapter, this.list, (TextView) findViewById(R.id.search_no_data));
-            task.execute();
+            new SearchRequest(query, (FrameLayout) findViewById(R.id.search_load), this.listAdapter, this.list, (TextView) findViewById(R.id.search_no_data));
         }
     }
 

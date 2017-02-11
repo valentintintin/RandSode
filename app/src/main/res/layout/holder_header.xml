@@ -13,14 +13,12 @@
         android:layout_height="wrap_content"
         android:id="@+id/holder_header_title"
         android:textAppearance="@android:style/TextAppearance.DeviceDefault.Large"
-        android:textAlignment="center"
-        android:text="@string/main_title_favorite" />
+        android:textAlignment="center" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/holder_header_help"
-        android:text="@string/main_help_popular"
         android:textAppearance="@android:style/TextAppearance.DeviceDefault.Small"
         android:textAlignment="center"
         android:visibility="gone" />

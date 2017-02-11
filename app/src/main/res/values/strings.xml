@@ -3,9 +3,8 @@
     <string name="search_hint">Search for a serie on the web</string>
     <string name="title_activity_serie">Showing serie</string>
     <string name="search_activity_title_caption">Search for :</string>
-    <string name="main_title_popular">Popular series</string>
-    <string name="main_title_favorite">Favorite series</string>
-    <string name="main_help_popular">You don\'t have favorite series, see popular !</string>
+    <string name="main_title_my_series">My series</string>
+    <string name="main_title_popular">Popular</string>
     <string name="no_data">No series found</string>
     <string name="seasons">seasons</string>
     <string name="episodes">episodes</string>

@@ -3,38 +3,37 @@ package lpsmin.randsode.models;
 import com.raizlabs.android.dbflow.annotation.Column;
 import com.raizlabs.android.dbflow.annotation.PrimaryKey;
 import com.raizlabs.android.dbflow.annotation.Table;
-
-import info.movito.themoviedbapi.model.tv.TvEpisode;
+import com.raizlabs.android.dbflow.structure.BaseModel;
 
 @Table(database = AppDatabase.class)
-public class Episode extends TvEpisode {
+public class Episode extends BaseModel {
 
     @PrimaryKey
     private int id;
 
-    @Column(name = "show_id")
-    private int seriesId;
+    @Column
+    private int show_id;
 
     @Column
     private String name;
 
-    @Column(name = "season_number")
-    private int seasonNumber;
+    @Column
+    private int season_number;
 
-    @Column(name = "episode_number")
-    private int episodeNumber;
+    @Column
+    private int episode_number;
 
-    @Column(name = "still_path")
-    private String stillPath;
+    @Column
+    private String still_path;
 
-    @Column(name = "vote_average")
-    private float voteAverage;
+    @Column
+    private float vote_average;
 
-    @Column(name = "vote_count", defaultValue = "0")
-    private int voteCount;
+    @Column(defaultValue = "0")
+    private int vote_count;
 
-    @Column(name = "date_added", defaultValue = "Date('now')")
-    private long dateAdded;
+    @Column(defaultValue = "Date('now')")
+    private long date_added;
 
     @Column
     private boolean watched;
@@ -43,36 +42,76 @@ public class Episode extends TvEpisode {
         super();
     }
 
-    public Episode(TvEpisode episode, boolean watched) {
-        this.id = episode.getId();
-        this.seriesId = episode.getSeriesId();
-        this.name = episode.getName();
-        this.seasonNumber = episode.getSeasonNumber();
-        this.episodeNumber = episode.getEpisodeNumber();
-        this.stillPath = episode.getStillPath();
-        this.voteAverage = episode.getVoteAverage();
-        this.voteCount = episode.getVoteCount();
-        this.watched = watched;
+    public int getId() {
+        return id;
     }
 
-    public void setSeriesId(int seriesId) {
-        this.seriesId = seriesId;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public void setSeasonNumber(Integer seasonNumber) {
-        this.seasonNumber = seasonNumber;
+    public int getShow_id() {
+        return show_id;
     }
 
-    public void setSeasonNumber(int seasonNumber) {
-        this.seasonNumber = seasonNumber;
+    public void setShow_id(int show_id) {
+        this.show_id = show_id;
     }
 
-    public long getDateAdded() {
-        return dateAdded;
+    public String getName() {
+        return name;
     }
 
-    public void setDateAdded(long dateAdded) {
-        this.dateAdded = dateAdded;
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getSeason_number() {
+        return season_number;
+    }
+
+    public void setSeason_number(int season_number) {
+        this.season_number = season_number;
+    }
+
+    public int getEpisode_number() {
+        return episode_number;
+    }
+
+    public void setEpisode_number(int episode_number) {
+        this.episode_number = episode_number;
+    }
+
+    public String getStill_path() {
+        return still_path;
+    }
+
+    public void setStill_path(String still_path) {
+        this.still_path = still_path;
+    }
+
+    public float getVote_average() {
+        return vote_average;
+    }
+
+    public void setVote_average(float vote_average) {
+        this.vote_average = vote_average;
+    }
+
+    public int getVote_count() {
+        return vote_count;
+    }
+
+    public void setVote_count(int vote_count) {
+        this.vote_count = vote_count;
+    }
+
+    public long getDate_added() {
+        return date_added;
+    }
+
+    public void setDate_added(long date_added) {
+        this.date_added = date_added;
     }
 
     public boolean isWatched() {

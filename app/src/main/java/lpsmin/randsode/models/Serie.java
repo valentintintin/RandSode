@@ -5,13 +5,13 @@ import com.raizlabs.android.dbflow.annotation.OneToMany;
 import com.raizlabs.android.dbflow.annotation.PrimaryKey;
 import com.raizlabs.android.dbflow.annotation.Table;
 import com.raizlabs.android.dbflow.sql.language.SQLite;
+import com.raizlabs.android.dbflow.structure.BaseModel;
 
+import java.io.Serializable;
 import java.util.List;
 
-import info.movito.themoviedbapi.model.tv.TvSeries;
-
 @Table(database = AppDatabase.class)
-public class Serie {
+public class Serie extends BaseModel implements Serializable {
 
     @PrimaryKey
     private int id;
@@ -22,49 +22,38 @@ public class Serie {
     @Column
     private String overview;
 
-    @Column(name = "first_air_date")
-    private String firstAirDate;
+    @Column
+    private String first_air_date;
 
-    @Column(name = "backdrop_path")
-    private String backdropPath;
+    @Column
+    private String backdrop_path;
 
-    @Column(name = "poster_path")
-    private String posterPath;
+    @Column
+    private String poster_path;
 
-    @Column(name = "number_of_seasons")
-    private int numberOfSeasons;
+    @Column
+    private int number_of_seasons;
 
-    @Column(name = "number_of_episodes")
-    private int numberOfEpisodes;
+    @Column
+    private int number_of_episodes;
 
-    @Column(name = "vote_average")
-    private float voteAverage;
+    @Column
+    private float vote_average;
 
-    @Column(name = "vote_count", defaultValue = "0")
-    private int voteCount;
+    @Column(defaultValue = "0")
+    private int vote_count;
 
-    @Column(name = "date_added", defaultValue = "Date('now')")
-    private long dateAdded;
+    @Column(defaultValue = "Date('now')")
+    private long date_added;
 
-    @Column(name = "last_watched")
-    private long lastWatched;
+    @Column
+    private long last_watched;
 
     List<Episode> episodes;
 
-    public Serie() {
-    }
+    private List<Season> seasons;
 
-    public Serie(TvSeries serie) {
-        this.id = serie.getId();
-        this.name = serie.getName();
-        this.overview = serie.getOverview();
-        this.firstAirDate = serie.getFirstAirDate();
-        this.backdropPath = serie.getBackdropPath();
-        this.posterPath = serie.getPosterPath();
-        this.numberOfSeasons = serie.getNumberOfSeasons();
-        this.numberOfEpisodes = serie.getNumberOfEpisodes();
-        this.voteAverage = serie.getVoteAverage();
-        this.voteCount = serie.getVoteCount();
+    public Serie() {
     }
 
     @OneToMany(methods = {OneToMany.Method.ALL}, variableName = "episodes")
@@ -103,75 +92,87 @@ public class Serie {
         this.overview = overview;
     }
 
-    public String getFirstAirDate() {
-        return firstAirDate;
+    public String getFirst_air_date() {
+        return first_air_date;
     }
 
-    public void setFirstAirDate(String firstAirDate) {
-        this.firstAirDate = firstAirDate;
+    public void setFirst_air_date(String first_air_date) {
+        this.first_air_date = first_air_date;
     }
 
-    public String getBackdropPath() {
-        return backdropPath;
+    public String getBackdrop_path() {
+        return backdrop_path;
     }
 
-    public void setBackdropPath(String backdropPath) {
-        this.backdropPath = backdropPath;
+    public void setBackdrop_path(String backdrop_path) {
+        this.backdrop_path = backdrop_path;
     }
 
-    public String getPosterPath() {
-        return posterPath;
+    public String getPoster_path() {
+        return poster_path;
     }
 
-    public void setPosterPath(String posterPath) {
-        this.posterPath = posterPath;
+    public void setPoster_path(String poster_path) {
+        this.poster_path = poster_path;
     }
 
-    public int getNumberOfSeasons() {
-        return numberOfSeasons;
+    public int getNumber_of_seasons() {
+        return number_of_seasons;
     }
 
-    public void setNumberOfSeasons(int numberOfSeasons) {
-        this.numberOfSeasons = numberOfSeasons;
+    public void setNumber_of_seasons(int number_of_seasons) {
+        this.number_of_seasons = number_of_seasons;
     }
 
-    public int getNumberOfEpisodes() {
-        return numberOfEpisodes;
+    public int getNumber_of_episodes() {
+        return number_of_episodes;
     }
 
-    public void setNumberOfEpisodes(int numberOfEpisodes) {
-        this.numberOfEpisodes = numberOfEpisodes;
+    public void setNumber_of_episodes(int number_of_episodes) {
+        this.number_of_episodes = number_of_episodes;
     }
 
-    public float getVoteAverage() {
-        return voteAverage;
+    public float getVote_average() {
+        return vote_average;
     }
 
-    public void setVoteAverage(float voteAverage) {
-        this.voteAverage = voteAverage;
+    public void setVote_average(float vote_average) {
+        this.vote_average = vote_average;
     }
 
-    public int getVoteCount() {
-        return voteCount;
+    public int getVote_count() {
+        return vote_count;
     }
 
-    public void setVoteCount(int voteCount) {
-        this.voteCount = voteCount;
+    public void setVote_count(int vote_count) {
+        this.vote_count = vote_count;
     }
 
-    public long getDateAdded() {
-        return dateAdded;
+    public long getDate_added() {
+        return date_added;
     }
 
-    public void setDateAdded(long dateAdded) {
-        this.dateAdded = dateAdded;
+    public void setDate_added(long date_added) {
+        this.date_added = date_added;
     }
 
-    public long getLastWatched() {
-        return lastWatched;
+    public long getLast_watched() {
+        return last_watched;
     }
 
-    public void setLastWatched(long lastWatched) {
-        this.lastWatched = lastWatched;
+    public void setLast_watched(long last_watched) {
+        this.last_watched = last_watched;
+    }
+
+    public void setEpisodes(List<Episode> episodes) {
+        this.episodes = episodes;
+    }
+
+    public List<Season> getSeasons() {
+        return seasons;
+    }
+
+    public void setSeasons(List<Season> seasons) {
+        this.seasons = seasons;
     }
 }

@@ -11,7 +11,6 @@ public class HeaderHolder extends Holder<Boolean> {
 
     private final TextView title, help;
 
-
     public HeaderHolder(View itemView, Context context) {
         super(itemView, context);
 
@@ -20,14 +19,6 @@ public class HeaderHolder extends Holder<Boolean> {
     }
 
     public void bind(Boolean empty) {
-        Log.i("empty", empty + "");
-        if (!empty) { //TODO bug
-            title.setText(R.string.main_title_popular);
-            help.setVisibility(View.VISIBLE);
-        } else {
-            help.setVisibility(View.GONE);
-            title.setText(R.string.main_title_favorite);
-        }
     }
 
     @Override

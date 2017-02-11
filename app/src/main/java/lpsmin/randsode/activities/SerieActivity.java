@@ -13,29 +13,29 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.Response;
 import com.android.volley.toolbox.NetworkImageView;
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
 import com.raizlabs.android.dbflow.config.FlowManager;
+import com.raizlabs.android.dbflow.sql.language.SQLite;
 
 import java.util.ArrayList;
 import java.util.Random;
 
-import info.movito.themoviedbapi.model.tv.TvEpisode;
-import info.movito.themoviedbapi.model.tv.TvSeries;
 import lpsmin.randsode.R;
 import lpsmin.randsode.adapters.RecyclerViewAdapter;
 import lpsmin.randsode.adapters.holders.SerieHolder;
 import lpsmin.randsode.models.Episode;
 import lpsmin.randsode.models.Serie;
+import lpsmin.randsode.models.Serie_Table;
+import lpsmin.randsode.requests.EpisodeRequest;
+import lpsmin.randsode.requests.SerieRequest;
 import lpsmin.randsode.shared.HttpSingleton;
-import lpsmin.randsode.tasks.models.Closure;
-import lpsmin.randsode.tasks.RandomTask;
-import lpsmin.randsode.tasks.SerieTask;
 
 public class SerieActivity extends AppCompatActivity {
 
-    private TvSeries serie;
+    private Serie serie;
 
     private FrameLayout loader;
     private FloatingActionButton random;
@@ -53,20 +53,20 @@ public class SerieActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
-        this.serie = (TvSeries) getIntent().getSerializableExtra("serie");
+        this.serie = (Serie) getIntent().getSerializableExtra("serie");
 
         this.loader = (FrameLayout) findViewById(R.id.serie_load);
         this.random = (FloatingActionButton) findViewById(R.id.serie_random);
-        RecyclerView list = (RecyclerView) findViewById(R.id.serie_list);
-        TextView summary = (TextView) findViewById(R.id.serie_summary);
-        NetworkImageView image = (NetworkImageView) findViewById(R.id.serie_image);
+        final RecyclerView list = (RecyclerView) findViewById(R.id.serie_list);
+        final TextView summary = (TextView) findViewById(R.id.serie_summary);
+        final NetworkImageView image = (NetworkImageView) findViewById(R.id.serie_image);
         seasons = (TextView) findViewById(R.id.serie_number_seasons);
         episodes = (TextView) findViewById(R.id.serie_number_episodes);
         favorite = (FloatingActionButton) findViewById(R.id.serie_favorite);
         favoriteDelete = (FloatingActionButton) findViewById(R.id.serie_favorite_delete);
         fabs = (FloatingActionMenu) findViewById(R.id.serie_fabs);
 
-        final ArrayList<TvEpisode> episodesList = new ArrayList<>();
+        final ArrayList<Episode> episodesList = new ArrayList<>();
         final RecyclerViewAdapter listAdapter = new RecyclerViewAdapter(this, episodesList, R.layout.holder_serie, SerieHolder.class);
         list.setAdapter(listAdapter);
         list.setLayoutManager(new LinearLayoutManager(this));
@@ -74,10 +74,10 @@ public class SerieActivity extends AppCompatActivity {
         setTitle(serie.getName());
         summary.setText(serie.getOverview());
 
-        if (serie.getBackdropPath() != null)
-            image.setImageUrl("https://image.tmdb.org/t/p/w342/" + serie.getBackdropPath(), HttpSingleton.getInstance(getApplicationContext()).getImageLoader());
-        else if (serie.getPosterPath() != null)
-            image.setImageUrl("https://image.tmdb.org/t/p/w342/" + serie.getPosterPath(), HttpSingleton.getInstance(getApplicationContext()).getImageLoader());
+        if (serie.getBackdrop_path() != null)
+            image.setImageUrl("https://image.tmdb.org/t/p/w342/" + serie.getBackdrop_path(), HttpSingleton.getInstance().getImageLoader());
+        else if (serie.getPoster_path() != null)
+            image.setImageUrl("https://image.tmdb.org/t/p/w342/" + serie.getPoster_path(), HttpSingleton.getInstance().getImageLoader());
 
         random.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -105,23 +105,24 @@ public class SerieActivity extends AppCompatActivity {
             }
         });
 
-        if (serie instanceof Serie) {
+        Serie serieOrm = SQLite.select().from(Serie.class).where(Serie_Table.id.eq(this.serie.getId())).querySingle();
+        if (serieOrm != null) {
+            this.serie = serieOrm;
+
             loader.setVisibility(View.GONE);
             favorite.setVisibility(View.GONE);
             favoriteDelete.setVisibility(View.VISIBLE);
 
             addNumbersInfos();
         } else {
-            SerieTask task = new SerieTask(this.serie.getId(), loader, findViewById(R.id.serie_infos__toload), new Closure() {
-
+            new SerieRequest(this.serie.getId(), new Response.Listener<Serie>() {
                 @Override
-                public void go(Object data) {
-                serie = (TvSeries) data;
+                public void onResponse(Serie response) {
+                    serie = response;
 
-                addNumbersInfos();
+                    addNumbersInfos();
                 }
-            });
-            task.execute();
+            }, loader, findViewById(R.id.serie_infos__toload));
         }
     }
 
@@ -136,72 +137,57 @@ public class SerieActivity extends AppCompatActivity {
     }
 
     private void addNumbersInfos() {
-        seasons.setText(String.valueOf(serie.getNumberOfSeasons()));
-        episodes.setText(String.valueOf(serie.getNumberOfEpisodes()));
+        seasons.setText(String.valueOf(serie.getNumber_of_seasons()));
+        episodes.setText(String.valueOf(serie.getNumber_of_episodes()));
 
-        if (serie.getNumberOfSeasons() == 0 && serie.getNumberOfEpisodes() == 0) {
+        if (serie.getNumber_of_seasons() == 0 && serie.getNumber_of_episodes() == 0) {
             fabs.setVisibility(View.GONE);
         }
     }
 
-    private void giveRandomEpisodeProcess() {
-        Random rand = new Random();
-        final int season = rand.nextInt(serie.getNumberOfSeasons()) + 1;
-        final int episode = rand.nextInt(serie.getSeasons().get(season).getEpisodes().size()) + 1;
-
-        RandomTask task = new RandomTask(serie.getId(), season, episode, loader, random, new Closure() {
-            @Override
-            public void go(Object data) {
-                createDialog((TvEpisode) data);
-            }
-        });
-        task.execute();
-    }
-
     private void giveRandomEpisode() {
-        if (serie instanceof Serie) {
-            SerieTask task = new SerieTask(this.serie.getId(), loader, findViewById(R.id.serie_infos__toload), new Closure() {
+        saveSerie();
 
-                @Override
-                public void go(Object data) {
-                    serie = (TvSeries) data;
+        Random rand = new Random();
+        final int season = rand.nextInt(serie.getNumber_of_seasons()) + 1;
+        final int episode = rand.nextInt(serie.getSeasons().get(season).getEpisodeCount()) + 1;
 
-                    giveRandomEpisodeProcess();
-                }
-            });
-            task.execute();
-        } else giveRandomEpisodeProcess();
+        new EpisodeRequest(serie.getId(), season, episode, new Response.Listener<Episode>() {
+            @Override
+            public void onResponse(Episode response) {
+                createDialog(response);
+            }
+        }, loader, random);
     }
 
     private void saveSerie() {
-        if (!(this.serie instanceof Serie)) {
-            Serie serieORM = new Serie(serie);
-            FlowManager.getModelAdapter(Serie.class).save(serieORM);
+        if (!this.serie.exists()) {
+            FlowManager.getModelAdapter(Serie.class).save(serie);
             favorite.setVisibility(View.GONE);
             favoriteDelete.setVisibility(View.VISIBLE);
         }
     }
 
     private void deleteSerie() {
-        if (this.serie instanceof Serie) {
+        if (this.serie.exists()) {
             FlowManager.getModelAdapter(Serie.class).delete((Serie) serie);
             favorite.setVisibility(View.VISIBLE);
             favoriteDelete.setVisibility(View.GONE);
         }
     }
 
-    private void createDialog(final TvEpisode episode) {
+    private void createDialog(final Episode episode) {
         final Dialog dialog = new Dialog(SerieActivity.this);
         dialog.setContentView(R.layout.dialog_episode);
         dialog.setTitle(getResources().getString(R.string.dialog_title_episode));
 
         TextView title = (TextView) dialog.findViewById(R.id.episode_title);
-        title.setText(episode.getName() + " (" + episode.getSeasonNumber() + "x" + episode.getEpisodeNumber() + ")");
+        title.setText(episode.getName() + " (" + episode.getSeason_number() + "x" + episode.getEpisode_number() + ")");
         NetworkImageView image = (NetworkImageView) dialog.findViewById(R.id.episode_image);
         image.setDefaultImageResId(R.drawable.ic_no_image);
         image.setErrorImageResId(R.drawable.ic_no_image);
-        image.setImageUrl("https://image.tmdb.org/t/p/w185/" + episode.getStillPath(), HttpSingleton.getInstance(SerieActivity.this).getImageLoader());
-        if (episode.getStillPath().length() == 0) image.setVisibility(View.GONE);
+        image.setImageUrl("https://image.tmdb.org/t/p/w185/" + episode.getStill_path(), HttpSingleton.getInstance().getImageLoader());
+        if (episode.getStill_path().length() == 0) image.setVisibility(View.GONE);
 
         ImageButton no = (ImageButton) dialog.findViewById(R.id.episode_no);
         no.setOnClickListener(new View.OnClickListener() {
@@ -219,9 +205,7 @@ public class SerieActivity extends AppCompatActivity {
         yes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                saveSerie();
-                Episode episodeOrm = new Episode(episode, true);
-                FlowManager.getModelAdapter(Episode.class).save(episodeOrm);
+                FlowManager.getModelAdapter(Episode.class).save(episode);
                 dialog.dismiss();
             }
         });
