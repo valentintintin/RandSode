@@ -7,4 +7,7 @@
     <dimen name="app_bar_height">180dp</dimen>
 
     <dimen name="text_margin">16dp</dimen>
+
+    <dimen name="card_leftright_margin">16dp</dimen>
+    <dimen name="card_topbottom_margin">5dp</dimen>
 </resources>

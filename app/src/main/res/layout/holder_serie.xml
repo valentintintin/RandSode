@@ -5,7 +5,10 @@
     android:layout_gravity="center"
     android:layout_width="match_parent"
     android:layout_height="303dp"
-    android:layout_margin="@dimen/text_margin"
+    android:layout_marginLeft="@dimen/card_leftright_margin"
+    android:layout_marginRight="@dimen/card_leftright_margin"
+    android:layout_marginTop="@dimen/card_topbottom_margin"
+    android:layout_marginBottom="@dimen/card_topbottom_margin"
     app:cardCornerRadius="4dp"
     app:cardElevation="2dp">
 

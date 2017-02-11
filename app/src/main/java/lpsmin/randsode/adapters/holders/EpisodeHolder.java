@@ -6,7 +6,7 @@ import android.widget.TextView;
 
 import com.android.volley.toolbox.NetworkImageView;
 
-import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import lpsmin.randsode.R;
@@ -38,9 +38,7 @@ public class EpisodeHolder extends Holder<Episode> {
     public void bind(Episode episode) {
         this.name.setText(episode.getName() + " (" + episode.getSeason_number() + "x" + episode.getEpisode_number() + ")");
 
-        Timestamp stamp = new Timestamp(episode.getDate_added());
-        Date date = new Date(stamp.getTime());
-        this.watched.setText(date.toString());
+        this.watched.setText(new SimpleDateFormat("dd-MM-yyyy").format(new Date(episode.getDate_added())));
 
         this.rank.setText(String.valueOf(episode.getVote_average()));
         if (episode.getVote_count() == 0) this.rank.setVisibility(View.GONE);

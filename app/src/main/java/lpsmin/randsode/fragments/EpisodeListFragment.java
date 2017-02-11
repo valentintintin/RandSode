@@ -50,7 +50,7 @@ public class EpisodeListFragment extends Fragment {
         refresh();
     }
 
-    private void refresh() {
+    public void refresh() {
         listAdapter.resetAndAdd(serie.getEpisodes());
 
         if (listAdapter.getItemCount() > 0) {

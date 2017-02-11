@@ -18,6 +18,7 @@ import com.android.volley.toolbox.NetworkImageView;
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
 
+import java.util.Date;
 import java.util.Random;
 
 import lpsmin.randsode.R;
@@ -36,6 +37,8 @@ public class SerieActivity extends AppCompatActivity {
     private FloatingActionButton random;
     private FloatingActionMenu fabs;
     private FloatingActionButton favorite, favoriteDelete;
+
+    private EpisodeListFragment episodeListFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,7 +98,7 @@ public class SerieActivity extends AppCompatActivity {
 
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-        EpisodeListFragment episodeListFragment = new EpisodeListFragment();
+        this.episodeListFragment = new EpisodeListFragment();
         Bundle bundle = new Bundle();
         bundle.putSerializable("serie", serie);
         episodeListFragment.setArguments(bundle);
@@ -134,6 +137,7 @@ public class SerieActivity extends AppCompatActivity {
             @Override
             public void onResponse(Episode response) {
                 response.setSerieId(serie.getId());
+                response.setDate_added(new Date().getTime());
                 createDialog(response);
             }
         }, loader, random);
@@ -187,6 +191,7 @@ public class SerieActivity extends AppCompatActivity {
                 saveSerie();
                 episode.save();
                 dialog.dismiss();
+                episodeListFragment.refresh();
             }
         });
 

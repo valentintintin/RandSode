@@ -5,8 +5,11 @@
     android:id="@+id/card_view"
     android:layout_gravity="center"
     android:layout_width="match_parent"
-    android:layout_height="303dp"
-    android:layout_margin="@dimen/text_margin"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="@dimen/card_leftright_margin"
+    android:layout_marginRight="@dimen/card_leftright_margin"
+    android:layout_marginTop="@dimen/card_topbottom_margin"
+    android:layout_marginBottom="@dimen/card_topbottom_margin"
     app:cardCornerRadius="4dp"
     app:cardElevation="2dp">
 
@@ -42,20 +45,11 @@
                     android:layout_weight="1"
                     android:paddingEnd="2dp" />
 
-                <TextView
-                    android:id="@+id/holder_episode_rank"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium"
-                    android:textStyle="bold"
-                    android:drawableEnd="@android:drawable/star_on"
-                    android:gravity="center_vertical" />
-
             </TableRow>
 
             <TableRow
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" >
 
                 <TextView
                     android:id="@+id/holder_episode_watched"
@@ -63,7 +57,23 @@
                     android:layout_height="wrap_content"
                     android:textAppearance="@android:style/TextAppearance.DeviceDefault.Small"
                     android:drawableEnd="@android:drawable/ic_media_play"
-                    android:gravity="center_vertical" />
+                    android:gravity="center_vertical"
+                    android:layout_weight="1" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/holder_episode_rank"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium"
+                    android:textStyle="bold"
+                    android:drawableEnd="@android:drawable/star_on"
+                    android:gravity="center_vertical"
+                    android:layout_weight="1" />
 
                 <TextView
                     android:id="@+id/holder_episode_year"
