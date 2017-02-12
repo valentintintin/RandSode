@@ -149,6 +149,7 @@ public class SerieActivity extends AppCompatActivity {
 
     private void saveSerie() {
         if (!this.serie.exists()) {
+            serie.setDate_added(new Date().getTime());
             serie.save();
             favorite.setVisibility(View.GONE);
             favoriteDelete.setVisibility(View.VISIBLE);
@@ -213,6 +214,7 @@ public class SerieActivity extends AppCompatActivity {
         yes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                serie.setLast_watched(new Date().getTime());
                 saveSerie();
                 episode.save();
                 dialog.dismiss();
