@@ -1,7 +1,6 @@
 package lpsmin.randsode.activities;
 
 import android.app.Dialog;
-import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -36,10 +35,9 @@ public class SerieActivity extends AppCompatActivity {
     private Serie serie;
 
     private FrameLayout loader;
-    private FloatingActionButton random;
     private FloatingActionMenu fabs;
-    private FloatingActionButton favorite, favoriteDelete;
-
+    private FloatingActionButton random, favorite, favoriteDelete;
+    private FrameLayout episodeListFragmentContainer;
     private EpisodeListFragment episodeListFragment;
 
     @Override
@@ -61,6 +59,7 @@ public class SerieActivity extends AppCompatActivity {
         favorite = (FloatingActionButton) findViewById(R.id.serie_favorite);
         favoriteDelete = (FloatingActionButton) findViewById(R.id.serie_favorite_delete);
         fabs = (FloatingActionMenu) findViewById(R.id.serie_fabs);
+        this.episodeListFragmentContainer = (FrameLayout) findViewById(R.id.serie_list_episode_fragment);
 
         setTitle(serie.getName());
         summary.setText(serie.getOverview());
@@ -96,7 +95,6 @@ public class SerieActivity extends AppCompatActivity {
 
         checkRandomPossible();
 
-        FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
         this.episodeListFragment = new EpisodeListFragment();
         Bundle bundle = new Bundle();
@@ -120,6 +118,7 @@ public class SerieActivity extends AppCompatActivity {
         if (this.serie.exists()) {
             favorite.setVisibility(View.GONE);
             favoriteDelete.setVisibility(View.VISIBLE);
+            episodeListFragmentContainer.setVisibility(View.VISIBLE);
         }
 
         new SerieRequest(this.serie.getId(), new Response.Listener<Serie>() {
@@ -153,6 +152,7 @@ public class SerieActivity extends AppCompatActivity {
             serie.save();
             favorite.setVisibility(View.GONE);
             favoriteDelete.setVisibility(View.VISIBLE);
+            episodeListFragmentContainer.setVisibility(View.VISIBLE);
             Toast.makeText(getApplicationContext(), "Serie added to favorite", Toast.LENGTH_SHORT).show();
         }
     }
@@ -169,6 +169,7 @@ public class SerieActivity extends AppCompatActivity {
                     serie.delete();
                     favorite.setVisibility(View.VISIBLE);
                     favoriteDelete.setVisibility(View.GONE);
+                    episodeListFragmentContainer.setVisibility(View.GONE);
                     episodeListFragment.refresh();
                     Toast.makeText(getApplicationContext(), "Serie deleted from favorite", Toast.LENGTH_SHORT).show();
                 }

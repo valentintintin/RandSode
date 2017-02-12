@@ -42,7 +42,8 @@
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/serie_list_episode_fragment"/>
+            android:id="@+id/serie_list_episode_fragment"
+            android:visibility="gone" />
 
     </LinearLayout>
 
