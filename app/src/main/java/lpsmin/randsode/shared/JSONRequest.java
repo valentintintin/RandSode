@@ -1,5 +1,6 @@
 package lpsmin.randsode.shared;
 
+import android.support.design.widget.Snackbar;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -27,11 +28,16 @@ public class JSONRequest<T> extends com.android.volley.Request<T> {
         this(url, jsonType, listener, null, null, null);
     }
 
-    public JSONRequest(String url, Class<T> jsonType, Response.Listener<T> listener, ViewGroup loader, View view, TextView noData) {
+    public JSONRequest(String url, Class<T> jsonType, Response.Listener<T> listener, final ViewGroup loader, final View view, TextView noData) {
         super(Method.GET, url + END_URL, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                error.getStackTrace();
+                error.printStackTrace();
+                if (loader != null) {
+                    Snackbar.make(loader, "Network error code: " + error.networkResponse.statusCode, Snackbar.LENGTH_LONG).show();
+                }
+                if (loader != null) loader.setVisibility(View.GONE);
+                if (view != null) view.setVisibility(View.VISIBLE);
             }
         });
 

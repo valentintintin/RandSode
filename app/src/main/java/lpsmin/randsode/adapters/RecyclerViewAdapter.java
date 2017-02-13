@@ -7,7 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import java.lang.reflect.InvocationTargetException;
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.List;
 
 import lpsmin.randsode.adapters.holders.Holder;
@@ -18,9 +18,9 @@ public class RecyclerViewAdapter<T> extends RecyclerView.Adapter<RecyclerView.Vi
     protected final Class holderClass;
 
     protected final Context context;
-    protected List<T> list = Collections.emptyList();
+    protected ArrayList<T> list;
 
-    public RecyclerViewAdapter(Context context, List<T> list, int holderRessource, Class holderClass) {
+    public RecyclerViewAdapter(Context context, ArrayList<T> list, int holderRessource, Class holderClass) {
         this.context = context;
         this.list = list;
         this.holderRessource = holderRessource;
@@ -53,6 +53,16 @@ public class RecyclerViewAdapter<T> extends RecyclerView.Adapter<RecyclerView.Vi
     @Override
     public int getItemCount() {
         return list.size();
+    }
+
+    public void add(T data) {
+        this.list.add(0, data);
+        this.notifyItemInserted(0);
+    }
+
+    public void remove(int position) {
+        this.list.remove(position);
+        this.notifyItemRemoved(position);
     }
 
     public void resetAndAdd(List<T> data) {

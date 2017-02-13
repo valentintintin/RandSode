@@ -18,7 +18,7 @@ public class HttpSingleton {
     private HttpSingleton(Context context) {
         this.requestQueue = Volley.newRequestQueue(context.getApplicationContext());
         this.imageLoader = new ImageLoader(this.requestQueue, new ImageLoader.ImageCache() {
-            private final LruCache<String, Bitmap> cache = new LruCache<String, Bitmap>(20);
+            private final LruCache<String, Bitmap> cache = new LruCache<>(50);
 
             @Override
             public Bitmap getBitmap(String url) {

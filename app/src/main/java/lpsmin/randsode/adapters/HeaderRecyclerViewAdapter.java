@@ -6,7 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.util.List;
+import java.util.ArrayList;
 
 import lpsmin.randsode.adapters.holders.HeaderHolder;
 import lpsmin.randsode.adapters.holders.Holder;
@@ -18,7 +18,7 @@ public class HeaderRecyclerViewAdapter<T> extends RecyclerViewAdapter<T> {
     private final int holderHeaderRessource;
     private final Class holderHeaderClass;
 
-    public HeaderRecyclerViewAdapter(Context context, List<T> list, int holderRessource, Class holderClass, int holderHeaderRessource, Class holderHeaderClass) {
+    public HeaderRecyclerViewAdapter(Context context, ArrayList<T> list, int holderRessource, Class holderClass, int holderHeaderRessource, Class holderHeaderClass) {
         super(context, list, holderRessource, holderClass);
 
         this.holderHeaderRessource = holderHeaderRessource;

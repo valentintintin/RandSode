@@ -61,4 +61,8 @@ public class EpisodeListFragment extends Fragment {
             list.setVisibility(View.GONE);
         }
     }
+
+    public void addEpisode(Episode episode) {
+        listAdapter.add(episode);
+    }
 }
