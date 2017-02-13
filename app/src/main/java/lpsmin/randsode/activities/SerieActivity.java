@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.app.FragmentTransaction;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -12,7 +13,6 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.Response;
 import com.android.volley.toolbox.NetworkImageView;
@@ -134,8 +134,9 @@ public class SerieActivity extends AppCompatActivity {
 
     private void giveRandomEpisode() {
         Random rand = new Random();
-        final int season = rand.nextInt(serie.getNumber_of_seasons()) + 1;
-        final int episode = rand.nextInt(serie.getSeasons().get(season - 1).getEpisodeCount()) + 1;
+        int season = rand.nextInt(serie.getSeasons().size());
+        int episode = rand.nextInt(serie.getSeasons().get(season).getEpisodeCount()) + 1;
+        if (serie.getNumber_of_seasons() == 1) season++;
 
         new EpisodeRequest(serie.getId(), season, episode, new Response.Listener<Episode>() {
             @Override
@@ -154,7 +155,7 @@ public class SerieActivity extends AppCompatActivity {
             favorite.setVisibility(View.GONE);
             favoriteDelete.setVisibility(View.VISIBLE);
             episodeListFragmentContainer.setVisibility(View.VISIBLE);
-            Toast.makeText(getApplicationContext(), "Serie added to favorite", Toast.LENGTH_SHORT).show();
+            Snackbar.make(loader, "Serie added to favorite", Snackbar.LENGTH_SHORT).show();
         }
     }
 
@@ -172,7 +173,7 @@ public class SerieActivity extends AppCompatActivity {
                     favoriteDelete.setVisibility(View.GONE);
                     episodeListFragmentContainer.setVisibility(View.GONE);
                     episodeListFragment.refresh();
-                    Toast.makeText(getApplicationContext(), "Serie deleted from favorite", Toast.LENGTH_SHORT).show();
+                    Snackbar.make(loader, "Serie deleted from favorite", Snackbar.LENGTH_SHORT).show();
                 }
             });
             alertDialogBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -218,7 +219,7 @@ public class SerieActivity extends AppCompatActivity {
                 saveSerie();
                 episode.save();
                 dialog.dismiss();
-                episodeListFragment.refresh();
+                episodeListFragment.addEpisode(episode);
             }
         });
 

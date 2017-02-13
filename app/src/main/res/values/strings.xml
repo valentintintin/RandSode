@@ -16,4 +16,7 @@
     <string name="dialog_title_episode">Watch this episode?</string>
     <string name="delete_question">Are you sure to delete?</string>
     <string name="delete_question_title">Delete a serie?</string>
+    <string name="button_undo">Undo</string>
+    <string name="episode_delete">Episode is deleted</string>
+    <string name="episode_restored">Episode is restored!</string>
 </resources>
