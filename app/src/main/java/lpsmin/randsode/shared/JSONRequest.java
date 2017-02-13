@@ -29,13 +29,19 @@ public class JSONRequest<T> extends com.android.volley.Request<T> {
     }
 
     public JSONRequest(String url, Class<T> jsonType, Response.Listener<T> listener, final ViewGroup loader, final View view, TextView noData) {
+        this(url, jsonType, listener, loader, view, noData, null);
+    }
+
+    public JSONRequest(String url, Class<T> jsonType, Response.Listener<T> listener, final ViewGroup loader, final View view, TextView noData, final Closure<VolleyError> errorListener) {
         super(Method.GET, url + END_URL, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 error.printStackTrace();
-                if (loader != null) {
+
+                if (loader != null && errorListener == null) {
                     Snackbar.make(loader, "Network error code: " + error.networkResponse.statusCode, Snackbar.LENGTH_LONG).show();
-                }
+                } else errorListener.go(error);
+
                 if (loader != null) loader.setVisibility(View.GONE);
                 if (view != null) view.setVisibility(View.VISIBLE);
             }
