@@ -135,7 +135,7 @@ public class SerieActivity extends AppCompatActivity {
     private void giveRandomEpisode() {
         Random rand = new Random();
         final int season = rand.nextInt(serie.getNumber_of_seasons()) + 1;
-        final int episode = rand.nextInt(serie.getSeasons().get(season).getEpisodeCount()) + 1;
+        final int episode = rand.nextInt(serie.getSeasons().get(season - 1).getEpisodeCount()) + 1;
 
         new EpisodeRequest(serie.getId(), season, episode, new Response.Listener<Episode>() {
             @Override
