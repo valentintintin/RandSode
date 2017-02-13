@@ -19,4 +19,8 @@
     <string name="button_undo">Undo</string>
     <string name="episode_delete">Episode is deleted</string>
     <string name="episode_restored">Episode is restored!</string>
+    <string name="serie_deleted">Serie deleted from favorite</string>
+    <string name="dialog_cancel_delete">Cancel</string>
+    <string name="dialog_ok_delete">Delete</string>
+    <string name="serie_added">Serie added to favorite</string>
 </resources>

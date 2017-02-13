@@ -155,7 +155,7 @@ public class SerieActivity extends AppCompatActivity {
             favorite.setVisibility(View.GONE);
             favoriteDelete.setVisibility(View.VISIBLE);
             episodeListFragmentContainer.setVisibility(View.VISIBLE);
-            Snackbar.make(loader, "Serie added to favorite", Snackbar.LENGTH_SHORT).show();
+            Snackbar.make(loader, getResources().getString(R.string.serie_added), Snackbar.LENGTH_SHORT).show();
         }
     }
 
@@ -165,7 +165,7 @@ public class SerieActivity extends AppCompatActivity {
             alertDialogBuilder.setIcon(android.R.drawable.ic_delete);
             alertDialogBuilder.setTitle(R.string.delete_question_title);
             alertDialogBuilder.setMessage(R.string.delete_question);
-            alertDialogBuilder.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+            alertDialogBuilder.setPositiveButton(getResources().getString(R.string.dialog_ok_delete), new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
                     serie.delete();
@@ -173,10 +173,10 @@ public class SerieActivity extends AppCompatActivity {
                     favoriteDelete.setVisibility(View.GONE);
                     episodeListFragmentContainer.setVisibility(View.GONE);
                     episodeListFragment.refresh();
-                    Snackbar.make(loader, "Serie deleted from favorite", Snackbar.LENGTH_SHORT).show();
+                    Snackbar.make(loader, getResources().getString(R.string.serie_deleted), Snackbar.LENGTH_SHORT).show();
                 }
             });
-            alertDialogBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            alertDialogBuilder.setNegativeButton(getResources().getString(R.string.dialog_cancel_delete), new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
 
@@ -203,9 +203,6 @@ public class SerieActivity extends AppCompatActivity {
         no.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Episode episodeOrm = new Episode(episode, false);
-//                FlowManager.getModelAdapter(Serie.class).delete((Serie) serie);
-//                Toast.makeText(getApplicationContext(), "Deleted !", Toast.LENGTH_SHORT).show();
                 dialog.dismiss();
                 giveRandomEpisode();
             }

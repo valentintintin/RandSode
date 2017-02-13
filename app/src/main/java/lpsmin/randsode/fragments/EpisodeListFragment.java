@@ -74,8 +74,6 @@ public class EpisodeListFragment extends Fragment {
         });
         mIth.attachToRecyclerView(list);
 
-        refresh();
-
         return v;
     }
 
