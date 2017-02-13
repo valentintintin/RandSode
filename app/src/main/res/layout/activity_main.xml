@@ -26,6 +26,18 @@
 
     </android.support.design.widget.AppBarLayout>
 
+    <android.support.design.widget.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/fab_margin"
+        android:clickable="true"
+        app:fabSize="normal"
+        app:srcCompat="@android:drawable/ic_menu_search"
+        android:id="@+id/main_search"
+        app:layout_anchor="@+id/main_viewpager"
+        app:layout_anchorGravity="bottom|right"
+        android:layout_gravity="top|left" />
+
     <android.support.v4.view.ViewPager
         android:id="@+id/main_viewpager"
         android:layout_width="match_parent"

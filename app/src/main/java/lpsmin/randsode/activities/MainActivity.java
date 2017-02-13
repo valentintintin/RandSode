@@ -3,6 +3,7 @@ package lpsmin.randsode.activities;
 import android.app.SearchManager;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -45,6 +46,14 @@ public class MainActivity extends AppCompatActivity {
         setupViewPager(viewPager);
         tabLayout.getTabAt(0).setIcon(android.R.drawable.star_on);
         tabLayout.getTabAt(1).setIcon(android.R.drawable.ic_media_play);
+
+        FloatingActionButton search = (FloatingActionButton) findViewById(R.id.main_search);
+        search.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onSearchRequested();
+            }
+        });
     }
 
     @Override
@@ -52,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.search_menu, menu);
 
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-        SearchView searchView = (SearchView) menu.findItem(R.id.search).getActionView();
+        SearchView searchView = (SearchView) menu.findItem(R.id.main_search_menu).getActionView();
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
 
         searchView.setOnQueryTextFocusChangeListener(new View.OnFocusChangeListener() {
