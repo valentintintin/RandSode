@@ -115,7 +115,7 @@ public class SerieActivity extends AppCompatActivity {
     }
 
     private void checkRandomPossible() {
-        if (this.serie.exists()) {
+        if (this.serie.exists() && this.serie.getEpisodes().size() < this.serie.getNumber_of_episodes()) {
             favorite.setVisibility(View.GONE);
             favoriteDelete.setVisibility(View.VISIBLE);
             episodeListFragmentContainer.setVisibility(View.VISIBLE);
@@ -134,18 +134,33 @@ public class SerieActivity extends AppCompatActivity {
 
     private void giveRandomEpisode() {
         Random rand = new Random();
-        int season = rand.nextInt(serie.getSeasons().size());
-        int episode = rand.nextInt(serie.getSeasons().get(season).getEpisodeCount()) + 1;
-        if (serie.getNumber_of_seasons() == 1) season++;
 
-        new EpisodeRequest(serie.getId(), season, episode, new Response.Listener<Episode>() {
-            @Override
-            public void onResponse(Episode response) {
-                response.setSerieId(serie.getId());
-                response.setDate_added(new Date().getTime());
-                createEpisodeDialog(response);
-            }
-        }, loader, random);
+        int season = -1, episode = -1;
+        boolean loop = true;
+
+        while(loop){
+            season = rand.nextInt(serie.getSeasons().size());
+            episode = rand.nextInt(serie.getSeasons().get(season).getEpisodeCount()) + 1;
+            if (serie.getNumber_of_seasons() == 1) season++;
+
+            int i = 0;
+            while (i < serie.getEpisodes().size() &&
+                    serie.getEpisodes().get(i).getSeason_number() != season &&
+                    serie.getEpisodes().get(i).getEpisode_number() != episode)
+                i++;
+            if (i == serie.getEpisodes().size()) loop = false;
+        }
+
+        if (season != -1 && episode != -1) {
+            new EpisodeRequest(serie.getId(), season, episode, new Response.Listener<Episode>() {
+                @Override
+                public void onResponse(Episode response) {
+                    response.setSerieId(serie.getId());
+                    response.setDate_added(new Date().getTime());
+                    createEpisodeDialog(response);
+                }
+            }, loader, random);
+        } else Snackbar.make(loader, getResources().getString(R.string.error_random), Snackbar.LENGTH_SHORT).show();
     }
 
     private void saveSerie() {
