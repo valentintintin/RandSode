@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name" translatable="false">RandSode</string>
-    <string name="search_hint">Search for a serie on the web</string>
+    <string name="search_hint">Search a serie</string>
     <string name="title_activity_serie">Showing serie</string>
     <string name="search_activity_title_caption">Search for :</string>
     <string name="main_title_my_series">My series</string>
@@ -23,4 +23,5 @@
     <string name="dialog_cancel_delete">Cancel</string>
     <string name="dialog_ok_delete">Delete</string>
     <string name="serie_added">Serie added to favorite</string>
+    <string name="error_random">Error in the randomizer !</string>
 </resources>
