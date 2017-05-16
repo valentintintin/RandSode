@@ -24,4 +24,5 @@
     <string name="dialog_ok_delete">Delete</string>
     <string name="serie_added">Serie added to favorite</string>
     <string name="error_random">Error in the randomizer !</string>
+    <string name="no_informations_serie">Not enough information about this series. Unable to do something with !</string>
 </resources>

@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Response;
 import com.android.volley.toolbox.NetworkImageView;
@@ -127,6 +128,8 @@ public class SerieActivity extends AppCompatActivity {
                 serie = response;
                 if (serie.getNumber_of_episodes() != 0) {
                     fabs.setVisibility(View.VISIBLE);
+                } else {
+                    Toast.makeText(SerieActivity.this, getString(R.string.no_informations_serie), Toast.LENGTH_LONG).show();
                 }
             }
         }, loader);
