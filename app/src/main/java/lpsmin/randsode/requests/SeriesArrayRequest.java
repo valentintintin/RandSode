@@ -6,6 +6,7 @@ import android.widget.TextView;
 
 import lpsmin.randsode.adapters.RecyclerViewAdapter;
 import lpsmin.randsode.models.Result;
+import lpsmin.randsode.shared.ArrayJSONRequest;
 
 public class SeriesArrayRequest extends ArrayJSONRequest<Result> {
 

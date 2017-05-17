@@ -1,4 +1,4 @@
-package lpsmin.randsode.requests;
+package lpsmin.randsode.shared;
 
 import android.view.View;
 import android.view.ViewGroup;
@@ -7,7 +7,6 @@ import android.widget.TextView;
 import com.android.volley.Response;
 
 import lpsmin.randsode.adapters.RecyclerViewAdapter;
-import lpsmin.randsode.shared.JSONRequest;
 
 public class ArrayJSONRequest<T> extends JSONRequest<T> {
 

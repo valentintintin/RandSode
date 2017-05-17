@@ -38,9 +38,9 @@ public class JSONRequest<T> extends com.android.volley.Request<T> {
             public void onErrorResponse(VolleyError error) {
                 error.printStackTrace();
 
-                if (loader != null && errorListener == null) {
+                if (loader != null && errorListener == null) { // To have the context ...
                     Snackbar.make(loader, "Network error code: " + error.networkResponse.statusCode, Snackbar.LENGTH_LONG).show();
-                } else errorListener.go(error);
+                } else if (errorListener != null) errorListener.go(error);
 
                 if (loader != null) loader.setVisibility(View.GONE);
                 if (view != null) view.setVisibility(View.VISIBLE);
