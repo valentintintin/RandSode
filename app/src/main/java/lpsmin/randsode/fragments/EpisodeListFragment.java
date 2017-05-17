@@ -61,10 +61,11 @@ public class EpisodeListFragment extends Fragment {
                                 @Override
                                 public void onClick(View view) {
                                     episode.save();
-                                    listAdapter.add(episode);
+                                    addEpisode(episode);
 
                                     Snackbar snackbarRestored = Snackbar.make(list, R.string.episode_restored, Snackbar.LENGTH_SHORT);
                                     snackbarRestored.show();
+
                                 }
                             });
 
