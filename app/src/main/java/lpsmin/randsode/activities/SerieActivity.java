@@ -128,8 +128,6 @@ public class SerieActivity extends AppCompatActivity {
                         favoriteDelete.setVisibility(View.VISIBLE);
                         episodeListFragmentContainer.setVisibility(View.VISIBLE);
                     }
-
-
                 } else {
                     Toast.makeText(SerieActivity.this, getString(R.string.no_informations_serie), Toast.LENGTH_LONG).show();
                 }
