@@ -116,18 +116,20 @@ public class SerieActivity extends AppCompatActivity {
     }
 
     private void checkRandomPossible() {
-        if (this.serie.exists() && this.serie.getEpisodes().size() < this.serie.getNumber_of_episodes()) {
-            favorite.setVisibility(View.GONE);
-            favoriteDelete.setVisibility(View.VISIBLE);
-            episodeListFragmentContainer.setVisibility(View.VISIBLE);
-        }
-
         new SerieRequest(this.serie.getId(), new Response.Listener<Serie>() {
             @Override
             public void onResponse(Serie response) {
                 serie = response;
                 if (serie.getNumber_of_episodes() != 0) {
                     fabs.setVisibility(View.VISIBLE);
+
+                    if (serie.exists() && serie.getEpisodes().size() < serie.getNumber_of_episodes()) {
+                        favorite.setVisibility(View.GONE);
+                        favoriteDelete.setVisibility(View.VISIBLE);
+                        episodeListFragmentContainer.setVisibility(View.VISIBLE);
+                    }
+
+
                 } else {
                     Toast.makeText(SerieActivity.this, getString(R.string.no_informations_serie), Toast.LENGTH_LONG).show();
                 }
