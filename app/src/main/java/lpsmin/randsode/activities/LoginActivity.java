@@ -15,8 +15,15 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
 
 import lpsmin.randsode.R;
+import lpsmin.randsode.models.Session;
+import lpsmin.randsode.requests.login.AuthenticationNewTokenRequest;
+import lpsmin.randsode.shared.Closure;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -81,24 +88,53 @@ public class LoginActivity extends AppCompatActivity {
         mPasswordView.setError(null);
 
         // Store values at the time of the login attempt.
-        String username = mUsernameText.getText().toString();
-        String password = mPasswordView.getText().toString();
+        String username = mUsernameText.getText().toString().trim();
+        String password = mPasswordView.getText().toString().trim();
 
         boolean cancel = false;
-        View focusView = null;
+
+        if (username.equals("")) {
+            mUsernameText.setError(getString(R.string.error_field_required));
+
+            cancel = true;
+        }
+
+        if (password.equals("")) {
+            mPasswordView.setError(getString(R.string.error_field_required));
+
+            cancel = true;
+        }
 
         if (cancel) {
             // There was an error; don't attempt login and focus the first
             // form field with an error.
-            focusView.requestFocus();
+            mLoginFormView.requestFocus();
         } else {
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
-//            showProgress(true);
+            showProgress(true);
 //            mAuthTask = new UserLoginTask(username, password);
 //            mAuthTask.execute((Void) null);
 
+            new AuthenticationNewTokenRequest(username, password, new Response.Listener<Session>() {
+                @Override
+                public void onResponse(Session response) {
+                    showProgress(false);
 
+                    Toast.makeText(LoginActivity.this, response.session_id, Toast.LENGTH_LONG).show();
+
+                    finish();
+                }
+            }, new Closure<VolleyError>() {
+                @Override
+                public void go(VolleyError data) {
+                    showProgress(false);
+
+                    mUsernameText.setError(getString(R.string.error_field));
+                    mPasswordView.setError("Possible wrong field");
+                    mLoginFormView.requestFocus();
+                }
+            });
         }
     }
 
