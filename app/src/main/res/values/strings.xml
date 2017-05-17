@@ -25,4 +25,12 @@
     <string name="serie_added">Serie added to favorite</string>
     <string name="error_random">Error in the randomizer !</string>
     <string name="no_informations_serie">Not enough information about this series. Unable to do something with !</string>
+    <string name="title_activity_login">Sign in to MovieDB website</string>
+
+    <!-- Strings related to login -->
+    <string name="prompt_username">Username</string>
+    <string name="prompt_password">Password</string>
+    <string name="action_sign_in">Sign in</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="error_field_required">This field is required</string>
 </resources>

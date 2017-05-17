@@ -2,6 +2,7 @@ package lpsmin.randsode.activities;
 
 import android.app.SearchManager;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
@@ -38,11 +39,10 @@ public class MainActivity extends AppCompatActivity {
         HttpSingleton.createInstance(this); //Creation of the HTTP singleton
 
         final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
         tabLayout = (TabLayout) findViewById(R.id.main_tablelayout);
         ViewPager viewPager = (ViewPager) findViewById(R.id.main_viewpager);
-
-        setSupportActionBar(toolbar);
 
         tabLayout.setupWithViewPager(viewPager);
         setupViewPager(viewPager);
@@ -61,19 +61,33 @@ public class MainActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.search_menu, menu);
 
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-        menuItem = (MenuItem) menu.findItem(R.id.main_search_menu);
+        menuItem = menu.findItem(R.id.main_search_menu);
         SearchView searchView = (SearchView) menuItem.getActionView();
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
         searchView.setFocusable(true);
+
+        final MenuItem connexionItem = menu.findItem(R.id.main_connexion_menu);
 
         searchView.setOnQueryTextFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View view, boolean hasFocus) {
                 if (hasFocus) {
+                    connexionItem.setVisible(false);
                     tabLayout.setVisibility(View.GONE);
                 } else {
+                    connexionItem.setVisible(true);
                     tabLayout.setVisibility(View.VISIBLE);
                 }
+            }
+        });
+
+        connexionItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                Intent intent = new Intent(getBaseContext(), LoginActivity.class);
+                startActivity(intent);
+
+                return true;
             }
         });
 

@@ -3,6 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
+        android:id="@+id/main_connexion_menu"
+        android:icon="@android:drawable/sym_contact_card"
+        android:title="@string/search_hint"
+        app:showAsAction="ifRoom|collapseActionView" />
+
+    <item
         android:id="@+id/main_search_menu"
         android:icon="@android:drawable/ic_menu_search"
         android:title="@string/search_hint"
