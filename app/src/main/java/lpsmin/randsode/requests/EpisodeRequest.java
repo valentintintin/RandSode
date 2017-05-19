@@ -5,8 +5,7 @@ import android.view.ViewGroup;
 
 import com.android.volley.Response;
 
-import lpsmin.randsode.models.Episode;
-import lpsmin.randsode.models.Serie;
+import lpsmin.randsode.models.database.Episode;
 import lpsmin.randsode.shared.JSONRequest;
 
 public class EpisodeRequest extends JSONRequest<Episode> {

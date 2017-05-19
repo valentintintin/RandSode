@@ -1,4 +1,4 @@
-package lpsmin.randsode.models;
+package lpsmin.randsode.models.database;
 
 import com.raizlabs.android.dbflow.annotation.Column;
 import com.raizlabs.android.dbflow.annotation.OneToMany;
@@ -13,44 +13,31 @@ import java.util.List;
 @Table(database = AppDatabase.class)
 public class Serie extends BaseModel implements Serializable {
 
+    List<Episode> episodes;
     @PrimaryKey
     private int id;
-
     @Column
     private String name;
-
     @Column
     private String overview;
-
     @Column
     private String first_air_date;
-
     @Column
     private String backdrop_path;
-
     @Column
     private String poster_path;
-
     @Column
     private int number_of_seasons;
-
     @Column
     private int number_of_episodes;
-
     @Column
     private float vote_average;
-
     @Column(defaultValue = "0")
     private int vote_count;
-
     @Column(defaultValue = "Date('now')")
     private long date_added;
-
     @Column
     private long last_watched;
-
-    List<Episode> episodes;
-
     private List<Season> seasons;
 
     public Serie() {
@@ -64,6 +51,10 @@ public class Serie extends BaseModel implements Serializable {
                 .orderBy(Episode_Table.date_added, false)
                 .queryList();
         return episodes;
+    }
+
+    public void setEpisodes(List<Episode> episodes) {
+        this.episodes = episodes;
     }
 
     public int getId() {
@@ -160,10 +151,6 @@ public class Serie extends BaseModel implements Serializable {
 
     public void setLast_watched(long last_watched) {
         this.last_watched = last_watched;
-    }
-
-    public void setEpisodes(List<Episode> episodes) {
-        this.episodes = episodes;
     }
 
     public List<Season> getSeasons() {

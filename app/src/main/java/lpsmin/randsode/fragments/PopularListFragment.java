@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import lpsmin.randsode.R;
 import lpsmin.randsode.adapters.RecyclerViewAdapter;
 import lpsmin.randsode.adapters.holders.SerieHolder;
-import lpsmin.randsode.models.Serie;
+import lpsmin.randsode.models.database.Serie;
 import lpsmin.randsode.requests.PopularRequest;
 
 public class PopularListFragment extends Fragment {

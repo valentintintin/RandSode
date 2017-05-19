@@ -39,4 +39,8 @@
     <string name="synchro_menu">Synchronise now</string>
     <string name="sychro_executed">Synchro executed !</string>
     <string name="synchro_auto_pref">synchro_auto_pref</string>
+    <string name="password_pref">password_pref</string>
+    <string name="username_pref">username_pref</string>
+    <string name="sychro_executed_error">Synchro error ! Please check network and account</string>
+    <string name="sessionid_pref">sessionid_pref</string>
 </resources>

@@ -9,7 +9,7 @@ import com.android.volley.toolbox.NetworkImageView;
 
 import lpsmin.randsode.R;
 import lpsmin.randsode.activities.SerieActivity;
-import lpsmin.randsode.models.Serie;
+import lpsmin.randsode.models.database.Serie;
 import lpsmin.randsode.shared.HttpSingleton;
 
 public class SerieHolder extends Holder<Serie> {

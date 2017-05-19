@@ -25,8 +25,8 @@ import java.util.Random;
 
 import lpsmin.randsode.R;
 import lpsmin.randsode.fragments.EpisodeListFragment;
-import lpsmin.randsode.models.Episode;
-import lpsmin.randsode.models.Serie;
+import lpsmin.randsode.models.database.Episode;
+import lpsmin.randsode.models.database.Serie;
 import lpsmin.randsode.requests.EpisodeRequest;
 import lpsmin.randsode.requests.SerieRequest;
 import lpsmin.randsode.shared.HttpSingleton;

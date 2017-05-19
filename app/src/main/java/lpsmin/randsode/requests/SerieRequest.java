@@ -1,11 +1,10 @@
 package lpsmin.randsode.requests;
 
-import android.view.View;
 import android.view.ViewGroup;
 
 import com.android.volley.Response;
 
-import lpsmin.randsode.models.Serie;
+import lpsmin.randsode.models.database.Serie;
 import lpsmin.randsode.shared.JSONRequest;
 
 public class SerieRequest extends JSONRequest<Serie> {

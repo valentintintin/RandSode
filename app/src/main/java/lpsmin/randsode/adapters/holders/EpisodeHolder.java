@@ -10,7 +10,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import lpsmin.randsode.R;
-import lpsmin.randsode.models.Episode;
+import lpsmin.randsode.models.database.Episode;
 import lpsmin.randsode.shared.HttpSingleton;
 
 public class EpisodeHolder extends Holder<Episode> {

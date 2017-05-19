@@ -16,8 +16,8 @@ import java.util.ArrayList;
 import lpsmin.randsode.R;
 import lpsmin.randsode.adapters.RecyclerViewAdapter;
 import lpsmin.randsode.adapters.holders.EpisodeHolder;
-import lpsmin.randsode.models.Episode;
-import lpsmin.randsode.models.Serie;
+import lpsmin.randsode.models.database.Episode;
+import lpsmin.randsode.models.database.Serie;
 
 public class EpisodeListFragment extends Fragment {
 

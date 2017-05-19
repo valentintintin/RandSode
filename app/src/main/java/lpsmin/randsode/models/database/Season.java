@@ -1,4 +1,4 @@
-package lpsmin.randsode.models;
+package lpsmin.randsode.models.database;
 
 public class Season {
 

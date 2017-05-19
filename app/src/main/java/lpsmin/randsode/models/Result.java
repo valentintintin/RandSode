@@ -2,6 +2,8 @@ package lpsmin.randsode.models;
 
 import java.util.List;
 
+import lpsmin.randsode.models.database.Serie;
+
 public class Result {
 
     private int page;

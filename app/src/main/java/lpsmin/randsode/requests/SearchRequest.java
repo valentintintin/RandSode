@@ -8,7 +8,7 @@ import java.util.Iterator;
 
 import lpsmin.randsode.adapters.RecyclerViewAdapter;
 import lpsmin.randsode.models.Result;
-import lpsmin.randsode.models.Serie;
+import lpsmin.randsode.models.database.Serie;
 
 public class SearchRequest extends SeriesArrayRequest {
 

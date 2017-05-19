@@ -1,4 +1,4 @@
-package lpsmin.randsode.models;
+package lpsmin.randsode.models.database;
 
 import com.raizlabs.android.dbflow.annotation.Column;
 import com.raizlabs.android.dbflow.annotation.PrimaryKey;
