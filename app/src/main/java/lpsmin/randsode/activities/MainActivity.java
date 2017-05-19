@@ -2,6 +2,7 @@ package lpsmin.randsode.activities;
 
 import android.app.SearchManager;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -10,6 +11,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
@@ -62,8 +64,6 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
 
         // TODO hide keyboard
-
-        if (Synchro.isAutoEnable(this)) Synchro.execute(this);
     }
 
     @Override
@@ -112,7 +112,7 @@ public class MainActivity extends AppCompatActivity {
         synchroniseItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
-                Synchro.execute(MainActivity.this);
+                dialogSynchroExecute();
 
                 return true;
             }
@@ -122,15 +122,25 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 item.setChecked(!item.isChecked());
-                if (item.isChecked()) Synchro.execute(MainActivity.this);
-
                 Synchro.setAutoEnable(MainActivity.this, item.isChecked());
+                if (item.isChecked()) dialogSynchroExecute();
 
                 return true;
             }
         });
 
         return true;
+    }
+
+    private void dialogSynchroExecute() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+        builder.setTitle(R.string.synchro_dialog_title)
+                .setItems(R.array.synchro_type, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        Synchro.execute(MainActivity.this, which);
+                    }
+                });
+        builder.create().show();
     }
 
     private void setupViewPager(ViewPager viewPager) {

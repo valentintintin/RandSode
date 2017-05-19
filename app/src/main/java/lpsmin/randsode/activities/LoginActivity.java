@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -101,7 +102,7 @@ public class LoginActivity extends AppCompatActivity {
                     showProgress(false);
 
                     Synchro.setUsernameAndPasswordAndSessionID(LoginActivity.this, username, password, response.session_id);
-                    Synchro.execute(LoginActivity.this);
+                    Toast.makeText(LoginActivity.this, R.string.connection_success, Toast.LENGTH_SHORT).show();
 
                     finish();
                 }

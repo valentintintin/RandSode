@@ -43,4 +43,7 @@
     <string name="username_pref">username_pref</string>
     <string name="sychro_executed_error">Synchro error ! Please check network and account</string>
     <string name="sessionid_pref">sessionid_pref</string>
+    <string name="prefs_name">preferences_synchro</string>
+    <string name="synchro_dialog_title">Choose how to synchronise</string>
+    <string name="connection_success">Connection successful!</string>
 </resources>

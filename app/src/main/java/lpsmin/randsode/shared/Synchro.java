@@ -18,7 +18,7 @@ public class Synchro {
         new AuthenticationNewTokenRequest(username, password, listener, errorListener);
     }
 
-    public static void execute(final Activity activity) {
+    public static void execute(Activity activity, int type) {
         String[] ident = getUsernameAndPasswordAndSessionID(activity);
 //
 //        connect(ident[0], ident[1], new Response.Listener<Session>() {
@@ -33,23 +33,23 @@ public class Synchro {
 //            }
 //        });
 
-        new MySeriesRequest(ident[2]);
+        new MySeriesRequest(ident[2], type);
     }
 
     public static void setAutoEnable(Activity activity, boolean enable) {
-        SharedPreferences sharedPref = activity.getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences sharedPref = activity.getSharedPreferences(activity.getString(R.string.prefs_name), Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putBoolean(activity.getString(R.string.synchro_auto_pref), enable);
         editor.apply();
     }
 
     public static boolean isAutoEnable(Activity activity) {
-        SharedPreferences sharedPref = activity.getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences sharedPref = activity.getSharedPreferences(activity.getString(R.string.prefs_name), Context.MODE_PRIVATE);
         return sharedPref.getBoolean(activity.getString(R.string.synchro_auto_pref), false);
     }
 
     public static void setUsernameAndPasswordAndSessionID(Activity activity, String username, String password, String sessionId) {
-        SharedPreferences sharedPref = activity.getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences sharedPref = activity.getSharedPreferences(activity.getString(R.string.prefs_name), Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putString(activity.getString(R.string.username_pref), username);
         editor.putString(activity.getString(R.string.password_pref), password);
@@ -58,7 +58,7 @@ public class Synchro {
     }
 
     public static String[] getUsernameAndPasswordAndSessionID(Activity activity) {
-        SharedPreferences sharedPref = activity.getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences sharedPref = activity.getSharedPreferences(activity.getString(R.string.prefs_name), Context.MODE_PRIVATE);
         return new String[]{
                 sharedPref.getString(activity.getString(R.string.username_pref), null),
                 sharedPref.getString(activity.getString(R.string.password_pref), null),
