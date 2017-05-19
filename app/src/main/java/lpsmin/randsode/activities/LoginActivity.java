@@ -12,7 +12,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -21,6 +20,7 @@ import lpsmin.randsode.R;
 import lpsmin.randsode.models.Session;
 import lpsmin.randsode.requests.login.AuthenticationNewTokenRequest;
 import lpsmin.randsode.shared.Closure;
+import lpsmin.randsode.shared.Synchro;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -39,10 +39,12 @@ public class LoginActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
-        // Set up the login form.
         usernameEditText = (EditText) findViewById(R.id.login_username);
-
         passwordEditText = (EditText) findViewById(R.id.login_password);
+
+        String[] ident = Synchro.getUsernameAndPasswordAndSessionID(this);
+        usernameEditText.setText(ident[0]);
+        passwordEditText.setText(ident[1]);
 
         Button loginButton = (Button) findViewById(R.id.login_button);
         loginButton.setOnClickListener(new OnClickListener() {
@@ -72,8 +74,8 @@ public class LoginActivity extends AppCompatActivity {
         usernameEditText.setError(null);
         passwordEditText.setError(null);
 
-        String username = usernameEditText.getText().toString().trim();
-        String password = passwordEditText.getText().toString().trim();
+        final String username = usernameEditText.getText().toString().trim();
+        final String password = passwordEditText.getText().toString().trim();
 
         boolean cancel = false;
 
@@ -98,7 +100,8 @@ public class LoginActivity extends AppCompatActivity {
                 public void onResponse(Session response) {
                     showProgress(false);
 
-                    Toast.makeText(LoginActivity.this, response.session_id, Toast.LENGTH_LONG).show();
+                    Synchro.setUsernameAndPasswordAndSessionID(LoginActivity.this, username, password, response.session_id);
+                    Synchro.execute(LoginActivity.this);
 
                     finish();
                 }

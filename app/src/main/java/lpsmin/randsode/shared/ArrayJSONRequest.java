@@ -27,7 +27,11 @@ public class ArrayJSONRequest<T> extends JSONRequest<T> {
         super.deliverResponse(response);
 
         if (this.listAdapter != null) addToListAdapter(response);
+        otherThing(response);
     }
 
     protected void addToListAdapter(T response) {}
+
+    protected void otherThing(T response) {
+    }
 }
