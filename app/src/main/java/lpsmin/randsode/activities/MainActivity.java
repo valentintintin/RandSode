@@ -24,6 +24,7 @@ import lpsmin.randsode.R;
 import lpsmin.randsode.fragments.MySeriesListFragment;
 import lpsmin.randsode.fragments.PopularListFragment;
 import lpsmin.randsode.shared.HttpSingleton;
+import lpsmin.randsode.shared.Synchro;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -67,15 +68,23 @@ public class MainActivity extends AppCompatActivity {
         searchView.setFocusable(true);
 
         final MenuItem connexionItem = menu.findItem(R.id.main_connexion_menu);
+        final MenuItem synchroniseItem = menu.findItem(R.id.main_synchro_menu);
+        final MenuItem autoSynchroItem = menu.findItem(R.id.main_auto_synchro_menu);
+
+        autoSynchroItem.setChecked(Synchro.isAutoEnable(this));
 
         searchView.setOnQueryTextFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View view, boolean hasFocus) {
                 if (hasFocus) {
                     connexionItem.setVisible(false);
+                    synchroniseItem.setVisible(false);
+                    autoSynchroItem.setVisible(false);
                     tabLayout.setVisibility(View.GONE);
                 } else {
                     connexionItem.setVisible(true);
+                    synchroniseItem.setVisible(true);
+                    autoSynchroItem.setVisible(true);
                     tabLayout.setVisibility(View.VISIBLE);
                 }
             }
@@ -84,8 +93,29 @@ public class MainActivity extends AppCompatActivity {
         connexionItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
-                Intent intent = new Intent(getBaseContext(), LoginActivity.class);
+                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
                 startActivity(intent);
+
+                return true;
+            }
+        });
+
+        synchroniseItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                Synchro.execute(MainActivity.this);
+
+                return true;
+            }
+        });
+
+        autoSynchroItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                item.setChecked(!item.isChecked());
+                if (item.isChecked()) Synchro.execute(MainActivity.this);
+
+                Synchro.setAutoEnable(MainActivity.this, item.isChecked());
 
                 return true;
             }

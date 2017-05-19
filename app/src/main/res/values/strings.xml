@@ -34,4 +34,9 @@
     <string name="action_sign_in_short">Sign in</string>
     <string name="error_field_required">This field is required</string>
     <string name="error_field">Field may be incorrect</string>
+    <string name="connection_menu">Connection to MovieDB</string>
+    <string name="synchro_auto_menu">Auto synchro</string>
+    <string name="synchro_menu">Synchronise now</string>
+    <string name="sychro_executed">Synchro executed !</string>
+    <string name="synchro_auto_pref">synchro_auto_pref</string>
 </resources>
