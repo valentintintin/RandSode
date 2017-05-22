@@ -11,9 +11,11 @@ import com.android.volley.toolbox.Volley;
 
 public class HttpSingleton {
 
+    public final static String END_URL = "&api_key=6eea0576c85e5ebf9fd8e438a8d8b316&language=en-US";
+
     private static HttpSingleton instance;
-    private RequestQueue requestQueue;
     private final ImageLoader imageLoader;
+    private RequestQueue requestQueue;
 
     private HttpSingleton(Context context) {
         this.requestQueue = Volley.newRequestQueue(context.getApplicationContext());

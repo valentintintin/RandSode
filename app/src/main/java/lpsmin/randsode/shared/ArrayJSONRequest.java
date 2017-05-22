@@ -8,7 +8,7 @@ import com.android.volley.Response;
 
 import lpsmin.randsode.adapters.RecyclerViewAdapter;
 
-public class ArrayJSONRequest<T> extends JSONRequest<T> {
+public class ArrayJSONRequest<T> extends JSONGetRequest<T> {
 
     protected RecyclerViewAdapter listAdapter;
 

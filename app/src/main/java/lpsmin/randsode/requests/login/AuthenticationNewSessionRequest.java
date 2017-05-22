@@ -5,9 +5,9 @@ import com.android.volley.VolleyError;
 
 import lpsmin.randsode.models.Session;
 import lpsmin.randsode.shared.Closure;
-import lpsmin.randsode.shared.JSONRequest;
+import lpsmin.randsode.shared.JSONGetRequest;
 
-public class AuthenticationNewSessionRequest extends JSONRequest<Session> {
+public class AuthenticationNewSessionRequest extends JSONGetRequest<Session> {
 
     public AuthenticationNewSessionRequest(String requestToken, final Response.Listener<Session> listener, final Closure<VolleyError> errorListener) {
         super("https://api.themoviedb.org/3/authentication/session/new?request_token=" + requestToken, Session.class, listener, null, null, null, errorListener);

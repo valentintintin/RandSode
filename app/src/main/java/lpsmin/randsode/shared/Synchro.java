@@ -28,12 +28,12 @@ public class Synchro {
 //            }
 //        }, new Closure<VolleyError>() {
 //            @Override
-//            public void go(VolleyError data) {
+//            public void execute(VolleyError data) {
 //                Toast.makeText(activity, R.string.sychro_executed_error, Toast.LENGTH_LONG).show();
 //            }
 //        });
 
-        new MySeriesRequest(ident[2], type);
+        new MySeriesRequest(ident[2], type, activity);
     }
 
     public static void setAutoEnable(Activity activity, boolean enable) {

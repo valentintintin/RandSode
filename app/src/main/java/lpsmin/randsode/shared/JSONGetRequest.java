@@ -1,6 +1,7 @@
 package lpsmin.randsode.shared;
 
 import android.support.design.widget.Snackbar;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -12,10 +13,9 @@ import com.android.volley.toolbox.HttpHeaderParser;
 import com.google.gson.Gson;
 
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 
-public class JSONRequest<T> extends com.android.volley.Request<T> {
-
-    private final static String END_URL = "&api_key=6eea0576c85e5ebf9fd8e438a8d8b316&language=en-US";
+public class JSONGetRequest<T> extends com.android.volley.Request<T> {
 
     private final Gson gson;
     private final Class<T> jsonType;
@@ -24,23 +24,25 @@ public class JSONRequest<T> extends com.android.volley.Request<T> {
     private final View view;
     private final TextView noData;
 
-    public JSONRequest(String url, Class<T> jsonType, Response.Listener<T> listener) {
+    public JSONGetRequest(String url, Class<T> jsonType, Response.Listener<T> listener) {
         this(url, jsonType, listener, null, null, null);
     }
 
-    public JSONRequest(String url, Class<T> jsonType, Response.Listener<T> listener, final ViewGroup loader, final View view, TextView noData) {
+    public JSONGetRequest(String url, Class<T> jsonType, Response.Listener<T> listener, final ViewGroup loader, final View view, TextView noData) {
         this(url, jsonType, listener, loader, view, noData, null);
     }
 
-    public JSONRequest(String url, Class<T> jsonType, Response.Listener<T> listener, final ViewGroup loader, final View view, TextView noData, final Closure<VolleyError> errorListener) {
-        super(Method.GET, url + END_URL, new Response.ErrorListener() {
+    public JSONGetRequest(String url, Class<T> jsonType, Response.Listener<T> listener, final ViewGroup loader, final View view, TextView noData, final Closure<VolleyError> errorListener) {
+        super(Method.GET, url + HttpSingleton.END_URL, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 error.printStackTrace();
 
+                Log.e("http", new String(error.networkResponse.data, StandardCharsets.UTF_8));
+
                 if (loader != null && errorListener == null) { // To have the context ...
                     Snackbar.make(loader, "Network error code: " + error.networkResponse.statusCode, Snackbar.LENGTH_LONG).show();
-                } else if (errorListener != null) errorListener.go(error);
+                } else if (errorListener != null) errorListener.execute(error);
 
                 if (loader != null) loader.setVisibility(View.GONE);
                 if (view != null) view.setVisibility(View.VISIBLE);

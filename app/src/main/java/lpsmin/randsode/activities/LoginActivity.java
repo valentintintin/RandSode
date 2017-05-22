@@ -108,7 +108,7 @@ public class LoginActivity extends AppCompatActivity {
                 }
             }, new Closure<VolleyError>() {
                 @Override
-                public void go(VolleyError data) {
+                public void execute(VolleyError data) {
                     showProgress(false);
 
                     usernameEditText.setError(getString(R.string.error_field));

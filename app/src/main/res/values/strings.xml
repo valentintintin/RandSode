@@ -26,6 +26,10 @@
     <string name="error_random">Error in the randomizer !</string>
     <string name="no_informations_serie">Not enough information about this series. Unable to do something with !</string>
     <string name="title_activity_login">Sign in to MovieDB website</string>
+    <string name="connection_success">Connection successful!</string>
+    <string name="has_been">has been</string>
+    <string name="deleted">deleted</string>
+    <string name="added">added</string>
 
     <!-- Strings related to login -->
     <string name="prompt_username">Username</string>
@@ -45,5 +49,4 @@
     <string name="sessionid_pref">sessionid_pref</string>
     <string name="prefs_name">preferences_synchro</string>
     <string name="synchro_dialog_title">Choose how to synchronise</string>
-    <string name="connection_success">Connection successful!</string>
 </resources>
