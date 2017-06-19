@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name" translatable="false">RandSode</string>
-    <string name="search_hint">Search a serie</string>
+    <string name="search_hint">Type a serie name</string>
     <string name="title_activity_serie">Showing serie</string>
     <string name="search_activity_title_caption">Search for :</string>
     <string name="main_title_my_series">My series</string>
@@ -36,18 +36,18 @@
     <string name="error_field_required">This field is required</string>
     <string name="error_field">Field may be incorrect</string>
     <string name="connection_menu">My connection to MovieDB</string>
-    <string name="synchro_auto_menu">Auto synchro</string>
-    <string name="synchro_menu">Synchronise now</string>
-    <string name="sychro_executed">Synchro executed !</string>
+    <string name="synchro_auto_menu">Auto synchronize</string>
+    <string name="synchro_menu">Synchronize now</string>
+    <string name="sychro_executed">Synchronization executed !</string>
     <string name="synchro_auto_pref">synchro_auto_pref</string>
     <string name="password_pref">password_pref</string>
     <string name="username_pref">username_pref</string>
-    <string name="sychro_executed_error">Synchro error ! Please check network and account</string>
+    <string name="sychro_executed_error">Synchronize error ! Please check network and account</string>
     <string name="sessionid_pref">sessionid_pref</string>
     <string name="prefs_name">preferences_synchro</string>
-    <string name="synchro_dialog_title">Choose how to synchronise</string>
+    <string name="synchro_dialog_title">Choose how to synchronize</string>
     <string name="logout">Log out</string>
     <string name="disconnected">You are disconnected</string>
     <string name="connected_as">Connected as</string>
-    <string name="synchro_running">Synchro is running ...</string>
+    <string name="synchro_running">Synchronization is running ...</string>
 </resources>
