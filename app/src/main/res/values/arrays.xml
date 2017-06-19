@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="synchro_type">
-        <item>Import from MovieDB (replace all data!)</item>
         <item>Export from Application (replace all data!)</item>
+        <item>Import from MovieDB (replace all data!)</item>
         <item>Mix both solution (no deletion)</item>
     </string-array>
 </resources>

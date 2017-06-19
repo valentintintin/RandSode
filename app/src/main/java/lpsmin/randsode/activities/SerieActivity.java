@@ -30,6 +30,7 @@ import lpsmin.randsode.models.database.Serie;
 import lpsmin.randsode.requests.EpisodeRequest;
 import lpsmin.randsode.requests.SerieRequest;
 import lpsmin.randsode.shared.HttpSingleton;
+import lpsmin.randsode.shared.Synchro;
 
 public class SerieActivity extends AppCompatActivity {
 
@@ -130,7 +131,6 @@ public class SerieActivity extends AppCompatActivity {
                         episodeListFragmentContainer.setVisibility(View.VISIBLE);
 
                         serie.save();
-
                     }
                 } else {
                     Toast.makeText(SerieActivity.this, getString(R.string.no_informations_serie), Toast.LENGTH_LONG).show();
@@ -178,6 +178,8 @@ public class SerieActivity extends AppCompatActivity {
             favoriteDelete.setVisibility(View.VISIBLE);
             episodeListFragmentContainer.setVisibility(View.VISIBLE);
             Snackbar.make(loader, getResources().getString(R.string.serie_added), Snackbar.LENGTH_SHORT).show();
+
+            if (Synchro.isAutoEnable(this)) Synchro.execute(this, Synchro.TYPE_EXPORT);
         }
     }
 
@@ -190,12 +192,17 @@ public class SerieActivity extends AppCompatActivity {
             alertDialogBuilder.setPositiveButton(getResources().getString(R.string.dialog_ok_delete), new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
+                    Snackbar.make(loader, getResources().getString(R.string.serie_deleted), Snackbar.LENGTH_SHORT).show();
+
+                    if (Synchro.isAutoEnable(SerieActivity.this))
+                        Synchro.execute(SerieActivity.this, Synchro.TYPE_EXPORT);
+
                     serie.delete();
+
                     favorite.setVisibility(View.VISIBLE);
                     favoriteDelete.setVisibility(View.GONE);
                     episodeListFragmentContainer.setVisibility(View.GONE);
                     episodeListFragment.refresh();
-                    Snackbar.make(loader, getResources().getString(R.string.serie_deleted), Snackbar.LENGTH_SHORT).show();
                 }
             });
             alertDialogBuilder.setNegativeButton(getResources().getString(R.string.dialog_cancel_delete), new DialogInterface.OnClickListener() {
@@ -220,6 +227,8 @@ public class SerieActivity extends AppCompatActivity {
         image.setErrorImageResId(R.drawable.ic_no_image);
         if (episode.getStill_path() == null) image.setVisibility(View.GONE);
         else image.setImageUrl("https://image.tmdb.org/t/p/w185/" + episode.getStill_path(), HttpSingleton.getInstance().getImageLoader());
+        TextView description = (TextView) dialog.findViewById(R.id.dialog_episode_description);
+        description.setText(episode.getOverview());
 
         ImageButton no = (ImageButton) dialog.findViewById(R.id.dialog_episode_no);
         no.setOnClickListener(new View.OnClickListener() {
@@ -237,6 +246,10 @@ public class SerieActivity extends AppCompatActivity {
                 serie.setLast_watched(new Date().getTime());
                 saveSerie();
                 episode.save();
+
+                if (Synchro.isAutoEnable(SerieActivity.this))
+                    Synchro.execute(SerieActivity.this, Synchro.TYPE_EXPORT);
+
                 dialog.dismiss();
                 episodeListFragment.addEpisode(episode);
             }

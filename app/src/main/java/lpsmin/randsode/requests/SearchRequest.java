@@ -7,7 +7,7 @@ import android.widget.TextView;
 import java.util.Iterator;
 
 import lpsmin.randsode.adapters.RecyclerViewAdapter;
-import lpsmin.randsode.models.Result;
+import lpsmin.randsode.models.ResultSeries;
 import lpsmin.randsode.models.database.Serie;
 
 public class SearchRequest extends SeriesArrayRequest {
@@ -16,7 +16,7 @@ public class SearchRequest extends SeriesArrayRequest {
         super("https://api.themoviedb.org/3/search/tv?query=" + query, loader, listAdapter, list, noData);
     }
 
-    protected void addToListAdapter(Result response) {
+    protected void addToListAdapter(ResultSeries response) {
         for (Iterator<Serie> iter = response.getResults().listIterator(); iter.hasNext(); ) {
             Serie s = iter.next();
             if (s.getOverview().length() == 0) iter.remove();

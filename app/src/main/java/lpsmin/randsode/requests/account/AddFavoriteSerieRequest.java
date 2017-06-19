@@ -23,9 +23,9 @@ public class AddFavoriteSerieRequest extends JSONPostRequest<FavoriteReturn> {
         super("https://api.themoviedb.org/3/account/0/favorite?session_id=" + sessionId, FavoriteReturn.class, new Response.Listener<FavoriteReturn>() {
             @Override
             public void onResponse(FavoriteReturn response) {
-                if (!series.isEmpty())
+                if (!series.isEmpty()) {
                     new AddFavoriteSerieRequest(sessionId, series, add, activity, next);
-                else {
+                } else {
                     if (next != null) next.execute(null);
                     else
                         Toast.makeText(activity, activity.getString(R.string.sychro_executed), Toast.LENGTH_SHORT).show();

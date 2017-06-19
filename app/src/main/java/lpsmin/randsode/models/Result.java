@@ -2,12 +2,10 @@ package lpsmin.randsode.models;
 
 import java.util.List;
 
-import lpsmin.randsode.models.database.Serie;
-
-public class Result {
+public class Result<T> {
 
     private int page;
-    private List<Serie> results;
+    private List<T> results;
 
     public int getPage() {
         return page;
@@ -17,11 +15,11 @@ public class Result {
         this.page = page;
     }
 
-    public List<Serie> getResults() {
+    public List<T> getResults() {
         return results;
     }
 
-    public void setResults(List<Serie> results) {
+    public void setResults(List<T> results) {
         this.results = results;
     }
 }

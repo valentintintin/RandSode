@@ -14,6 +14,8 @@ import lpsmin.randsode.requests.login.AuthenticationNewTokenRequest;
 
 public class Synchro {
 
+    public static final int TYPE_EXPORT = 0, TYPE_IMPORT = 1, TYPE_BOTH = 2;
+
     public static void connect(String username, String password, Response.Listener<Session> listener, Closure<VolleyError> errorListener) {
         new AuthenticationNewTokenRequest(username, password, listener, errorListener);
     }
