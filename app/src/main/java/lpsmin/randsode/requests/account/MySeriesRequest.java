@@ -33,6 +33,8 @@ public class MySeriesRequest extends SeriesArrayRequest {
         this.typeSynchro = type;
         this.sessionId = sessionId;
         this.activity = activity;
+
+        Toast.makeText(activity, activity.getString(R.string.synchro_running), Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -69,7 +71,7 @@ public class MySeriesRequest extends SeriesArrayRequest {
             }, null);
         }
 
-        Toast.makeText(activity, activity.getString(R.string.sychro_executed) + " " + seriesMovieDB.size() + " series", Toast.LENGTH_SHORT).show();
+        Toast.makeText(activity, activity.getString(R.string.sychro_executed) + " " + seriesMovieDB.size() + " series imported", Toast.LENGTH_SHORT).show();
     }
 
     private void exportFromApplication(List<Serie> seriesMovieDB) {
@@ -87,16 +89,21 @@ public class MySeriesRequest extends SeriesArrayRequest {
 //            }
 //        }
 
-        if (seriesMovieDB.isEmpty()) { //ajout simple
-            addMovieDB(SQLite.select(Serie_Table.id, Serie_Table.name).from(Serie.class).queryList());
-        } else { // suppression puis ajout
-            new AddFavoriteSerieRequest(this.sessionId, series, false, this.activity, new Closure<Nullable>() {
-                @Override
-                public void execute(Nullable data) {
-                    addMovieDB(SQLite.select(Serie_Table.id, Serie_Table.name).from(Serie.class).queryList());
-                }
-            });
+        List<Serie> seriesBDD = SQLite.select(Serie_Table.id, Serie_Table.name).from(Serie.class).queryList();
+        if (!seriesBDD.isEmpty()) {
+            if (seriesMovieDB.isEmpty()) { //ajout simple
+                addMovieDB(seriesBDD);
+            } else { // suppression puis ajout
+                new AddFavoriteSerieRequest(this.sessionId, series, false, this.activity, new Closure<Nullable>() {
+                    @Override
+                    public void execute(Nullable data) {
+                        addMovieDB(SQLite.select(Serie_Table.id, Serie_Table.name).from(Serie.class).queryList());
+                    }
+                });
+            }
         }
+
+        Toast.makeText(activity, activity.getString(R.string.sychro_executed) + " " + seriesBDD.size() + " series exported", Toast.LENGTH_SHORT).show();
     }
 
     private void addMovieDB(List<Serie> seriesMovieDB) {
