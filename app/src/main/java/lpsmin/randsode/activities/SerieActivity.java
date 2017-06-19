@@ -38,6 +38,7 @@ public class SerieActivity extends AppCompatActivity {
     private FrameLayout loader;
     private FloatingActionMenu fabs;
     private FloatingActionButton random, favorite, favoriteDelete;
+    private TextView summary;
     private FrameLayout episodeListFragmentContainer;
     private EpisodeListFragment episodeListFragment;
 
@@ -55,7 +56,7 @@ public class SerieActivity extends AppCompatActivity {
 
         this.loader = (FrameLayout) findViewById(R.id.serie_load);
         this.random = (FloatingActionButton) findViewById(R.id.serie_random);
-        final TextView summary = (TextView) findViewById(R.id.serie_summary);
+        this.summary = (TextView) findViewById(R.id.serie_summary);
         final NetworkImageView image = (NetworkImageView) findViewById(R.id.serie_image);
         favorite = (FloatingActionButton) findViewById(R.id.serie_favorite);
         favoriteDelete = (FloatingActionButton) findViewById(R.id.serie_favorite_delete);
@@ -127,6 +128,9 @@ public class SerieActivity extends AppCompatActivity {
                         favorite.setVisibility(View.GONE);
                         favoriteDelete.setVisibility(View.VISIBLE);
                         episodeListFragmentContainer.setVisibility(View.VISIBLE);
+
+                        serie.save();
+
                     }
                 } else {
                     Toast.makeText(SerieActivity.this, getString(R.string.no_informations_serie), Toast.LENGTH_LONG).show();

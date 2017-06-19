@@ -46,7 +46,8 @@ public class SerieHolder extends Holder<Serie> {
         if (serie.getVote_count() == 0) this.rank.setVisibility(View.GONE);
 
         this.summary.setText(serie.getOverview());
-        if (serie.getOverview().length() == 0) this.summary.setVisibility(View.GONE);
+        if (serie.getOverview() == null || serie.getOverview().length() == 0)
+            this.summary.setVisibility(View.GONE);
 
 //        String genres = "";
 ////        try {

@@ -1,15 +1,21 @@
 package lpsmin.randsode.requests.account;
 
 import android.app.Activity;
+import android.support.annotation.Nullable;
+import android.widget.Toast;
 
 import com.raizlabs.android.dbflow.sql.language.SQLite;
 
+import java.util.LinkedList;
 import java.util.List;
 
+import lpsmin.randsode.R;
+import lpsmin.randsode.fragments.MySeriesListFragment;
 import lpsmin.randsode.models.Result;
 import lpsmin.randsode.models.database.Serie;
 import lpsmin.randsode.models.database.Serie_Table;
 import lpsmin.randsode.requests.SeriesArrayRequest;
+import lpsmin.randsode.shared.Closure;
 
 public class MySeriesRequest extends SeriesArrayRequest {
 
@@ -47,13 +53,15 @@ public class MySeriesRequest extends SeriesArrayRequest {
 //        }
 
         SQLite.delete().from(Serie.class).execute();
+        for (Serie s : seriesMovieDB) s.save();
 
-        for (Serie s : seriesMovieDB) {
-            s.save();
-        }
+        MySeriesListFragment.observable.notifyObservers();
+
+        Toast.makeText(activity, activity.getString(R.string.sychro_executed), Toast.LENGTH_SHORT).show();
     }
 
     private void exportFromApplication(List<Serie> seriesMovieDB) {
+        final LinkedList<Serie> series = new LinkedList<>(seriesMovieDB);
 //        int i;
 
 //        for (Serie s : SQLite.select(Serie_Table.id, Serie_Table.name).from(Serie.class).queryList()) {
@@ -67,12 +75,20 @@ public class MySeriesRequest extends SeriesArrayRequest {
 //            }
 //        }
 
-        for (Serie s : seriesMovieDB) {
-            new AddFavoriteSerieRequest(this.sessionId, s, false, this.activity);
+        if (seriesMovieDB.isEmpty())
+            addMovieDB(SQLite.select(Serie_Table.id, Serie_Table.name).from(Serie.class).queryList());
+        else {
+            new AddFavoriteSerieRequest(this.sessionId, series, false, this.activity, new Closure<Nullable>() {
+                @Override
+                public void execute(Nullable data) {
+                    addMovieDB(SQLite.select(Serie_Table.id, Serie_Table.name).from(Serie.class).queryList());
+                }
+            });
         }
+    }
 
-        for (Serie s : SQLite.select(Serie_Table.id, Serie_Table.name).from(Serie.class).queryList()) {
-            new AddFavoriteSerieRequest(this.sessionId, s, true, this.activity);
-        }
+    private void addMovieDB(List<Serie> seriesMovieDB) {
+        final LinkedList<Serie> series = new LinkedList<>(seriesMovieDB);
+        new AddFavoriteSerieRequest(sessionId, series, true, activity, null);
     }
 }
