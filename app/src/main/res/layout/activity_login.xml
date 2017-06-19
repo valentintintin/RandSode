@@ -88,10 +88,30 @@
         </LinearLayout>
     </ScrollView>
 
+    <TextView
+        android:id="@+id/login_status"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/connected_as"
+        android:textAppearance="@android:style/TextAppearance.Material.Large"
+        android:textColor="@android:color/holo_green_light"
+        android:visibility="gone" />
+
+    <Button
+        android:id="@+id/login_logout"
+        style="?android:textAppearanceSmall"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/logout"
+        android:textStyle="bold"
+        android:visibility="gone" />
+
     <ImageView
         android:id="@+id/login_logo_moviedb"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="center"
         app:srcCompat="@drawable/moviedb_logo" />
+
 </LinearLayout>

@@ -46,5 +46,7 @@
     <string name="sessionid_pref">sessionid_pref</string>
     <string name="prefs_name">preferences_synchro</string>
     <string name="synchro_dialog_title">Choose how to synchronise</string>
-    <string name="not_connected">Not connected</string>
+    <string name="logout">Log out</string>
+    <string name="disconnected">You are disconnected</string>
+    <string name="connected_as">Connected as</string>
 </resources>

@@ -10,12 +10,14 @@
     <item
         android:id="@+id/main_synchro_menu"
         android:title="@string/synchro_menu"
+        android:visible="false"
         app:showAsAction="never" />
 
     <item
         android:id="@+id/main_auto_synchro_menu"
         android:checkable="true"
         android:title="@string/synchro_auto_menu"
+        android:visible="false"
         app:showAsAction="never" />
 
     <item

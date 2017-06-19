@@ -31,7 +31,7 @@ import lpsmin.randsode.shared.Synchro;
 public class MainActivity extends AppCompatActivity {
 
     private TabLayout tabLayout;
-    private MenuItem menuItem;
+    private MenuItem menuItem, synchroniseItem, autoSynchroItem;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,7 +63,20 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
+        if (synchroniseItem != null) {
+            refreshMenuWithConnectionStatus();
+        }
+
         // TODO hide keyboard
+    }
+
+    private void refreshMenuWithConnectionStatus() {
+        String ident[] = Synchro.getUsernameAndPasswordAndSessionID(this);
+
+        if (ident[2] != null) {
+            synchroniseItem.setVisible(true);
+            autoSynchroItem.setVisible(true);
+        }
     }
 
     @Override
@@ -77,8 +90,8 @@ public class MainActivity extends AppCompatActivity {
         searchView.setFocusable(true);
 
         final MenuItem connexionItem = menu.findItem(R.id.main_connexion_menu);
-        final MenuItem synchroniseItem = menu.findItem(R.id.main_synchro_menu);
-        final MenuItem autoSynchroItem = menu.findItem(R.id.main_auto_synchro_menu);
+        synchroniseItem = menu.findItem(R.id.main_synchro_menu);
+        autoSynchroItem = menu.findItem(R.id.main_auto_synchro_menu);
 
         autoSynchroItem.setChecked(Synchro.isAutoEnable(this));
 
@@ -128,6 +141,8 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });
+
+        refreshMenuWithConnectionStatus();
 
         return true;
     }

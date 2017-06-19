@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.support.annotation.Nullable;
 import android.widget.Toast;
 
+import com.android.volley.Response;
 import com.raizlabs.android.dbflow.sql.language.SQLite;
 
 import java.util.LinkedList;
@@ -14,6 +15,7 @@ import lpsmin.randsode.fragments.MySeriesListFragment;
 import lpsmin.randsode.models.Result;
 import lpsmin.randsode.models.database.Serie;
 import lpsmin.randsode.models.database.Serie_Table;
+import lpsmin.randsode.requests.SerieRequest;
 import lpsmin.randsode.requests.SeriesArrayRequest;
 import lpsmin.randsode.shared.Closure;
 
@@ -53,11 +55,21 @@ public class MySeriesRequest extends SeriesArrayRequest {
 //        }
 
         SQLite.delete().from(Serie.class).execute();
-        for (Serie s : seriesMovieDB) s.save();
+        for (final Serie serie : seriesMovieDB) {
+            new SerieRequest(serie.getId(), new Response.Listener<Serie>() {
+                @Override
+                public void onResponse(Serie response) {
+                    if (response.getNumber_of_episodes() != 0 &&
+                            response.getEpisodes().size() < response.getNumber_of_episodes()) {
+                        response.save();
 
-        MySeriesListFragment.observable.notifyObservers();
+                        MySeriesListFragment.update();
+                    }
+                }
+            }, null);
+        }
 
-        Toast.makeText(activity, activity.getString(R.string.sychro_executed), Toast.LENGTH_SHORT).show();
+        Toast.makeText(activity, activity.getString(R.string.sychro_executed) + " " + seriesMovieDB.size() + " series", Toast.LENGTH_SHORT).show();
     }
 
     private void exportFromApplication(List<Serie> seriesMovieDB) {
@@ -75,9 +87,9 @@ public class MySeriesRequest extends SeriesArrayRequest {
 //            }
 //        }
 
-        if (seriesMovieDB.isEmpty())
+        if (seriesMovieDB.isEmpty()) { //ajout simple
             addMovieDB(SQLite.select(Serie_Table.id, Serie_Table.name).from(Serie.class).queryList());
-        else {
+        } else { // suppression puis ajout
             new AddFavoriteSerieRequest(this.sessionId, series, false, this.activity, new Closure<Nullable>() {
                 @Override
                 public void execute(Nullable data) {

@@ -44,12 +44,14 @@ public class AddFavoriteSerieRequest extends JSONPostRequest<FavoriteReturn> {
             }
         });
 
-        try {
-            this.paramsJson.put("media_type", new String("tv"));
-            this.paramsJson.put("media_id", series.pop().getId());
-            this.paramsJson.put("favorite", add);
-        } catch (org.json.JSONException e) {
-            e.printStackTrace();
+        if (!series.isEmpty()) {
+            try {
+                this.paramsJson.put("media_type", new String("tv"));
+                this.paramsJson.put("media_id", series.pop().getId());
+                this.paramsJson.put("favorite", add);
+            } catch (org.json.JSONException e) {
+                e.printStackTrace();
+            }
         }
     }
 }

@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Response;
@@ -54,6 +55,26 @@ public class LoginActivity extends AppCompatActivity {
                 attemptLogin();
             }
         });
+
+        final TextView status = (TextView) findViewById(R.id.login_status);
+
+        final Button logoutButton = (Button) findViewById(R.id.login_logout);
+        logoutButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Synchro.setUsernameAndPasswordAndSessionID(LoginActivity.this, null, null, null);
+
+                logoutButton.setVisibility(View.GONE);
+                Toast.makeText(LoginActivity.this, R.string.disconnected, Toast.LENGTH_SHORT).show();
+                status.setVisibility(View.GONE);
+            }
+        });
+
+        if (ident[2] != null) {
+            status.setVisibility(View.VISIBLE);
+            status.setText(getString(R.string.connected_as) + ident[0]);
+            logoutButton.setVisibility(View.VISIBLE);
+        }
 
         formView = findViewById(R.id.login_form);
         loading = findViewById(R.id.login_progress);

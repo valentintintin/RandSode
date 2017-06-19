@@ -21,9 +21,15 @@ import lpsmin.randsode.models.database.Serie_Table;
 
 public class MySeriesListFragment extends Fragment {
 
+    private static MySeriesListFragment instance = null;
+
     private RecyclerViewAdapter listAdapter;
     private TextView noData;
     private RecyclerView list;
+
+    public static void update() {
+        if (MySeriesListFragment.instance != null) MySeriesListFragment.instance.refresh();
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -37,6 +43,8 @@ public class MySeriesListFragment extends Fragment {
         list.setAdapter(listAdapter);
         list.setLayoutManager(new LinearLayoutManager(this.getActivity()));
         refresh();
+
+        MySeriesListFragment.instance = this;
 
         return v;
     }
