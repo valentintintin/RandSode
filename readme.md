@@ -1,6 +1,6 @@
 # Randsode
 
-![Randsode Logo](/home/valentin/Developpement/Android/RandSode/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png)
+![Randsode Logo](app/src/main/res/mipmap-xxxhdpi/ic_launcher.png)
 
 Android app developped for a school project.
 Use of the MovieDB API: https://developers.themoviedb.org/3
