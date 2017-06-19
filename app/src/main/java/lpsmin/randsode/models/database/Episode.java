@@ -43,6 +43,8 @@ public class Episode extends BaseModel implements Serializable {
     @Column
     private boolean watched;
 
+    private String overview;
+
     public Episode() {
         super();
     }
@@ -133,5 +135,9 @@ public class Episode extends BaseModel implements Serializable {
 
     public void setAir_date(String air_date) {
         this.air_date = air_date;
+    }
+
+    public String getOverview() {
+        return overview;
     }
 }

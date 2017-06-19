@@ -1,47 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="horizontal"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
-
-    <ImageButton
-        android:contentDescription="No for this episode"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
-        app:srcCompat="@android:drawable/ic_delete"
-        android:id="@+id/dialog_episode_no" />
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/text_margin"
+    android:orientation="vertical">
 
     <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content">
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/dialog_title_episode"
+            android:textAppearance="@android:style/TextAppearance.Material.Large" />
 
         <com.android.volley.toolbox.NetworkImageView
             android:id="@+id/dialog_episode_image"
-            android:scaleType="fitXY"
             android:layout_width="match_parent"
+            android:layout_height="200dp"
             android:layout_gravity="center"
-            android:layout_height="200dp" />
+            android:scaleType="fitCenter" />
 
         <TextView
-            android:paddingTop="@dimen/text_margin"
+            android:id="@+id/dialog_episode_title"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:id="@+id/dialog_episode_title"
-            android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium"
-            android:textStyle="bold"
+            android:layout_weight="1"
+            android:paddingTop="@dimen/text_margin"
             android:textAlignment="center"
-            android:layout_weight="1" />
+            android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/dialog_episode_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
     </LinearLayout>
 
-    <ImageButton
-        android:contentDescription="Yes add episode"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
-        app:srcCompat="@android:drawable/ic_input_add"
-        android:id="@+id/dialog_episode_yes"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <ImageButton
+            android:id="@+id/dialog_episode_no"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:contentDescription="Not this episode"
+            app:srcCompat="@android:drawable/ic_delete" />
+
+        <ImageButton
+            android:id="@+id/dialog_episode_yes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:contentDescription="Yes add this episode"
+            app:srcCompat="@android:drawable/ic_input_add" />
+    </LinearLayout>
 
 </LinearLayout>
